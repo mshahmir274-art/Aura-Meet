@@ -354,7 +354,7 @@
   }
   .face-verify-box video, .face-verify-box img {
     width: 100%;
-    max-height: 210px;
+    max-height: 220px;
     object-fit: cover;
     border-radius: 12px;
     margin-top: 8px;
@@ -450,20 +450,29 @@
     font-size: 13px;
     font-weight: 800;
     color: var(--maroon-800);
-    margin: 10px 0 8px;
+    margin: 8px 0 8px;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
+  /* Vertical Series Online Users List (Messenger-style Vertical Series & Vertical Scroll) */
+  .vertical-online-series {
+    max-height: 245px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 2px;
+  }
+
   .chat-user-card {
     background: #fff;
     border-radius: 18px;
-    padding: 12px 14px;
+    padding: 11px 14px;
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-card);
     cursor: pointer;
@@ -475,15 +484,77 @@
     border: 1.5px solid var(--maroon-500);
     cursor: pointer;
   }
+
+  /* Horizontal Active Chats Strip Below Own ID (Aleena) */
+  .horizontal-chats-series {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 4px 2px 10px;
+    scroll-snap-type: x mandatory;
+  }
+  .horiz-chat-card {
+    min-width: 162px;
+    max-width: 175px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    background: #fff;
+    border-radius: 18px;
+    padding: 12px;
+    border: 1.5px solid var(--border-light);
+    box-shadow: var(--shadow-card);
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .horiz-chat-card.has-unread {
+    border-color: var(--maroon-600);
+    background: #fff9fa;
+  }
+  .unread-count-badge {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    background: #16a34a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(22, 163, 74, 0.35);
+  }
+  .horiz-last-msg {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
   .avatar-wrap {
     position: relative;
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
     flex-shrink: 0;
   }
   .avatar-img {
-    width: 54px;
-    height: 54px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--maroon-200);
@@ -590,7 +661,7 @@
   }
   .msg-meta {
     font-size: 10px;
-    opacity: 0.85;
+    opacity: 0.88;
     margin-top: 4px;
     display: flex;
     align-items: center;
@@ -671,7 +742,7 @@
     50% { transform: scale(1.08); }
   }
 
-  /* Direct Camera Modal */
+  /* Direct HD Camera Modal (Front & Back Switch) */
   #direct-camera-modal {
     position: fixed;
     inset: 0;
@@ -726,7 +797,7 @@
     margin-top: 3px;
   }
 
-  /* Active Personal Call Screen — Full-Screen Clear Video + Audio */
+  /* Active Personal Call Screen — HD Full-Screen Clear Video + Front/Back Flip + Audio */
   #active-call-screen {
     position: fixed;
     inset: 0;
@@ -775,15 +846,15 @@
   }
   .call-controls {
     display: flex;
-    gap: 18px;
+    gap: 16px;
     align-items: center;
   }
   .call-btn {
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     border: none;
-    font-size: 21px;
+    font-size: 20px;
     color: #fff;
     cursor: pointer;
     display: flex;
@@ -836,7 +907,7 @@
     color: #fff;
   }
 
-  /* Full Screen Live Room — 100% Clear Full Screen Video + WebRTC Audio */
+  /* Full Screen Live Room — HD Full Screen Video + Front/Back Flip + WebRTC Audio */
   #live-room-fullscreen {
     position: fixed;
     inset: 0;
@@ -1176,16 +1247,19 @@
 
         <div id="female-face-box" class="face-verify-box hidden">
           <div style="font-size:13px; font-weight:800; color:var(--maroon-800);">
-            <i class="fa-solid fa-camera"></i> Live Face Verification Required
+            <i class="fa-solid fa-camera"></i> HD Live Face Verification Required
           </div>
           <p style="font-size:11px; color:var(--text-muted); margin-top:3px;">
-            Female accounts must complete live camera face verification.
+            Female accounts must complete HD camera face verification.
           </p>
           <video id="face-cam-video" autoplay playsinline class="hidden"></video>
           <img id="face-captured-img" class="hidden" alt="Verified Face" />
-          <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
+          <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:10px;">
             <button type="button" class="btn btn-outline btn-sm" id="btn-start-face-cam" onclick="startFaceCamera()">
-              <i class="fa-solid fa-video"></i> Open Camera
+              <i class="fa-solid fa-video"></i> Open HD Camera
+            </button>
+            <button type="button" class="btn btn-outline btn-sm hidden" id="btn-flip-face-cam" onclick="flipFaceCamera()">
+              <i class="fa-solid fa-camera-rotate"></i> Front/Back
             </button>
             <button type="button" class="btn btn-primary btn-sm hidden" id="btn-snap-face" onclick="captureFaceSnapshot()">
               <i class="fa-solid fa-camera"></i> Verify Face
@@ -1261,19 +1335,27 @@
         <span id="online-peers-heading">Online Members</span>
         <span id="online-counter-label" style="font-size:11px; color:var(--text-muted);">0 Online</span>
       </div>
-      <div id="online-peers-list"></div>
+      <!-- Vertical Series & Vertical Scroll for Online Users -->
+      <div id="online-peers-list" class="vertical-online-series"></div>
 
       <div class="section-heading" style="margin-top:14px;">
         <span>Your Account (1st Position)</span>
       </div>
       <div id="self-id-card-container"></div>
+
+      <!-- Horizontal Chats Below Own ID (Shows Unread Counts + WhatsApp Ticks) -->
+      <div class="section-heading" style="margin-top:14px;">
+        <span><i class="fa-solid fa-comments"></i> Recent Chats</span>
+        <span id="total-unread-label" style="font-size:11px; color:var(--maroon-700);">Live</span>
+      </div>
+      <div id="horizontal-chats-list" class="horizontal-chats-series"></div>
     </div>
 
     <!-- TAB 2: LIVE -->
     <div id="tab-live" class="tab-viewport hidden">
       <div id="girl-go-live-banner" class="auth-card hidden" style="margin-bottom:14px; text-align:center; background:linear-gradient(135deg, var(--maroon-800), var(--maroon-600)); color:#fff;">
         <h3 style="font-size:17px; font-weight:800; margin-bottom:5px;">Go to Live</h3>
-        <p style="font-size:12px; opacity:0.9; margin-bottom:12px;">Start your full-screen live broadcast &amp; earn coins from calls &amp; gifts.</p>
+        <p style="font-size:12px; opacity:0.9; margin-bottom:12px;">Start your full-screen HD live broadcast &amp; earn coins from calls &amp; gifts.</p>
         <button class="btn" style="background:#fff; color:var(--maroon-800); width:100%;" onclick="startGirlGoLive()">
           <i class="fa-solid fa-tower-broadcast"></i> Go to Live
         </button>
@@ -1511,7 +1593,7 @@
   <div class="chat-input-bar">
     <input type="file" id="chat-gallery-input" accept="image/*" multiple class="hidden" onchange="sendMultipleImagesMessage(this)" />
     <button class="chat-tool-btn" onclick="document.getElementById('chat-gallery-input').click()" title="Photos"><i class="fa-regular fa-images"></i></button>
-    <button class="chat-tool-btn" onclick="openDirectCameraCapture()" title="Camera"><i class="fa-solid fa-camera"></i></button>
+    <button class="chat-tool-btn" onclick="openDirectCameraCapture()" title="HD Camera"><i class="fa-solid fa-camera"></i></button>
     <button class="chat-tool-btn" id="btn-voice-record" onclick="toggleVoiceRecording()" title="Voice"><i class="fa-solid fa-microphone"></i></button>
     <button class="chat-tool-btn" onclick="toggleChatGifts()" title="Gifts" style="background:var(--maroon-100);"><i class="fa-solid fa-gift"></i></button>
     <input type="text" id="chat-text-input" class="input-field" style="padding:9px 12px; border-radius:20px;" placeholder="Message..." onkeypress="if(event.key==='Enter') sendTextMessage()" />
@@ -1519,24 +1601,29 @@
   </div>
 </div>
 
-<!-- ==================== DIRECT CAMERA CAPTURE MODAL ==================== -->
+<!-- ==================== DIRECT HD CAMERA CAPTURE MODAL (FRONT & BACK SWITCH) ==================== -->
 <div id="direct-camera-modal" class="hidden">
   <div style="display:flex; justify-content:space-between; align-items:center;">
-    <span style="font-weight:800; font-size:15px;"><i class="fa-solid fa-camera"></i> Camera</span>
-    <button class="back-btn" onclick="closeDirectCameraCapture()"><i class="fa-solid fa-xmark"></i></button>
+    <span style="font-weight:800; font-size:15px;"><i class="fa-solid fa-camera"></i> HD Camera</span>
+    <div style="display:flex; gap:8px;">
+      <button class="back-btn" onclick="flipDirectCamera()" title="Switch Front / Back Camera">
+        <i class="fa-solid fa-camera-rotate"></i>
+      </button>
+      <button class="back-btn" onclick="closeDirectCameraCapture()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
   </div>
   <video id="direct-camera-preview" autoplay playsinline></video>
   <div style="display:flex; gap:10px; justify-content:center;">
     <button class="btn btn-primary" onclick="captureAndSendCameraPhoto()">
-      <i class="fa-solid fa-camera"></i> Send Photo
+      <i class="fa-solid fa-camera"></i> Send HD Photo
     </button>
     <button class="btn btn-success" id="btn-record-cam-video" onclick="toggleCameraVideoCapture()">
-      <i class="fa-solid fa-video"></i> Record Video
+      <i class="fa-solid fa-video"></i> Record HD Video
     </button>
   </div>
 </div>
 
-<!-- ==================== PAID CALL DEPOSIT / CALL MODAL ==================== -->
+<!-- ==================== PAID CALL MODAL (FORM ONLY FOR BOYS; DIRECT CALL FOR GIRLS) ==================== -->
 <div id="paid-call-modal" class="fullscreen-modal hidden">
   <div class="modal-header">
     <div style="display:flex; align-items:center; gap:10px;">
@@ -1547,7 +1634,7 @@
   <div class="modal-body" id="paid-call-body"></div>
 </div>
 
-<!-- ==================== FULLSCREEN PERSONAL CALL SCREEN (REAL WEBRTC AUDIO & FULL-SCREEN VIDEO) ==================== -->
+<!-- ==================== FULLSCREEN PERSONAL CALL SCREEN (HD WEBRTC + FRONT/BACK FLIP) ==================== -->
 <div id="active-call-screen" class="hidden">
   <video id="call-remote-video" class="call-remote-video hidden" autoplay playsinline></video>
   <audio id="call-remote-audio" autoplay playsinline></audio>
@@ -1570,13 +1657,14 @@
     </div>
 
     <div class="call-controls">
-      <button class="call-btn" style="background:rgba(255,255,255,0.2);" onclick="toggleCallMute(this)"><i class="fa-solid fa-microphone"></i></button>
-      <button class="call-btn" style="background:#dc2626; width:68px; height:68px; font-size:26px;" onclick="endActiveCall()"><i class="fa-solid fa-phone-slash"></i></button>
+      <button class="call-btn" style="background:rgba(255,255,255,0.2);" onclick="toggleCallMute(this)" title="Mute/Unmute"><i class="fa-solid fa-microphone"></i></button>
+      <button class="call-btn hidden" id="btn-flip-call-cam" style="background:rgba(255,255,255,0.2);" onclick="flipCallCamera()" title="Front / Back Camera"><i class="fa-solid fa-camera-rotate"></i></button>
+      <button class="call-btn" style="background:#dc2626; width:66px; height:66px; font-size:25px;" onclick="endActiveCall()"><i class="fa-solid fa-phone-slash"></i></button>
     </div>
   </div>
 </div>
 
-<!-- ==================== FULLSCREEN LIVE ROOM (WEBRTC BROADCAST + VIEWER AUDIO/VIDEO) ==================== -->
+<!-- ==================== FULLSCREEN LIVE ROOM (HD WEBRTC + FRONT/BACK FLIP) ==================== -->
 <div id="live-room-fullscreen" class="hidden">
   <video id="live-video-el" autoplay playsinline></video>
   <audio id="live-remote-audio" autoplay playsinline></audio>
@@ -1587,11 +1675,14 @@
       <img id="live-host-dp" src="" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid #e11d48;" />
       <div>
         <div id="live-host-name" style="font-size:14px; font-weight:800;">Host Name</div>
-        <div id="live-stream-status" style="font-size:10px; color:#fda4af;"><i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE VOICE + VIDEO</div>
+        <div id="live-stream-status" style="font-size:10px; color:#fda4af;"><i class="fa-solid fa-circle" style="font-size:7px;"></i> HD LIVE VOICE + VIDEO</div>
       </div>
     </div>
 
     <div style="display:flex; gap:6px; align-items:center;">
+      <button id="btn-flip-live-cam" class="back-btn hidden" style="width:34px; height:34px;" title="Front / Back Camera" onclick="flipLiveCamera()">
+        <i class="fa-solid fa-camera-rotate"></i>
+      </button>
       <button id="btn-live-mic-toggle" class="back-btn" style="width:34px; height:34px;" title="Voice Call Mic" onclick="toggleLiveVoiceMic(this)">
         <i class="fa-solid fa-microphone"></i>
       </button>
@@ -1757,6 +1848,7 @@ const GIFTS_CATALOG = [
 
 let currentUser = null;
 let allUsersMap = {};
+let allChatsMap = {};
 let appSettings = {
   appClosedPakistan: false,
   downloadAppLink: "https://aura-meet-6f81b.web.app/AuraMeet.apk",
@@ -1768,6 +1860,8 @@ let appSettings = {
 let selectedGender = "Male";
 let verifiedFaceDataUrl = "";
 let faceStream = null;
+let faceFacingMode = "user";
+
 let selectedDepositWallet = "Easypaisa";
 let selectedWithdrawWallet = "Easypaisa";
 
@@ -1781,17 +1875,20 @@ let audioChunks = [];
 let isRecordingVoice = false;
 
 let directCamStream = null;
+let directCamFacingMode = "user";
 let directCamRecorder = null;
 let directCamVideoChunks = [];
 let isRecordingCamVideo = false;
 
 // Personal WebRTC Call State
 let activeCallState = null;
+let callFacingMode = "user";
 let incomingCallListenerStarted = false;
 
 // Live Room WebRTC Broadcast / Viewer State
 let activeLiveHostId = null;
 let liveStreamObj = null;
+let liveFacingMode = "user";
 let liveVoiceStream = null;
 let liveRoomsList = [];
 let currentLiveIndex = 0;
@@ -1859,6 +1956,25 @@ function togglePass(inputId, btn) {
 }
 
 /* ==========================================================================
+   HD CAMERA STREAM HELPER (FRONT & BACK SUPPORT)
+   ========================================================================== */
+async function getHdCameraStream(facingMode = "user", withAudio = false) {
+  const constraints = {
+    video: {
+      facingMode: { ideal: facingMode },
+      width: { ideal: 1280, min: 640 },
+      height: { ideal: 720, min: 480 }
+    },
+    audio: withAudio ? { echoCancellation: true, noiseSuppression: true, autoGainControl: true } : false
+  };
+  try {
+    return await navigator.mediaDevices.getUserMedia(constraints);
+  } catch (e) {
+    return await navigator.mediaDevices.getUserMedia({ video: true, audio: withAudio });
+  }
+}
+
+/* ==========================================================================
    SCREENSHOT, IMAGE SAVE & SCREEN RECORDING PROTECTION
    ========================================================================== */
 function handleGlobalContextMenu(e) {
@@ -1895,6 +2011,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setupCaptureProtection();
   listenAppSettings();
   listenAllUsers();
+  listenAllChatsSummary();
 
   let logoTapCount = 0;
   document.getElementById("secret-admin-tap").addEventListener("click", () => {
@@ -1977,6 +2094,15 @@ function listenAllUsers() {
   });
 }
 
+function listenAllChatsSummary() {
+  db.ref("chats").on("value", snap => {
+    allChatsMap = snap.val() || {};
+    if (currentUser) {
+      renderChatsTab();
+    }
+  });
+}
+
 function triggerAppDownload() {
   const link = appSettings.downloadAppLink || "https://aura-meet-6f81b.web.app/AuraMeet.apk";
   showToast("Opening Download Link...", "fa-download");
@@ -1984,7 +2110,7 @@ function triggerAppDownload() {
 }
 
 /* ==========================================================================
-   AUTH & ONE-TIME 300 COINS WELCOME BONUS
+   AUTH & ONE-TIME 300 COINS WELCOME BONUS + HD FRONT/BACK FACE CAMERA
    ========================================================================== */
 function switchAuthTab(mode) {
   document.getElementById("btn-show-register").classList.toggle("active", mode === "register");
@@ -2016,34 +2142,42 @@ function selectGender(g) {
 }
 
 async function startFaceCamera() {
+  stopFaceCamera();
   try {
-    faceStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false });
+    faceStream = await getHdCameraStream(faceFacingMode, false);
     const vid = document.getElementById("face-cam-video");
     vid.srcObject = faceStream;
     vid.classList.remove("hidden");
     document.getElementById("face-captured-img").classList.add("hidden");
     document.getElementById("btn-snap-face").classList.remove("hidden");
+    document.getElementById("btn-flip-face-cam").classList.remove("hidden");
   } catch (err) {
     showToast("Camera permission required for Female Face Verification!", "fa-camera");
   }
 }
 
+async function flipFaceCamera() {
+  faceFacingMode = faceFacingMode === "user" ? "environment" : "user";
+  await startFaceCamera();
+}
+
 function captureFaceSnapshot() {
   const vid = document.getElementById("face-cam-video");
   const canvas = document.createElement("canvas");
-  canvas.width = 360;
-  canvas.height = 360;
+  canvas.width = 720;
+  canvas.height = 720;
   const ctx = canvas.getContext("2d");
-  ctx.drawImage(vid, 0, 0, 360, 360);
-  verifiedFaceDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+  ctx.drawImage(vid, 0, 0, 720, 720);
+  verifiedFaceDataUrl = canvas.toDataURL("image/jpeg", 0.90);
 
   const img = document.getElementById("face-captured-img");
   img.src = verifiedFaceDataUrl;
   img.classList.remove("hidden");
   vid.classList.add("hidden");
   document.getElementById("btn-snap-face").classList.add("hidden");
+  document.getElementById("btn-flip-face-cam").classList.add("hidden");
   document.getElementById("face-status-text").style.color = "#15803d";
-  document.getElementById("face-status-text").innerHTML = `<i class="fa-solid fa-circle-check"></i> Face Verified!`;
+  document.getElementById("face-status-text").innerHTML = `<i class="fa-solid fa-circle-check"></i> HD Face Verified!`;
   stopFaceCamera();
 }
 
@@ -2262,11 +2396,47 @@ function switchMainTab(tab) {
 
 /* ==========================================================================
    TAB 1: CHATS
+   - Vertical Series + Vertical Scroll for Online Members (Messenger Style)
+   - Own ID (1st Position) in Middle
+   - Horizontal Chats Series Below Own ID with Unread Badge & WhatsApp Ticks
    ========================================================================== */
+function getThreadMetaForPeer(peerUid) {
+  const threadId = getChatThreadId(currentUser.uid, peerUid);
+  const threadMsgs = allChatsMap[threadId];
+  if (!threadMsgs) return null;
+
+  const list = Object.values(threadMsgs).sort((a, b) => (a.ts || 0) - (b.ts || 0));
+  if (!list.length) return null;
+
+  const lastMsg = list[list.length - 1];
+  const unreadCount = list.filter(m => m.senderId !== currentUser.uid && !m.seenByPeer).length;
+
+  let preview = lastMsg.text || "";
+  if (lastMsg.type === "image" || lastMsg.type === "multi_image") preview = "📷 Photo";
+  else if (lastMsg.type === "video") preview = "🎥 Video";
+  else if (lastMsg.type === "audio") preview = "🎤 Voice";
+  else if (lastMsg.type === "gift") preview = `${lastMsg.giftEmoji || '🎁'} ${lastMsg.giftName || 'Gift'}`;
+
+  return { lastMsg, unreadCount, preview };
+}
+
+function getOuterTickHtml(msg, peerUid) {
+  if (!msg || msg.senderId !== currentUser.uid) return "";
+  if (msg.seenByPeer || msg.seen) {
+    return `<i class="fa-solid fa-check-double" style="color:#0284c7; font-size:12px;" title="Seen"></i>`;
+  }
+  const peer = allUsersMap[peerUid];
+  if (peer && peer.online) {
+    return `<i class="fa-solid fa-check-double" style="color:#6b7280; font-size:12px;" title="Delivered"></i>`;
+  }
+  return `<i class="fa-solid fa-check" style="color:#9ca3af; font-size:12px;" title="Sent"></i>`;
+}
+
 function renderChatsTab() {
   if (!currentUser) return;
   const peersListEl = document.getElementById("online-peers-list");
   const selfContainer = document.getElementById("self-id-card-container");
+  const horizChatsEl = document.getElementById("horizontal-chats-list");
 
   const targetSex = currentUser.sex === "Male" ? "Female" : "Male";
   document.getElementById("online-peers-heading").textContent =
@@ -2279,35 +2449,48 @@ function renderChatsTab() {
   const onlineCount = oppositeUsers.filter(u => u.online).length;
   document.getElementById("online-counter-label").textContent = `${onlineCount} Online`;
 
+  // 1. Vertical Series + Vertical Scroll for Online Members
   if (oppositeUsers.length === 0) {
-    peersListEl.innerHTML = `<div class="auth-card" style="text-align:center; color:var(--text-muted); padding:20px; font-size:13px;">
+    peersListEl.innerHTML = `<div class="auth-card" style="text-align:center; color:var(--text-muted); padding:16px; font-size:13px;">
       No ${targetSex === 'Female' ? 'girls' : 'boys'} available right now.
     </div>`;
   } else {
-    peersListEl.innerHTML = oppositeUsers.map(p => `
-      <div class="chat-user-card" onclick="openChatRoom('${p.uid}')">
-        <div class="avatar-wrap">
-          <img class="avatar-img" src="${p.dp || defaultAvatar(p.name, p.sex)}" alt="${escapeHtml(p.name)}" />
-          <span class="status-dot ${p.online ? 'online' : ''}"></span>
-        </div>
-        <div style="flex:1; min-width:0;">
-          <strong style="font-size:15px; color:var(--text-dark);">${escapeHtml(p.name)}</strong>
-          <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-            ${escapeHtml(p.country)} • ${p.age} yrs
+    peersListEl.innerHTML = oppositeUsers.map(p => {
+      const meta = getThreadMetaForPeer(p.uid);
+      const outerTick = meta ? getOuterTickHtml(meta.lastMsg, p.uid) : "";
+      const unreadPill = (meta && meta.unreadCount > 0)
+        ? `<span style="background:#16a34a; color:#fff; font-size:11px; font-weight:800; padding:2px 7px; border-radius:10px; margin-left:5px;">${meta.unreadCount}</span>`
+        : "";
+
+      return `
+        <div class="chat-user-card" onclick="openChatRoom('${p.uid}')">
+          <div class="avatar-wrap">
+            <img class="avatar-img" src="${p.dp || defaultAvatar(p.name, p.sex)}" alt="${escapeHtml(p.name)}" />
+            <span class="status-dot ${p.online ? 'online' : ''}"></span>
+          </div>
+          <div style="flex:1; min-width:0;">
+            <div style="display:flex; align-items:center;">
+              <strong style="font-size:15px; color:var(--text-dark);">${escapeHtml(p.name)}</strong>
+              ${unreadPill}
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+              ${meta ? `${outerTick} ${escapeHtml(meta.preview)}` : `${escapeHtml(p.country)} • ${p.age} yrs`}
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <span style="font-size:11px; font-weight:800; color:${p.online ? '#16a34a' : '#6b7280'};">
+              ${p.online ? '● Online' : 'Offline'}
+            </span>
+            <div style="margin-top:4px; color:var(--maroon-700); font-size:12px; font-weight:700;">
+              <i class="fa-solid fa-comment"></i> Chat
+            </div>
           </div>
         </div>
-        <div style="text-align:right;">
-          <span style="font-size:11px; font-weight:800; color:${p.online ? '#16a34a' : '#6b7280'};">
-            ${p.online ? '● Online' : 'Offline'}
-          </span>
-          <div style="margin-top:4px; color:var(--maroon-700); font-size:12px; font-weight:700;">
-            <i class="fa-solid fa-comment"></i> Chat
-          </div>
-        </div>
-      </div>
-    `).join("");
+      `;
+    }).join("");
   }
 
+  // 2. Own ID Card (1st Position)
   selfContainer.innerHTML = `
     <div class="chat-user-card self-user-card" onclick="openChatRoom('${currentUser.uid}')">
       <div class="avatar-wrap">
@@ -2333,6 +2516,64 @@ function renderChatsTab() {
       </div>
     </div>
   `;
+
+  // 3. Horizontal Chats Series Below Own ID (Users who messaged or were messaged)
+  const chatPartners = [];
+  let totalUnreadAll = 0;
+
+  Object.keys(allChatsMap).forEach(threadId => {
+    const parts = threadId.split("__");
+    if (parts.length !== 2) return;
+    let peerUid = null;
+    if (parts[0] === currentUser.uid && parts[1] === currentUser.uid) {
+      peerUid = currentUser.uid;
+    } else if (parts[0] === currentUser.uid) {
+      peerUid = parts[1];
+    } else if (parts[1] === currentUser.uid) {
+      peerUid = parts[0];
+    }
+    if (!peerUid) return;
+
+    const peerUser = allUsersMap[peerUid];
+    if (!peerUser || peerUser.banned) return;
+
+    const meta = getThreadMetaForPeer(peerUid);
+    if (!meta) return;
+
+    totalUnreadAll += meta.unreadCount;
+    chatPartners.push({ peer: peerUser, meta });
+  });
+
+  chatPartners.sort((a, b) => (b.meta.lastMsg.ts || 0) - (a.meta.lastMsg.ts || 0));
+
+  document.getElementById("total-unread-label").textContent =
+    totalUnreadAll > 0 ? `${totalUnreadAll} New Msg` : "Live";
+
+  if (chatPartners.length === 0) {
+    horizChatsEl.innerHTML = `<div class="auth-card" style="width:100%; text-align:center; color:var(--text-muted); padding:14px; font-size:12px;">
+      No active chats yet. Tap any online user above to start chatting.
+    </div>`;
+  } else {
+    horizChatsEl.innerHTML = chatPartners.map(({ peer, meta }) => {
+      const tickIcon = getOuterTickHtml(meta.lastMsg, peer.uid);
+      return `
+        <div class="horiz-chat-card ${meta.unreadCount > 0 ? 'has-unread' : ''}" onclick="openChatRoom('${peer.uid}')">
+          ${meta.unreadCount > 0 ? `<span class="unread-count-badge">${meta.unreadCount}</span>` : ``}
+          <div class="avatar-wrap" style="margin-bottom:6px;">
+            <img class="avatar-img" src="${peer.dp || defaultAvatar(peer.name, peer.sex)}" alt="${escapeHtml(peer.name)}" />
+            <span class="status-dot ${peer.online ? 'online' : ''}"></span>
+          </div>
+          <strong style="font-size:13px; color:var(--text-dark); width:100%; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            ${escapeHtml(peer.name)}
+          </strong>
+          <div class="horiz-last-msg">
+            ${tickIcon}
+            <span>${escapeHtml(meta.preview)}</span>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
 }
 
 function getChatThreadId(uid1, uid2) {
@@ -2460,6 +2701,7 @@ function closeChatRoom() {
   if (chatMessagesRef) chatMessagesRef.off();
   activeChatPeerId = null;
   document.getElementById("chat-room-modal").classList.add("hidden");
+  renderChatsTab();
 }
 
 function creditGirlCoins(girlId, amount, deductFromBoyId = null) {
@@ -2516,7 +2758,7 @@ function sendMultipleImagesMessage(inputEl) {
   let processed = 0;
 
   limitedFiles.forEach(file => {
-    compressImageFile(file, 720, 0.74, (dataUrl) => {
+    compressImageFile(file, 1080, 0.85, (dataUrl) => {
       compressedUrls.push(dataUrl);
       processed++;
       if (processed === limitedFiles.length) {
@@ -2544,20 +2786,37 @@ function sendMultipleImagesMessage(inputEl) {
   });
 }
 
+/* ==========================================================================
+   DIRECT HD CAMERA CAPTURE (FRONT & BACK CAMERA SWITCH + HD PHOTO & VIDEO)
+   ========================================================================== */
 async function openDirectCameraCapture() {
   if (!activeChatPeerId) return;
   if (isPeerBlocked(activeChatPeerId)) {
     showToast("Unblock this user first.", "fa-ban");
     return;
   }
+  if (directCamStream) {
+    directCamStream.getTracks().forEach(t => t.stop());
+    directCamStream = null;
+  }
   try {
-    directCamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: true });
+    directCamStream = await getHdCameraStream(directCamFacingMode, true);
     const vid = document.getElementById("direct-camera-preview");
     vid.srcObject = directCamStream;
+    vid.muted = true;
     document.getElementById("direct-camera-modal").classList.remove("hidden");
   } catch (e) {
     showToast("Camera permission required!", "fa-camera");
   }
+}
+
+async function flipDirectCamera() {
+  if (isRecordingCamVideo) {
+    showToast("Stop video recording before switching camera.", "fa-circle-info");
+    return;
+  }
+  directCamFacingMode = directCamFacingMode === "user" ? "environment" : "user";
+  await openDirectCameraCapture();
 }
 
 function captureAndSendCameraPhoto() {
@@ -2567,11 +2826,13 @@ function captureAndSendCameraPhoto() {
     return;
   }
   const vid = document.getElementById("direct-camera-preview");
+  const w = vid.videoWidth || 1280;
+  const h = vid.videoHeight || 720;
   const canvas = document.createElement("canvas");
-  canvas.width = 640;
-  canvas.height = 480;
-  canvas.getContext("2d").drawImage(vid, 0, 0, 640, 480);
-  const photoDataUrl = canvas.toDataURL("image/jpeg", 0.78);
+  canvas.width = w;
+  canvas.height = h;
+  canvas.getContext("2d").drawImage(vid, 0, 0, w, h);
+  const photoDataUrl = canvas.toDataURL("image/jpeg", 0.90);
 
   const threadId = getChatThreadId(currentUser.uid, activeChatPeerId);
   db.ref("chats/" + threadId).push({
@@ -2582,7 +2843,7 @@ function captureAndSendCameraPhoto() {
     ts: Date.now()
   });
   closeDirectCameraCapture();
-  showToast("Photo sent", "fa-camera");
+  showToast("HD Photo sent", "fa-camera");
 }
 
 function toggleCameraVideoCapture() {
@@ -2608,7 +2869,7 @@ function toggleCameraVideoCapture() {
           seenByPeer: false,
           ts: Date.now()
         });
-        showToast("Video sent", "fa-video");
+        showToast("HD Video sent", "fa-video");
         closeDirectCameraCapture();
       };
       reader.readAsDataURL(blob);
@@ -2619,7 +2880,7 @@ function toggleCameraVideoCapture() {
   } else {
     directCamRecorder.stop();
     isRecordingCamVideo = false;
-    btn.innerHTML = `<i class="fa-solid fa-video"></i> Record Video`;
+    btn.innerHTML = `<i class="fa-solid fa-video"></i> Record HD Video`;
   }
 }
 
@@ -2778,7 +3039,7 @@ function contextDeleteMsg() {
 }
 
 /* ==========================================================================
-   REAL-TIME WEBRTC PERSONAL CALLS (AUDIO, VIDEO, PAID VIDEO — CLEAR & FULL SCREEN)
+   REAL-TIME HD WEBRTC PERSONAL CALLS (FRONT/BACK CAMERA FLIP + CLEAR AUDIO/VIDEO)
    ========================================================================== */
 function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) {
   const pc = new RTCPeerConnection(RTC_CONFIG);
@@ -2801,7 +3062,7 @@ function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) 
       remoteAud.srcObject = remoteStream;
       remoteAud.play().catch(() => {});
     }
-    document.getElementById("call-billing-note").textContent = "Connected • Live";
+    document.getElementById("call-billing-note").textContent = "Connected • HD Live";
   };
 
   const candPath = isCaller
@@ -2845,19 +3106,16 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
     }
   }
 
-  const mediaConstraints = type === "video"
-    ? {
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-        video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } }
-      }
-    : {
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
-        video: false
-      };
-
   let localStream = null;
   try {
-    localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    if (type === "video") {
+      localStream = await getHdCameraStream(callFacingMode, true);
+    } else {
+      localStream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+        video: false
+      });
+    }
   } catch (e) {
     showToast("Camera/Microphone permission required for call.", "fa-video-slash");
   }
@@ -2865,9 +3123,11 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   const callScreen = document.getElementById("active-call-screen");
   const remoteVid = document.getElementById("call-remote-video");
   const localPip = document.getElementById("call-local-pip");
+  const flipBtn = document.getElementById("btn-flip-call-cam");
 
   if (type === "video") {
     remoteVid.classList.remove("hidden");
+    flipBtn.classList.remove("hidden");
     if (localStream) {
       localPip.srcObject = localStream;
       localPip.classList.remove("hidden");
@@ -2875,14 +3135,15 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   } else {
     remoteVid.classList.add("hidden");
     localPip.classList.add("hidden");
+    flipBtn.classList.add("hidden");
   }
 
   document.getElementById("call-type-badge").textContent =
-    (isPaid ? "PAID " : "") + (type === "video" ? "Video Call" : "Audio Call");
+    (isPaid ? "PAID HD " : "HD ") + (type === "video" ? "Video Call" : "Audio Call");
   document.getElementById("call-peer-dp").src = peer.dp || defaultAvatar(peer.name, peer.sex);
   document.getElementById("call-peer-name").textContent = peer.name;
   document.getElementById("call-timer-display").textContent = "00:00";
-  document.getElementById("call-billing-note").textContent = incomingCallData ? "Connected • Live" : "Calling...";
+  document.getElementById("call-billing-note").textContent = incomingCallData ? "Connected • HD Live" : "Calling...";
 
   document.getElementById("call-gifts-strip").innerHTML = GIFTS_CATALOG.map(g => `
     <button onclick='sendInCallGift(${JSON.stringify(g)})' style="background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.25); color:#fff; border-radius:12px; padding:6px 10px; font-size:12px; white-space:nowrap; cursor:pointer;">
@@ -2982,6 +3243,37 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   }, 1000);
 }
 
+async function flipCallCamera() {
+  if (!activeCallState || activeCallState.type !== "video") return;
+  callFacingMode = callFacingMode === "user" ? "environment" : "user";
+  try {
+    const newCamStream = await getHdCameraStream(callFacingMode, false);
+    const newVideoTrack = newCamStream.getVideoTracks()[0];
+    if (!newVideoTrack) return;
+
+    if (activeCallState.localStream) {
+      activeCallState.localStream.getVideoTracks().forEach(t => {
+        t.stop();
+        activeCallState.localStream.removeTrack(t);
+      });
+      activeCallState.localStream.addTrack(newVideoTrack);
+    }
+
+    const localPip = document.getElementById("call-local-pip");
+    if (localPip) localPip.srcObject = activeCallState.localStream;
+
+    if (activeCallState.pc) {
+      const videoSender = activeCallState.pc.getSenders().find(s => s.track && s.track.kind === "video");
+      if (videoSender) {
+        await videoSender.replaceTrack(newVideoTrack);
+      }
+    }
+    showToast(callFacingMode === "user" ? "Front Camera (HD)" : "Back Camera (HD)", "fa-camera-rotate");
+  } catch (e) {
+    showToast("Unable to switch camera on this device.", "fa-camera");
+  }
+}
+
 function sendInCallGift(gift) {
   if (!activeCallState) return;
   if (currentUser.sex === "Male" && Number(currentUser.coins || 0) < gift.coins) {
@@ -3048,12 +3340,42 @@ function listenIncomingCalls() {
   });
 }
 
+/* ==========================================================================
+   PAID CALL HUB:
+   - IF CURRENT USER IS GIRL (FEMALE): NO FORM SHOWN; DIRECT PAID CALL TO BOY
+   - IF CURRENT USER IS BOY (MALE): SHOWS PAID CALL FORM & PAYMENT SCREENSHOT
+   ========================================================================== */
 function openPaidCallHub() {
   if (!activeChatPeerId) return;
   const peer = allUsersMap[activeChatPeerId];
   const body = document.getElementById("paid-call-body");
   document.getElementById("paid-call-modal").classList.remove("hidden");
 
+  // Girls NEVER see the paid call form — they can directly call the boy
+  if (currentUser.sex === "Female") {
+    body.innerHTML = `
+      <div class="auth-card" style="text-align:center;">
+        <div style="width:64px; height:64px; border-radius:50%; background:var(--maroon-100); color:var(--maroon-700); display:inline-flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:10px;">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <h3 style="font-size:18px; font-weight:800; color:var(--maroon-900);">Paid Call to ${escapeHtml(peer.name)}</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin:8px 0 16px;">
+          Start direct HD Paid Audio or Paid Video call with ${escapeHtml(peer.name)}.
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <button class="btn btn-primary" onclick="closeModal('paid-call-modal'); initiateCall('audio', true, null, 3600)">
+            <i class="fa-solid fa-phone"></i> Paid Audio
+          </button>
+          <button class="btn btn-success" onclick="closeModal('paid-call-modal'); initiateCall('video', true, null, 3600)">
+            <i class="fa-solid fa-video"></i> Paid Video
+          </button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  // Boys see the Paid Video Call Form
   const cfg = peer.paidCallConfig || {
     method: "Easypaisa",
     holder: peer.name,
@@ -3161,7 +3483,7 @@ function submitPaidCallRequest(girlId, method, maxMins) {
 }
 
 /* ==========================================================================
-   TAB 2: LIVE ROOM WITH REAL-TIME WEBRTC VIDEO & VOICE STREAMING
+   TAB 2: LIVE ROOM WITH REAL-TIME HD WEBRTC VIDEO & FRONT/BACK CAMERA FLIP
    ========================================================================== */
 function listenLiveRooms() {
   db.ref("liveRooms").on("value", snap => {
@@ -3196,16 +3518,13 @@ async function startGirlGoLive() {
   }
 
   try {
-    liveStreamObj = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: { echoCancellation: true, noiseSuppression: true }
-    });
+    liveStreamObj = await getHdCameraStream(liveFacingMode, true);
     const vid = document.getElementById("live-video-el");
     vid.srcObject = liveStreamObj;
     vid.muted = true;
     vid.classList.remove("hidden");
   } catch (e) {
-    showToast("Camera/Mic permission required for Live.", "fa-camera");
+    showToast("Camera/Mic permission needed for Live.", "fa-camera");
     return;
   }
 
@@ -3219,6 +3538,34 @@ async function startGirlGoLive() {
 
   setupHostLiveWebRTC(currentUser.uid);
   openLiveRoomUI(currentUser.uid, true);
+}
+
+async function flipLiveCamera() {
+  if (!liveStreamObj || activeLiveHostId !== currentUser.uid) return;
+  liveFacingMode = liveFacingMode === "user" ? "environment" : "user";
+  try {
+    const newStream = await getHdCameraStream(liveFacingMode, false);
+    const newVideoTrack = newStream.getVideoTracks()[0];
+    if (!newVideoTrack) return;
+
+    liveStreamObj.getVideoTracks().forEach(t => {
+      t.stop();
+      liveStreamObj.removeTrack(t);
+    });
+    liveStreamObj.addTrack(newVideoTrack);
+
+    const vid = document.getElementById("live-video-el");
+    if (vid) vid.srcObject = liveStreamObj;
+
+    Object.values(livePeerConnections).forEach(pc => {
+      const sender = pc.getSenders().find(s => s.track && s.track.kind === "video");
+      if (sender) sender.replaceTrack(newVideoTrack).catch(() => {});
+    });
+
+    showToast(liveFacingMode === "user" ? "Front Camera (HD)" : "Back Camera (HD)", "fa-camera-rotate");
+  } catch (e) {
+    showToast("Unable to switch camera.", "fa-camera");
+  }
 }
 
 function setupHostLiveWebRTC(hostId) {
@@ -3301,7 +3648,7 @@ async function setupViewerLiveWebRTC(hostId) {
       audEl.srcObject = hostRemoteStream;
       audEl.play().catch(() => {});
     }
-    document.getElementById("live-stream-status").innerHTML = `<i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE • CONNECTED`;
+    document.getElementById("live-stream-status").innerHTML = `<i class="fa-solid fa-circle" style="font-size:7px;"></i> HD LIVE • CONNECTED`;
   };
 
   const hostCandRef = db.ref(`liveStreams/${hostId}/viewers/${viewerId}/hostCandidates`);
@@ -3378,8 +3725,9 @@ function openLiveRoomUI(hostId, isHost) {
   document.getElementById("live-host-dp").src = host.dp || defaultAvatar(host.name, "Female");
   document.getElementById("live-host-name").textContent = host.name || "Live Girl";
   document.getElementById("live-fallback-bg").src = host.dp || defaultAvatar(host.name, "Female");
-  document.getElementById("live-stream-status").innerHTML = `<i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE VOICE + VIDEO`;
+  document.getElementById("live-stream-status").innerHTML = `<i class="fa-solid fa-circle" style="font-size:7px;"></i> HD LIVE VOICE + VIDEO`;
 
+  document.getElementById("btn-flip-live-cam").classList.toggle("hidden", !isHost);
   document.getElementById("btn-live-clear-chat").classList.toggle("hidden", !isHost);
   document.getElementById("btn-live-next-room").classList.toggle("hidden", isHost);
   document.getElementById("btn-live-gift").classList.toggle("hidden", isHost);
@@ -3677,7 +4025,7 @@ let pendingNewDp = null;
 function handleDpChange(inp) {
   const file = inp.files[0];
   if (!file) return;
-  compressImageFile(file, 360, 0.8, (url) => {
+  compressImageFile(file, 720, 0.88, (url) => {
     pendingNewDp = url;
     document.getElementById("edit-dp-preview").src = url;
   });
