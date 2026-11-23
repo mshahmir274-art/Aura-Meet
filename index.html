@@ -173,19 +173,61 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Capture / Privacy Shield Overlay */
-  #privacy-shield-overlay {
+  /* Luxury Custom Admin Login Modal (Replaces Browser Prompt) */
+  #luxury-admin-login-modal {
     position: fixed;
     inset: 0;
-    background: rgba(51, 7, 17, 0.96);
-    color: #fff;
-    z-index: 99500;
+    background: rgba(36, 5, 13, 0.82);
+    backdrop-filter: blur(8px);
+    z-index: 99800;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 24px;
+    padding: 20px;
+  }
+  .luxury-admin-card {
+    width: 100%;
+    max-width: 360px;
+    background: linear-gradient(165deg, #3b0916 0%, #1d030a 100%);
+    color: #fff;
+    border-radius: 24px;
+    padding: 24px 20px;
+    border: 1.5px solid rgba(253, 224, 71, 0.45);
+    box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
+    position: relative;
+  }
+  .luxury-crown-badge {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #f59e0b, #fde047);
+    color: #3b0916;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+  }
+  .luxury-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 13px;
+    border: 1.5px solid rgba(253, 224, 71, 0.35);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+  }
+  .luxury-input:focus {
+    border-color: #fde047;
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .luxury-btn {
+    background: linear-gradient(135deg, #d97706, #facc15);
+    color: #2c0912;
+    font-weight: 800;
+    box-shadow: 0 8px 20px rgba(250, 204, 21, 0.28);
   }
 
   /* Deposit Required Popup Modal */
@@ -198,6 +240,21 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
+  }
+
+  /* Screenshot / Screen-Capture Shield for Normal Users */
+  #privacy-shield-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(51, 7, 17, 0.96);
+    color: #fff;
+    z-index: 99500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
   }
 
   /* Pakistan Kill Switch Maintenance Screen */
@@ -485,7 +542,7 @@
     cursor: pointer;
   }
 
-  /* Horizontal Active Chats Strip Below Own ID (Aleena) */
+  /* Horizontal Active Chats Strip Below Own ID */
   .horizontal-chats-series {
     display: flex;
     flex-direction: row;
@@ -580,6 +637,46 @@
     border-radius: 8px;
     margin-left: 6px;
   }
+
+  /* Luxury Reward & Share Buttons inside Invite Box */
+  .luxury-reward-banner {
+    background: linear-gradient(135deg, #3b0916 0%, #6d152a 55%, #8c1e39 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 15px;
+    border: 1.5px solid rgba(253, 224, 71, 0.55);
+    box-shadow: 0 10px 24px rgba(77, 13, 28, 0.25);
+    margin: 12px 0;
+    text-align: center;
+  }
+  .luxury-reward-amount {
+    font-size: 22px;
+    font-weight: 800;
+    color: #fde047;
+    margin: 4px 0;
+  }
+  .social-share-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .share-btn {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 8px;
+    font-weight: 800;
+    font-size: 12px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .share-wa { background: #16a34a; }
+  .share-tg { background: #0284c7; }
+  .share-fb { background: #1d4ed8; }
 
   .fullscreen-modal {
     position: fixed;
@@ -797,7 +894,7 @@
     margin-top: 3px;
   }
 
-  /* Active Personal Call Screen — HD Full-Screen Clear Video + Front/Back Flip + Audio */
+  /* Active Personal Call Screen */
   #active-call-screen {
     position: fixed;
     inset: 0;
@@ -907,7 +1004,6 @@
     color: #fff;
   }
 
-  /* Full Screen Live Room — HD Full Screen Video + Front/Back Flip + WebRTC Audio */
   #live-room-fullscreen {
     position: fixed;
     inset: 0;
@@ -1145,6 +1241,34 @@
 
 <div id="toast-box"></div>
 
+<!-- Luxury Custom Admin Login Modal (No Browser Prompt, Show/Hide Password) -->
+<div id="luxury-admin-login-modal" class="hidden" onclick="closeLuxuryAdminModal()">
+  <div class="luxury-admin-card" onclick="event.stopPropagation()">
+    <button type="button" onclick="closeLuxuryAdminModal()" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.12); border:none; color:#fff; width:32px; height:32px; border-radius:10px; cursor:pointer;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div style="text-align:center;">
+      <div class="luxury-crown-badge"><i class="fa-solid fa-crown"></i></div>
+      <div style="font-size:20px; font-weight:800; letter-spacing:0.3px;">Aura Meet</div>
+      <div style="font-size:13px; font-weight:700; color:#fde047; margin-top:2px; margin-bottom:16px;">Admin Panel</div>
+    </div>
+
+    <div class="input-group">
+      <label style="color:#fde047;">Admin Password</label>
+      <div class="pass-wrap">
+        <input type="password" id="luxury-admin-pass-input" class="luxury-input" style="padding-right:44px;" placeholder="Enter password" onkeypress="if(event.key==='Enter') verifyLuxuryAdminPass()" />
+        <button type="button" class="pass-toggle" style="color:#fde047;" onclick="toggleLuxuryAdminPass(this)">
+          <i class="fa-regular fa-eye"></i>
+        </button>
+      </div>
+    </div>
+
+    <button type="button" class="btn luxury-btn btn-block" onclick="verifyLuxuryAdminPass()">
+      <i class="fa-solid fa-shield-halved"></i> Unlock Admin Panel
+    </button>
+  </div>
+</div>
+
 <!-- Deposit Required Popup Modal -->
 <div id="deposit-prompt-modal" class="hidden">
   <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
@@ -1329,13 +1453,13 @@
       </div>
     </div>
 
-    <!-- TAB 1: CHATS -->
+    <!-- TAB 1: CHATS (Same System for Both Boy & Girl IDs) -->
     <div id="tab-chats" class="tab-viewport">
       <div class="section-heading">
         <span id="online-peers-heading">Online Members</span>
         <span id="online-counter-label" style="font-size:11px; color:var(--text-muted);">0 Online</span>
       </div>
-      <!-- Vertical Series & Vertical Scroll for Online Users -->
+      <!-- Vertical Series & Vertical Scroll for Online Members -->
       <div id="online-peers-list" class="vertical-online-series"></div>
 
       <div class="section-heading" style="margin-top:14px;">
@@ -1343,7 +1467,7 @@
       </div>
       <div id="self-id-card-container"></div>
 
-      <!-- Horizontal Chats Below Own ID (Shows Unread Counts + WhatsApp Ticks) -->
+      <!-- Horizontal Chats Below Own ID (Shows Unread Counts + Single/Double/Blue Ticks + Green Dot) -->
       <div class="section-heading" style="margin-top:14px;">
         <span><i class="fa-solid fa-comments"></i> Recent Chats</span>
         <span id="total-unread-label" style="font-size:11px; color:var(--maroon-700);">Live</span>
@@ -1569,7 +1693,7 @@
       <img id="chat-peer-dp" src="" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid #fff;" />
       <div style="min-width:0;">
         <div id="chat-peer-name" style="font-size:14px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Name</div>
-        <div id="chat-peer-details" style="font-size:10px; opacity:0.88;">Country • Age • Online</div>
+        <div id="chat-peer-details" style="font-size:10px; opacity:0.9;">Online • Last Seen</div>
       </div>
     </div>
     <div style="display:flex; gap:5px; flex-shrink:0;">
@@ -1601,7 +1725,7 @@
   </div>
 </div>
 
-<!-- ==================== DIRECT HD CAMERA CAPTURE MODAL (FRONT & BACK SWITCH) ==================== -->
+<!-- ==================== DIRECT HD CAMERA CAPTURE MODAL ==================== -->
 <div id="direct-camera-modal" class="hidden">
   <div style="display:flex; justify-content:space-between; align-items:center;">
     <span style="font-weight:800; font-size:15px;"><i class="fa-solid fa-camera"></i> HD Camera</span>
@@ -1623,7 +1747,7 @@
   </div>
 </div>
 
-<!-- ==================== PAID CALL MODAL (FORM ONLY FOR BOYS; DIRECT CALL FOR GIRLS) ==================== -->
+<!-- ==================== PAID CALL MODAL ==================== -->
 <div id="paid-call-modal" class="fullscreen-modal hidden">
   <div class="modal-header">
     <div style="display:flex; align-items:center; gap:10px;">
@@ -1634,7 +1758,7 @@
   <div class="modal-body" id="paid-call-body"></div>
 </div>
 
-<!-- ==================== FULLSCREEN PERSONAL CALL SCREEN (HD WEBRTC + FRONT/BACK FLIP) ==================== -->
+<!-- ==================== FULLSCREEN PERSONAL CALL SCREEN ==================== -->
 <div id="active-call-screen" class="hidden">
   <video id="call-remote-video" class="call-remote-video hidden" autoplay playsinline></video>
   <audio id="call-remote-audio" autoplay playsinline></audio>
@@ -1664,7 +1788,7 @@
   </div>
 </div>
 
-<!-- ==================== FULLSCREEN LIVE ROOM (HD WEBRTC + FRONT/BACK FLIP) ==================== -->
+<!-- ==================== FULLSCREEN LIVE ROOM ==================== -->
 <div id="live-room-fullscreen" class="hidden">
   <video id="live-video-el" autoplay playsinline></video>
   <audio id="live-remote-audio" autoplay playsinline></audio>
@@ -1811,6 +1935,7 @@ const RTC_CONFIG = {
 const ADMIN_PASSCODE = "786786";
 const COINS_PER_PKR = 20;
 const NEW_USER_WELCOME_BONUS = 300;
+const INVITE_REWARD_COINS = 1000;
 
 const DEPOSIT_PACKAGES = [
   { coins: 800, pkr: 500 },
@@ -1909,6 +2034,44 @@ function showToast(msg, icon = "fa-circle-info") {
   setTimeout(() => { el.remove(); }, 3400);
 }
 
+/* Luxury Admin Modal Controls (No Browser Prompt, No Hint Toasts) */
+function openLuxuryAdminModal() {
+  const inp = document.getElementById("luxury-admin-pass-input");
+  inp.value = "";
+  inp.type = "password";
+  document.getElementById("luxury-admin-login-modal").classList.remove("hidden");
+  setTimeout(() => inp.focus(), 60);
+}
+
+function closeLuxuryAdminModal() {
+  document.getElementById("luxury-admin-login-modal").classList.add("hidden");
+}
+
+function toggleLuxuryAdminPass(btn) {
+  const inp = document.getElementById("luxury-admin-pass-input");
+  if (inp.type === "password") {
+    inp.type = "text";
+    btn.innerHTML = `<i class="fa-regular fa-eye-slash"></i>`;
+  } else {
+    inp.type = "password";
+    btn.innerHTML = `<i class="fa-regular fa-eye"></i>`;
+  }
+}
+
+function verifyLuxuryAdminPass() {
+  const code = document.getElementById("luxury-admin-pass-input").value.trim();
+  if (code === ADMIN_PASSCODE) {
+    closeLuxuryAdminModal();
+    localStorage.setItem("aura_meet_is_admin", "1");
+    document.getElementById("admin-shortcut-btn").classList.remove("hidden");
+    document.getElementById("maintenance-screen").classList.add("hidden");
+    updateFemaleFaceBoxVisibility();
+    openAdminPanel();
+  } else {
+    showToast("Invalid password", "fa-lock");
+  }
+}
+
 function openDepositPrompt() {
   document.getElementById("deposit-prompt-modal").classList.remove("hidden");
 }
@@ -1929,6 +2092,13 @@ function defaultAvatar(name, sex) {
 function formatDateTime(ts) {
   const d = new Date(ts || Date.now());
   return d.toLocaleDateString('en-PK', { day: '2-digit', month: 'short' }) + " • " +
+         d.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
+}
+
+function formatLastSeen(ts) {
+  if (!ts) return "Recently";
+  const d = new Date(ts);
+  return d.toLocaleDateString('en-PK', { day: '2-digit', month: 'short' }) + " " +
          d.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
 }
 
@@ -2018,7 +2188,7 @@ window.addEventListener("DOMContentLoaded", () => {
     logoTapCount++;
     if (logoTapCount >= 5) {
       logoTapCount = 0;
-      openAdminLoginPrompt();
+      openLuxuryAdminModal();
     }
     setTimeout(() => { logoTapCount = 0; }, 2500);
   });
@@ -2040,7 +2210,7 @@ function handleHeaderSecretTap() {
   headerTapCounter++;
   if (headerTapCounter >= 5) {
     headerTapCounter = 0;
-    openAdminLoginPrompt();
+    openLuxuryAdminModal();
   }
   setTimeout(() => { headerTapCounter = 0; }, 2500);
 }
@@ -2050,9 +2220,7 @@ function handleAdminShortcutClick() {
   adminBtnTapCounter++;
   if (adminBtnTapCounter >= 5) {
     adminBtnTapCounter = 0;
-    openAdminLoginPrompt();
-  } else {
-    showToast(`Tap ${5 - adminBtnTapCounter} more times & login`, "fa-lock");
+    openLuxuryAdminModal();
   }
   setTimeout(() => { adminBtnTapCounter = 0; }, 2500);
 }
@@ -2090,6 +2258,9 @@ function listenAllUsers() {
     }
     if (currentUser) {
       renderChatsTab();
+      if (activeChatPeerId && allUsersMap[activeChatPeerId]) {
+        updateActiveChatHeaderStatus(allUsersMap[activeChatPeerId]);
+      }
     }
   });
 }
@@ -2110,7 +2281,7 @@ function triggerAppDownload() {
 }
 
 /* ==========================================================================
-   AUTH & ONE-TIME 300 COINS WELCOME BONUS + HD FRONT/BACK FACE CAMERA
+   AUTH, 300 COINS WELCOME BONUS, 1000 COINS INVITE REWARD (BOY OR GIRL)
    ========================================================================== */
 function switchAuthTab(mode) {
   document.getElementById("btn-show-register").classList.toggle("active", mode === "register");
@@ -2225,6 +2396,10 @@ function handleCreateAccount(isFromProfileFolder = false) {
   const uid = "usr_" + Date.now() + "_" + Math.floor(Math.random() * 999);
   const realFacePic = (!isFromProfileFolder && sex === "Female" && verifiedFaceDataUrl) ? verifiedFaceDataUrl : "";
 
+  const inviterId = isFromProfileFolder && currentUser
+    ? currentUser.uid
+    : (new URLSearchParams(window.location.search).get("ref") || "");
+
   const userObj = {
     uid,
     name,
@@ -2237,7 +2412,9 @@ function handleCreateAccount(isFromProfileFolder = false) {
     faceVerificationPic: realFacePic,
     coins: NEW_USER_WELCOME_BONUS,
     welcomeBonusClaimed: true,
+    invitedBy: inviterId || "",
     online: true,
+    lastSeen: Date.now(),
     banned: false,
     blockedUsers: {},
     createdAt: Date.now(),
@@ -2252,6 +2429,19 @@ function handleCreateAccount(isFromProfileFolder = false) {
 
   db.ref("users/" + uid).set(userObj)
     .then(() => {
+      // Reward 1000 coins to inviter (male or female) for adding any boy or girl
+      if (inviterId && inviterId !== uid && allUsersMap[inviterId]) {
+        db.ref("users/" + inviterId + "/coins").transaction(c => (c || 0) + INVITE_REWARD_COINS);
+        db.ref("inviteRewards/" + uid).set({
+          inviterId,
+          invitedUserId: uid,
+          invitedName: name,
+          invitedSex: sex,
+          rewardCoins: INVITE_REWARD_COINS,
+          ts: Date.now()
+        }).catch(() => {});
+      }
+
       verifiedFaceDataUrl = "";
       if (submitBtn && !isFromProfileFolder) {
         submitBtn.disabled = false;
@@ -2322,9 +2512,11 @@ function completeUserLogin(user, isAdminImpersonation = false) {
   currentUser = user;
   localStorage.setItem("aura_meet_uid", user.uid);
 
+  const nowTs = Date.now();
   const userRef = db.ref("users/" + user.uid);
-  userRef.update({ online: true, lastSeen: Date.now() }).catch(() => {});
+  userRef.update({ online: true, lastSeen: nowTs }).catch(() => {});
   userRef.child("online").onDisconnect().set(false);
+  userRef.child("lastSeen").onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
 
   document.getElementById("auth-screen").classList.add("hidden");
   document.getElementById("main-app").classList.remove("hidden");
@@ -2342,13 +2534,13 @@ function completeUserLogin(user, isAdminImpersonation = false) {
   if (isAdminImpersonation) {
     closeModal("admin-subfolder-modal");
     closeModal("admin-panel-modal");
-    showToast(`Logged in as ${user.name}. Tap Admin 5 times & login to return.`, "fa-user-check");
+    showToast(`Logged in as ${user.name}`, "fa-user-check");
   }
 }
 
 function logoutUser() {
   if (currentUser) {
-    db.ref("users/" + currentUser.uid + "/online").set(false).catch(() => {});
+    db.ref("users/" + currentUser.uid).update({ online: false, lastSeen: Date.now() }).catch(() => {});
     db.ref("activeCalls/" + currentUser.uid).off();
     incomingCallListenerStarted = false;
   }
@@ -2395,10 +2587,10 @@ function switchMainTab(tab) {
 }
 
 /* ==========================================================================
-   TAB 1: CHATS
+   TAB 1: CHATS (IDENTICAL SYSTEM FOR BOTH BOY & GIRL IDS)
    - Vertical Series + Vertical Scroll for Online Members (Messenger Style)
-   - Own ID (1st Position) in Middle
-   - Horizontal Chats Series Below Own ID with Unread Badge & WhatsApp Ticks
+   - Own ID Card (1st Position)
+   - Horizontal Chats Series Below Own ID with Unread Badge, Green Circle & Ticks
    ========================================================================== */
 function getThreadMetaForPeer(peerUid) {
   const threadId = getChatThreadId(currentUser.uid, peerUid);
@@ -2517,7 +2709,7 @@ function renderChatsTab() {
     </div>
   `;
 
-  // 3. Horizontal Chats Series Below Own ID (Users who messaged or were messaged)
+  // 3. Horizontal Chats Series Below Own ID
   const chatPartners = [];
   let totalUnreadAll = 0;
 
@@ -2595,6 +2787,17 @@ function getTickIconHtml(msg, peerUid) {
   return `<i class="fa-solid fa-check" style="color:rgba(255,255,255,0.75);"></i>`;
 }
 
+function updateActiveChatHeaderStatus(peer) {
+  if (!peer) return;
+  const detailsEl = document.getElementById("chat-peer-details");
+  if (!detailsEl) return;
+  if (peer.online) {
+    detailsEl.innerHTML = `<span style="color:#86efac; font-weight:800;">● Online</span> • ${escapeHtml(peer.country)} • ${peer.age} yrs`;
+  } else {
+    detailsEl.textContent = `Last seen ${formatLastSeen(peer.lastSeen)} • ${peer.country} • ${peer.age} yrs`;
+  }
+}
+
 function openChatRoom(peerUid) {
   const peer = allUsersMap[peerUid];
   if (!peer) return;
@@ -2602,8 +2805,7 @@ function openChatRoom(peerUid) {
 
   document.getElementById("chat-peer-dp").src = peer.dp || defaultAvatar(peer.name, peer.sex);
   document.getElementById("chat-peer-name").textContent = peer.name + (peerUid === currentUser.uid ? " (My Chat)" : "");
-  document.getElementById("chat-peer-details").textContent =
-    `${peer.country} • ${peer.age} yrs • ${peer.online ? 'Online' : 'Offline'}`;
+  updateActiveChatHeaderStatus(peer);
 
   updateBlockButtonIcon();
 
@@ -3039,7 +3241,7 @@ function contextDeleteMsg() {
 }
 
 /* ==========================================================================
-   REAL-TIME HD WEBRTC PERSONAL CALLS (FRONT/BACK CAMERA FLIP + CLEAR AUDIO/VIDEO)
+   REAL-TIME HD WEBRTC PERSONAL CALLS
    ========================================================================== */
 function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) {
   const pc = new RTCPeerConnection(RTC_CONFIG);
@@ -3351,7 +3553,6 @@ function openPaidCallHub() {
   const body = document.getElementById("paid-call-body");
   document.getElementById("paid-call-modal").classList.remove("hidden");
 
-  // Girls NEVER see the paid call form — they can directly call the boy
   if (currentUser.sex === "Female") {
     body.innerHTML = `
       <div class="auth-card" style="text-align:center;">
@@ -3375,7 +3576,6 @@ function openPaidCallHub() {
     return;
   }
 
-  // Boys see the Paid Video Call Form
   const cfg = peer.paidCallConfig || {
     method: "Easypaisa",
     holder: peer.name,
@@ -3976,8 +4176,28 @@ function submitWithdrawRequest() {
 }
 
 /* ==========================================================================
-   TAB 5: PROFILE FOLDERS
+   TAB 5: PROFILE FOLDERS + LUXURY 1000 COINS INVITE REWARD & SOCIAL SHARE
    ========================================================================== */
+function getUserInviteShareUrl() {
+  const base = (appSettings.inviteLink || window.location.origin + window.location.pathname).trim();
+  const sep = base.includes("?") ? "&" : "?";
+  return `${base}${sep}ref=${encodeURIComponent(currentUser.uid)}`;
+}
+
+function shareInviteTo(platform) {
+  const shareUrl = getUserInviteShareUrl();
+  const shareText = `Join Aura Meet & get 300 welcome coins! Invite & earn 1000 coins reward: ${shareUrl}`;
+  let target = "";
+  if (platform === "whatsapp") {
+    target = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+  } else if (platform === "telegram") {
+    target = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent("Join Aura Meet & get 300 welcome coins! Invite & earn 1000 coins reward:")}`;
+  } else if (platform === "facebook") {
+    target = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+  }
+  if (target) window.open(target, "_blank");
+}
+
 function openEditProfileModal() {
   const title = document.getElementById("profile-folder-title");
   const body = document.getElementById("profile-folder-body");
@@ -4058,17 +4278,36 @@ function openProfileFolder(folder) {
 
   if (folder === "invite") {
     title.textContent = "Invite Link";
-    const link = appSettings.inviteLink || window.location.href;
+    const link = getUserInviteShareUrl();
     body.innerHTML = `
-      <div class="auth-card" style="text-align:center; padding:26px 18px;">
-        <div style="width:70px; height:70px; border-radius:22px; background:var(--maroon-100); color:var(--maroon-700); display:inline-flex; align-items:center; justify-content:center; font-size:32px; margin-bottom:12px;">
-          <i class="fa-solid fa-share-nodes"></i>
+      <div class="auth-card" style="text-align:center; padding:22px 16px;">
+        <div class="luxury-reward-banner">
+          <div style="font-size:11px; font-weight:800; letter-spacing:0.8px; text-transform:uppercase; color:#fde047;">
+            <i class="fa-solid fa-crown"></i> Luxury Invite Reward <i class="fa-solid fa-crown"></i>
+          </div>
+          <div class="luxury-reward-amount">+1,000 Coins Reward</div>
+          <div style="font-size:12px; opacity:0.92; line-height:1.45;">
+            Invite any Boy or Girl to join Aura Meet and earn <strong>1,000 Coins</strong> on every successful invite!
+          </div>
         </div>
-        <h3 style="font-size:19px; font-weight:800;">Invite Friends</h3>
-        <input type="text" readonly class="input-field" value="${escapeHtml(link)}" style="text-align:center; font-weight:700; margin:14px 0;" />
-        <button class="btn btn-primary btn-block" style="padding:16px; font-size:16px;" onclick="copyText('${escapeHtml(link)}')">
-          <i class="fa-regular fa-copy"></i> COPY LINK
+
+        <input type="text" readonly class="input-field" value="${escapeHtml(link)}" style="text-align:center; font-weight:700; margin:12px 0;" />
+
+        <button class="btn btn-primary btn-block" style="padding:14px; font-size:15px;" onclick="copyText('${escapeHtml(link)}')">
+          <i class="fa-regular fa-copy"></i> COPY INVITE LINK
         </button>
+
+        <div class="social-share-grid">
+          <button type="button" class="share-btn share-wa" onclick="shareInviteTo('whatsapp')">
+            <i class="fa-brands fa-whatsapp"></i> WhatsApp
+          </button>
+          <button type="button" class="share-btn share-tg" onclick="shareInviteTo('telegram')">
+            <i class="fa-brands fa-telegram"></i> Telegram
+          </button>
+          <button type="button" class="share-btn share-fb" onclick="shareInviteTo('facebook')">
+            <i class="fa-brands fa-facebook-f"></i> Facebook
+          </button>
+        </div>
       </div>
     `;
   } else if (folder === "dep-history") {
@@ -4176,7 +4415,7 @@ function openProfileFolder(folder) {
         <div class="input-group"><label>Country</label>
           <select id="alt-reg-country" class="input-field"><option value="Pakistan">Pakistan</option><option value="India">India</option></select>
         </div>
-        <button class="btn btn-primary btn-block" onclick="handleCreateAccount(true)">Create Account</button>
+        <button class="btn btn-primary btn-block" onclick="handleCreateAccount(true)">Create Account (+1000 Invite Coins)</button>
       </div>
     `;
   }
@@ -4223,19 +4462,6 @@ function submitPasswordChange() {
 /* ==========================================================================
    OWNER ADMIN PANEL
    ========================================================================== */
-function openAdminLoginPrompt() {
-  const code = prompt("Password:");
-  if (code === ADMIN_PASSCODE) {
-    localStorage.setItem("aura_meet_is_admin", "1");
-    document.getElementById("admin-shortcut-btn").classList.remove("hidden");
-    document.getElementById("maintenance-screen").classList.add("hidden");
-    updateFemaleFaceBoxVisibility();
-    openAdminPanel();
-  } else if (code !== null) {
-    showToast("Invalid!", "fa-lock");
-  }
-}
-
 function openAdminPanel() {
   if (!isOwnerAdmin()) return;
   document.getElementById("admin-panel-modal").classList.remove("hidden");
