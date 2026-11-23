@@ -173,11 +173,11 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Luxury Custom Admin Login Modal (Replaces Browser Prompt) */
+  /* Luxury Custom Admin Login Modal */
   #luxury-admin-login-modal {
     position: fixed;
     inset: 0;
-    background: rgba(36, 5, 13, 0.82);
+    background: rgba(36, 5, 13, 0.84);
     backdrop-filter: blur(8px);
     z-index: 99800;
     display: flex;
@@ -192,7 +192,7 @@
     color: #fff;
     border-radius: 24px;
     padding: 24px 20px;
-    border: 1.5px solid rgba(253, 224, 71, 0.45);
+    border: 1.5px solid rgba(253, 224, 71, 0.5);
     box-shadow: 0 22px 50px rgba(0, 0, 0, 0.55);
     position: relative;
   }
@@ -513,7 +513,7 @@
     justify-content: space-between;
   }
 
-  /* Vertical Series Online Users List (Messenger-style Vertical Series & Vertical Scroll) */
+  /* Vertical Series Online Users List (Vertical Scroll) */
   .vertical-online-series {
     max-height: 245px;
     overflow-y: auto;
@@ -542,7 +542,7 @@
     cursor: pointer;
   }
 
-  /* Horizontal Active Chats Strip Below Own ID */
+  /* Horizontal Active Chats Strip Below Own ID (Horizontal Scroll) */
   .horizontal-chats-series {
     display: flex;
     flex-direction: row;
@@ -654,6 +654,17 @@
     font-weight: 800;
     color: #fde047;
     margin: 4px 0;
+  }
+  .invite-code-box {
+    background: var(--maroon-50);
+    border: 1.5px dashed var(--maroon-600);
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
   }
   .social-share-grid {
     display: grid;
@@ -839,7 +850,7 @@
     50% { transform: scale(1.08); }
   }
 
-  /* Direct HD Camera Modal (Front & Back Switch) */
+  /* Direct HD Camera Modal */
   #direct-camera-modal {
     position: fixed;
     inset: 0;
@@ -1241,7 +1252,7 @@
 
 <div id="toast-box"></div>
 
-<!-- Luxury Custom Admin Login Modal (No Browser Prompt, Show/Hide Password) -->
+<!-- Luxury Custom Admin Login Modal (Passcode: 112233) -->
 <div id="luxury-admin-login-modal" class="hidden" onclick="closeLuxuryAdminModal()">
   <div class="luxury-admin-card" onclick="event.stopPropagation()">
     <button type="button" onclick="closeLuxuryAdminModal()" style="position:absolute; top:14px; right:14px; background:rgba(255,255,255,0.12); border:none; color:#fff; width:32px; height:32px; border-radius:10px; cursor:pointer;">
@@ -1409,6 +1420,11 @@
         </div>
       </div>
 
+      <div class="input-group">
+        <label>8. Invite Code (Auto-Filled • Owner Code: 222222)</label>
+        <input type="text" id="reg-invite-code" class="input-field" maxlength="6" placeholder="6-digit invite code" value="222222" />
+      </div>
+
       <button type="button" id="btn-create-account-submit" class="btn btn-primary btn-block" style="margin-top:6px;" onclick="handleCreateAccount(false)">
         <i class="fa-solid fa-user-plus"></i> Create Account
       </button>
@@ -1453,13 +1469,13 @@
       </div>
     </div>
 
-    <!-- TAB 1: CHATS (Same System for Both Boy & Girl IDs) -->
+    <!-- TAB 1: CHATS -->
     <div id="tab-chats" class="tab-viewport">
       <div class="section-heading">
         <span id="online-peers-heading">Online Members</span>
         <span id="online-counter-label" style="font-size:11px; color:var(--text-muted);">0 Online</span>
       </div>
-      <!-- Vertical Series & Vertical Scroll for Online Members -->
+      <!-- Vertical Series & Vertical Scroll for Online Opposite Gender Members -->
       <div id="online-peers-list" class="vertical-online-series"></div>
 
       <div class="section-heading" style="margin-top:14px;">
@@ -1467,7 +1483,7 @@
       </div>
       <div id="self-id-card-container"></div>
 
-      <!-- Horizontal Chats Below Own ID (Shows Unread Counts + Single/Double/Blue Ticks + Green Dot) -->
+      <!-- Horizontal Chats Below Own ID (Horizontal Series & Horizontal Scroll) -->
       <div class="section-heading" style="margin-top:14px;">
         <span><i class="fa-solid fa-comments"></i> Recent Chats</span>
         <span id="total-unread-label" style="font-size:11px; color:var(--maroon-700);">Live</span>
@@ -1615,6 +1631,9 @@
         <img id="prof-dp" src="" alt="DP" style="width:78px; height:78px; border-radius:50%; object-fit:cover; border:3px solid var(--maroon-600); margin-bottom:8px;" />
         <h3 id="prof-name" style="font-size:18px; font-weight:800;">User Name</h3>
         <p id="prof-meta" style="font-size:12px; color:var(--text-muted); margin-top:3px;">22 yrs • Pakistan</p>
+        <div id="prof-invite-code-pill" style="display:inline-block; margin-top:6px; background:var(--maroon-100); color:var(--maroon-900); font-size:12px; font-weight:800; padding:4px 12px; border-radius:12px;">
+          Invite Code: ------
+        </div>
 
         <div class="balance-split">
           <div class="bal-box">
@@ -1629,6 +1648,11 @@
       </div>
 
       <div style="margin-top:14px;">
+        <div class="folder-item" onclick="openProfileFolder('my-refers')">
+          <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-users"></i></div> My Refers</div>
+          <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
+        </div>
+
         <div class="folder-item" onclick="openProfileFolder('invite')">
           <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-share-nodes"></i></div> Invite Link</div>
           <i class="fa-solid fa-chevron-right" style="color:var(--text-muted);"></i>
@@ -1895,7 +1919,7 @@
   </div>
 </div>
 
-<!-- Long Press Menu: Delete, Unsend, Copy, Paste, Select, Bold, Italic -->
+<!-- Long Press Menu -->
 <div id="msg-context-menu" class="hidden" onclick="this.classList.add('hidden')">
   <div class="context-card" onclick="event.stopPropagation()">
     <div class="context-opt" onclick="contextCopyMsg()"><i class="fa-regular fa-copy" style="color:var(--maroon-700);"></i> Copy</div>
@@ -1932,7 +1956,8 @@ const RTC_CONFIG = {
   ]
 };
 
-const ADMIN_PASSCODE = "786786";
+const ADMIN_PASSCODE = "112233";
+const OWNER_INVITE_CODE = "222222";
 const COINS_PER_PKR = 20;
 const NEW_USER_WELCOME_BONUS = 300;
 const INVITE_REWARD_COINS = 1000;
@@ -1974,6 +1999,7 @@ const GIFTS_CATALOG = [
 let currentUser = null;
 let allUsersMap = {};
 let allChatsMap = {};
+let allReferralsMap = {};
 let appSettings = {
   appClosedPakistan: false,
   downloadAppLink: "https://aura-meet-6f81b.web.app/AuraMeet.apk",
@@ -2005,12 +2031,10 @@ let directCamRecorder = null;
 let directCamVideoChunks = [];
 let isRecordingCamVideo = false;
 
-// Personal WebRTC Call State
 let activeCallState = null;
 let callFacingMode = "user";
 let incomingCallListenerStarted = false;
 
-// Live Room WebRTC Broadcast / Viewer State
 let activeLiveHostId = null;
 let liveStreamObj = null;
 let liveFacingMode = "user";
@@ -2034,7 +2058,41 @@ function showToast(msg, icon = "fa-circle-info") {
   setTimeout(() => { el.remove(); }, 3400);
 }
 
-/* Luxury Admin Modal Controls (No Browser Prompt, No Hint Toasts) */
+/* 6-Digit Unique Invite Code Generator (Never 222222) */
+function generateSixDigitInviteCode() {
+  let code = "";
+  const usedCodes = new Set(Object.values(allUsersMap).map(u => String(u.inviteCode || "")));
+  usedCodes.add(OWNER_INVITE_CODE);
+  for (let i = 0; i < 30; i++) {
+    code = String(Math.floor(100000 + Math.random() * 900000));
+    if (!usedCodes.has(code)) return code;
+  }
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
+function autoFillInviteCodeInput() {
+  const params = new URLSearchParams(window.location.search);
+  const urlCode = (params.get("code") || params.get("ref") || "").trim();
+  const invInput = document.getElementById("reg-invite-code");
+  if (!invInput) return;
+
+  if (urlCode) {
+    if (/^\d{6}$/.test(urlCode)) {
+      invInput.value = urlCode;
+      return;
+    }
+    const matchedByUid = allUsersMap[urlCode];
+    if (matchedByUid && matchedByUid.inviteCode) {
+      invInput.value = matchedByUid.inviteCode;
+      return;
+    }
+  }
+  if (!invInput.value || !invInput.value.trim()) {
+    invInput.value = OWNER_INVITE_CODE;
+  }
+}
+
+/* Luxury Admin Modal Controls */
 function openLuxuryAdminModal() {
   const inp = document.getElementById("luxury-admin-pass-input");
   inp.value = "";
@@ -2099,7 +2157,7 @@ function formatLastSeen(ts) {
   if (!ts) return "Recently";
   const d = new Date(ts);
   return d.toLocaleDateString('en-PK', { day: '2-digit', month: 'short' }) + " " +
-         d.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
+         d.LocaleTimeString ? d.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' }) : "";
 }
 
 function copyText(txt) {
@@ -2125,9 +2183,6 @@ function togglePass(inputId, btn) {
   }
 }
 
-/* ==========================================================================
-   HD CAMERA STREAM HELPER (FRONT & BACK SUPPORT)
-   ========================================================================== */
 async function getHdCameraStream(facingMode = "user", withAudio = false) {
   const constraints = {
     video: {
@@ -2144,9 +2199,6 @@ async function getHdCameraStream(facingMode = "user", withAudio = false) {
   }
 }
 
-/* ==========================================================================
-   SCREENSHOT, IMAGE SAVE & SCREEN RECORDING PROTECTION
-   ========================================================================== */
 function handleGlobalContextMenu(e) {
   if (isOwnerAdmin() && appSettings.ownerCaptureEnabled !== false) return true;
   if (e.target && (e.target.tagName === "IMG" || e.target.tagName === "VIDEO")) {
@@ -2178,10 +2230,12 @@ function setupCaptureProtection() {
    ========================================================================== */
 window.addEventListener("DOMContentLoaded", () => {
   renderStaticTables();
+  autoFillInviteCodeInput();
   setupCaptureProtection();
   listenAppSettings();
   listenAllUsers();
   listenAllChatsSummary();
+  listenReferrals();
 
   let logoTapCount = 0;
   document.getElementById("secret-admin-tap").addEventListener("click", () => {
@@ -2247,8 +2301,15 @@ function listenAppSettings() {
 function listenAllUsers() {
   db.ref("users").on("value", snap => {
     allUsersMap = snap.val() || {};
+    autoFillInviteCodeInput();
+
     if (currentUser && allUsersMap[currentUser.uid]) {
       currentUser = allUsersMap[currentUser.uid];
+      if (!currentUser.inviteCode) {
+        const genCode = generateSixDigitInviteCode();
+        db.ref("users/" + currentUser.uid + "/inviteCode").set(genCode).catch(() => {});
+        currentUser.inviteCode = genCode;
+      }
       if (currentUser.banned) {
         showToast("Account suspended by Admin.", "fa-ban");
         logoutUser();
@@ -2274,6 +2335,12 @@ function listenAllChatsSummary() {
   });
 }
 
+function listenReferrals() {
+  db.ref("referrals").on("value", snap => {
+    allReferralsMap = snap.val() || {};
+  });
+}
+
 function triggerAppDownload() {
   const link = appSettings.downloadAppLink || "https://aura-meet-6f81b.web.app/AuraMeet.apk";
   showToast("Opening Download Link...", "fa-download");
@@ -2281,13 +2348,14 @@ function triggerAppDownload() {
 }
 
 /* ==========================================================================
-   AUTH, 300 COINS WELCOME BONUS, 1000 COINS INVITE REWARD (BOY OR GIRL)
+   AUTH, 6-DIGIT INVITE CODE, OWNER CODE 222222 & AUTO 1000 COINS REWARD
    ========================================================================== */
 function switchAuthTab(mode) {
   document.getElementById("btn-show-register").classList.toggle("active", mode === "register");
   document.getElementById("btn-show-login").classList.toggle("active", mode === "login");
   document.getElementById("register-form-card").classList.toggle("hidden", mode !== "register");
   document.getElementById("login-form-card").classList.toggle("hidden", mode !== "login");
+  if (mode === "register") autoFillInviteCodeInput();
 }
 
 function isGirlFaceVerifyBypassed() {
@@ -2367,6 +2435,9 @@ function handleCreateAccount(isFromProfileFolder = false) {
   const age = parseInt(document.getElementById(isFromProfileFolder ? "alt-reg-age" : "reg-age").value, 10);
   const country = document.getElementById(isFromProfileFolder ? "alt-reg-country" : "reg-country").value;
   const sex = isFromProfileFolder ? document.getElementById("alt-reg-sex").value : selectedGender;
+  const enteredCode = isFromProfileFolder
+    ? (currentUser?.inviteCode || OWNER_INVITE_CODE)
+    : (document.getElementById("reg-invite-code").value.trim() || OWNER_INVITE_CODE);
 
   if (!name || !mobile || !pass || !cpass || !age) {
     showToast("Please fill all required fields!", "fa-triangle-exclamation");
@@ -2394,11 +2465,19 @@ function handleCreateAccount(isFromProfileFolder = false) {
   }
 
   const uid = "usr_" + Date.now() + "_" + Math.floor(Math.random() * 999);
+  const newUserInviteCode = generateSixDigitInviteCode();
   const realFacePic = (!isFromProfileFolder && sex === "Female" && verifiedFaceDataUrl) ? verifiedFaceDataUrl : "";
 
-  const inviterId = isFromProfileFolder && currentUser
-    ? currentUser.uid
-    : (new URLSearchParams(window.location.search).get("ref") || "");
+  let inviterUser = null;
+  let usedOwnerCode = false;
+
+  if (isFromProfileFolder && currentUser) {
+    inviterUser = currentUser;
+  } else if (enteredCode === OWNER_INVITE_CODE) {
+    usedOwnerCode = true;
+  } else if (enteredCode) {
+    inviterUser = Object.values(allUsersMap).find(u => String(u.inviteCode || "") === enteredCode && u.uid !== uid) || null;
+  }
 
   const userObj = {
     uid,
@@ -2410,9 +2489,12 @@ function handleCreateAccount(isFromProfileFolder = false) {
     country,
     dp: realFacePic || defaultAvatar(name, sex),
     faceVerificationPic: realFacePic,
+    inviteCode: newUserInviteCode,
+    usedInviteCode: enteredCode,
+    invitedBy: inviterUser ? inviterUser.uid : (usedOwnerCode ? "owner_222222" : ""),
+    invitedByName: inviterUser ? inviterUser.name : (usedOwnerCode ? "Owner (222222)" : ""),
     coins: NEW_USER_WELCOME_BONUS,
     welcomeBonusClaimed: true,
-    invitedBy: inviterId || "",
     online: true,
     lastSeen: Date.now(),
     banned: false,
@@ -2429,17 +2511,23 @@ function handleCreateAccount(isFromProfileFolder = false) {
 
   db.ref("users/" + uid).set(userObj)
     .then(() => {
-      // Reward 1000 coins to inviter (male or female) for adding any boy or girl
-      if (inviterId && inviterId !== uid && allUsersMap[inviterId]) {
-        db.ref("users/" + inviterId + "/coins").transaction(c => (c || 0) + INVITE_REWARD_COINS);
-        db.ref("inviteRewards/" + uid).set({
-          inviterId,
-          invitedUserId: uid,
-          invitedName: name,
-          invitedSex: sex,
-          rewardCoins: INVITE_REWARD_COINS,
-          ts: Date.now()
-        }).catch(() => {});
+      const refRecord = {
+        invitedUserId: uid,
+        invitedName: name,
+        invitedMobile: mobile,
+        invitedSex: sex,
+        usedInviteCode: enteredCode,
+        inviterId: inviterUser ? inviterUser.uid : "owner_222222",
+        inviterName: inviterUser ? inviterUser.name : "Owner (222222)",
+        rewardCoins: INVITE_REWARD_COINS,
+        ts: Date.now()
+      };
+
+      db.ref("referrals/" + uid).set(refRecord).catch(() => {});
+
+      if (inviterUser && inviterUser.uid !== uid) {
+        db.ref("users/" + inviterUser.uid + "/coins").transaction(c => (c || 0) + INVITE_REWARD_COINS);
+        db.ref("userRefers/" + inviterUser.uid + "/" + uid).set(refRecord).catch(() => {});
       }
 
       verifiedFaceDataUrl = "";
@@ -2514,7 +2602,11 @@ function completeUserLogin(user, isAdminImpersonation = false) {
 
   const nowTs = Date.now();
   const userRef = db.ref("users/" + user.uid);
-  userRef.update({ online: true, lastSeen: nowTs }).catch(() => {});
+  const updates = { online: true, lastSeen: nowTs };
+  if (!user.inviteCode) {
+    updates.inviteCode = generateSixDigitInviteCode();
+  }
+  userRef.update(updates).catch(() => {});
   userRef.child("online").onDisconnect().set(false);
   userRef.child("lastSeen").onDisconnect().set(firebase.database.ServerValue.TIMESTAMP);
 
@@ -2548,6 +2640,7 @@ function logoutUser() {
   currentUser = null;
   document.getElementById("main-app").classList.add("hidden");
   document.getElementById("auth-screen").classList.remove("hidden");
+  autoFillInviteCodeInput();
   showToast("Logged out", "fa-right-from-bracket");
 }
 
@@ -2555,11 +2648,13 @@ function refreshCurrentUserUI() {
   if (!currentUser) return;
   const coins = Number(currentUser.coins || 0);
   const pkr = Math.floor(coins / COINS_PER_PKR);
+  const code = currentUser.inviteCode || "------";
 
   document.getElementById("top-coins-val").textContent = coins.toLocaleString();
   document.getElementById("prof-dp").src = currentUser.dp || defaultAvatar(currentUser.name, currentUser.sex);
   document.getElementById("prof-name").textContent = currentUser.name;
   document.getElementById("prof-meta").textContent = `${currentUser.sex} • ${currentUser.age} yrs • ${currentUser.country}`;
+  document.getElementById("prof-invite-code-pill").textContent = `Invite Code: ${code}`;
   document.getElementById("prof-bal-coins").textContent = coins.toLocaleString();
   document.getElementById("prof-bal-pkr").textContent = `Rs. ${pkr.toLocaleString()}`;
 
@@ -2587,10 +2682,11 @@ function switchMainTab(tab) {
 }
 
 /* ==========================================================================
-   TAB 1: CHATS (IDENTICAL SYSTEM FOR BOTH BOY & GIRL IDS)
-   - Vertical Series + Vertical Scroll for Online Members (Messenger Style)
+   TAB 1: CHATS
+   - Boys see Online Girls (online === true) in Vertical Series + Vertical Scroll
+   - Girls see Online Boys (online === true) in Vertical Series + Vertical Scroll
    - Own ID Card (1st Position)
-   - Horizontal Chats Series Below Own ID with Unread Badge, Green Circle & Ticks
+   - Horizontal Chats Series Below Own ID (Horizontal Scroll) for messaged users
    ========================================================================== */
 function getThreadMetaForPeer(peerUid) {
   const threadId = getChatThreadId(currentUser.uid, peerUid);
@@ -2634,20 +2730,19 @@ function renderChatsTab() {
   document.getElementById("online-peers-heading").textContent =
     currentUser.sex === "Male" ? "Online Girls" : "Online Boys";
 
-  const oppositeUsers = Object.values(allUsersMap)
-    .filter(u => u.uid !== currentUser.uid && u.sex === targetSex && !u.banned)
-    .sort((a, b) => (b.online ? 1 : 0) - (a.online ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
+  // Only ONLINE opposite-gender users in Vertical Series & Vertical Scroll
+  const onlineOppositeUsers = Object.values(allUsersMap)
+    .filter(u => u.uid !== currentUser.uid && u.sex === targetSex && u.online === true && !u.banned)
+    .sort((a, b) => (b.lastSeen || 0) - (a.lastSeen || 0));
 
-  const onlineCount = oppositeUsers.filter(u => u.online).length;
-  document.getElementById("online-counter-label").textContent = `${onlineCount} Online`;
+  document.getElementById("online-counter-label").textContent = `${onlineOppositeUsers.length} Online`;
 
-  // 1. Vertical Series + Vertical Scroll for Online Members
-  if (oppositeUsers.length === 0) {
+  if (onlineOppositeUsers.length === 0) {
     peersListEl.innerHTML = `<div class="auth-card" style="text-align:center; color:var(--text-muted); padding:16px; font-size:13px;">
-      No ${targetSex === 'Female' ? 'girls' : 'boys'} available right now.
+      No ${targetSex === 'Female' ? 'girls' : 'boys'} online right now.
     </div>`;
   } else {
-    peersListEl.innerHTML = oppositeUsers.map(p => {
+    peersListEl.innerHTML = onlineOppositeUsers.map(p => {
       const meta = getThreadMetaForPeer(p.uid);
       const outerTick = meta ? getOuterTickHtml(meta.lastMsg, p.uid) : "";
       const unreadPill = (meta && meta.unreadCount > 0)
@@ -2658,7 +2753,7 @@ function renderChatsTab() {
         <div class="chat-user-card" onclick="openChatRoom('${p.uid}')">
           <div class="avatar-wrap">
             <img class="avatar-img" src="${p.dp || defaultAvatar(p.name, p.sex)}" alt="${escapeHtml(p.name)}" />
-            <span class="status-dot ${p.online ? 'online' : ''}"></span>
+            <span class="status-dot online"></span>
           </div>
           <div style="flex:1; min-width:0;">
             <div style="display:flex; align-items:center;">
@@ -2670,9 +2765,7 @@ function renderChatsTab() {
             </div>
           </div>
           <div style="text-align:right;">
-            <span style="font-size:11px; font-weight:800; color:${p.online ? '#16a34a' : '#6b7280'};">
-              ${p.online ? '● Online' : 'Offline'}
-            </span>
+            <span style="font-size:11px; font-weight:800; color:#16a34a;">● Online</span>
             <div style="margin-top:4px; color:var(--maroon-700); font-size:12px; font-weight:700;">
               <i class="fa-solid fa-comment"></i> Chat
             </div>
@@ -2682,7 +2775,7 @@ function renderChatsTab() {
     }).join("");
   }
 
-  // 2. Own ID Card (1st Position)
+  // Own ID Card (1st Position)
   selfContainer.innerHTML = `
     <div class="chat-user-card self-user-card" onclick="openChatRoom('${currentUser.uid}')">
       <div class="avatar-wrap">
@@ -2709,7 +2802,7 @@ function renderChatsTab() {
     </div>
   `;
 
-  // 3. Horizontal Chats Series Below Own ID
+  // Horizontal Chats Series Below Own ID (Horizontal Scroll)
   const chatPartners = [];
   let totalUnreadAll = 0;
 
@@ -2743,7 +2836,7 @@ function renderChatsTab() {
 
   if (chatPartners.length === 0) {
     horizChatsEl.innerHTML = `<div class="auth-card" style="width:100%; text-align:center; color:var(--text-muted); padding:14px; font-size:12px;">
-      No active chats yet. Tap any online user above to start chatting.
+      No chats yet. Tap any online user above to send a message.
     </div>`;
   } else {
     horizChatsEl.innerHTML = chatPartners.map(({ peer, meta }) => {
@@ -2989,7 +3082,7 @@ function sendMultipleImagesMessage(inputEl) {
 }
 
 /* ==========================================================================
-   DIRECT HD CAMERA CAPTURE (FRONT & BACK CAMERA SWITCH + HD PHOTO & VIDEO)
+   DIRECT HD CAMERA CAPTURE
    ========================================================================== */
 async function openDirectCameraCapture() {
   if (!activeChatPeerId) return;
@@ -3543,9 +3636,7 @@ function listenIncomingCalls() {
 }
 
 /* ==========================================================================
-   PAID CALL HUB:
-   - IF CURRENT USER IS GIRL (FEMALE): NO FORM SHOWN; DIRECT PAID CALL TO BOY
-   - IF CURRENT USER IS BOY (MALE): SHOWS PAID CALL FORM & PAYMENT SCREENSHOT
+   PAID CALL HUB
    ========================================================================== */
 function openPaidCallHub() {
   if (!activeChatPeerId) return;
@@ -3683,7 +3774,7 @@ function submitPaidCallRequest(girlId, method, maxMins) {
 }
 
 /* ==========================================================================
-   TAB 2: LIVE ROOM WITH REAL-TIME HD WEBRTC VIDEO & FRONT/BACK CAMERA FLIP
+   TAB 2: LIVE ROOM
    ========================================================================== */
 function listenLiveRooms() {
   db.ref("liveRooms").on("value", snap => {
@@ -4176,22 +4267,24 @@ function submitWithdrawRequest() {
 }
 
 /* ==========================================================================
-   TAB 5: PROFILE FOLDERS + LUXURY 1000 COINS INVITE REWARD & SOCIAL SHARE
+   TAB 5: PROFILE FOLDERS (INCLUDING FULLSCREEN MY REFERS & INVITE SHARE)
    ========================================================================== */
 function getUserInviteShareUrl() {
   const base = (appSettings.inviteLink || window.location.origin + window.location.pathname).trim();
   const sep = base.includes("?") ? "&" : "?";
-  return `${base}${sep}ref=${encodeURIComponent(currentUser.uid)}`;
+  const code = currentUser.inviteCode || OWNER_INVITE_CODE;
+  return `${base}${sep}code=${encodeURIComponent(code)}`;
 }
 
 function shareInviteTo(platform) {
   const shareUrl = getUserInviteShareUrl();
-  const shareText = `Join Aura Meet & get 300 welcome coins! Invite & earn 1000 coins reward: ${shareUrl}`;
+  const code = currentUser.inviteCode || OWNER_INVITE_CODE;
+  const shareText = `Join Aura Meet with Invite Code ${code} & get 300 welcome coins! Invite & earn 1000 coins reward: ${shareUrl}`;
   let target = "";
   if (platform === "whatsapp") {
     target = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   } else if (platform === "telegram") {
-    target = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent("Join Aura Meet & get 300 welcome coins! Invite & earn 1000 coins reward:")}`;
+    target = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent("Join Aura Meet with code " + code + " & earn 1000 coins reward:")}`;
   } else if (platform === "facebook") {
     target = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
   }
@@ -4276,9 +4369,47 @@ function openProfileFolder(folder) {
   body.style.padding = "14px";
   document.getElementById("profile-folder-modal").classList.remove("hidden");
 
-  if (folder === "invite") {
+  if (folder === "my-refers") {
+    title.textContent = "My Refers";
+    const myCode = currentUser.inviteCode || "------";
+    const myRefersList = Object.values(allReferralsMap).filter(r => r.inviterId === currentUser.uid)
+      .sort((a, b) => (b.ts || 0) - (a.ts || 0));
+
+    body.innerHTML = `
+      <div class="auth-card" style="margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <div style="font-size:11px; color:var(--text-muted); font-weight:700;">Your 6-Digit Invite Code</div>
+            <div style="font-size:20px; font-weight:800; color:var(--maroon-900);">${escapeHtml(myCode)}</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px; color:var(--text-muted); font-weight:700;">Total Refers</div>
+            <div style="font-size:20px; font-weight:800; color:#16a34a;">${myRefersList.length}</div>
+          </div>
+        </div>
+        <div style="margin-top:8px; font-size:12px; font-weight:700; color:var(--maroon-800);">
+          Total Earned From Refers: ${(myRefersList.length * INVITE_REWARD_COINS).toLocaleString()} Coins
+        </div>
+      </div>
+
+      ${myRefersList.length ? myRefersList.map(r => `
+        <div class="auth-card" style="margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>${escapeHtml(r.invitedName)}</strong> (${escapeHtml(r.invitedSex)})
+            <div style="font-size:11px; color:var(--text-muted);">${formatDateTime(r.ts)}</div>
+          </div>
+          <span class="new-badge" style="background:#dcfce7; color:#15803d;">+${r.rewardCoins || INVITE_REWARD_COINS} Coins</span>
+        </div>
+      `).join("") : `
+        <div class="auth-card" style="text-align:center; color:var(--text-muted); padding:24px;">
+          No refers yet. Share your invite code <strong>${escapeHtml(myCode)}</strong> to earn 1,000 coins per invite!
+        </div>
+      `}
+    `;
+  } else if (folder === "invite") {
     title.textContent = "Invite Link";
     const link = getUserInviteShareUrl();
+    const myCode = currentUser.inviteCode || "------";
     body.innerHTML = `
       <div class="auth-card" style="text-align:center; padding:22px 16px;">
         <div class="luxury-reward-banner">
@@ -4291,7 +4422,17 @@ function openProfileFolder(folder) {
           </div>
         </div>
 
-        <input type="text" readonly class="input-field" value="${escapeHtml(link)}" style="text-align:center; font-weight:700; margin:12px 0;" />
+        <div class="invite-code-box">
+          <div style="text-align:left;">
+            <div style="font-size:10px; font-weight:700; color:var(--text-muted);">Your Invite Code</div>
+            <div style="font-size:17px; font-weight:800; color:var(--maroon-900);">${escapeHtml(myCode)}</div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="copyText('${escapeHtml(myCode)}')">
+            <i class="fa-regular fa-copy"></i> Copy Code
+          </button>
+        </div>
+
+        <input type="text" readonly class="input-field" value="${escapeHtml(link)}" style="text-align:center; font-weight:700; margin:10px 0;" />
 
         <button class="btn btn-primary btn-block" style="padding:14px; font-size:15px;" onclick="copyText('${escapeHtml(link)}')">
           <i class="fa-regular fa-copy"></i> COPY INVITE LINK
@@ -4460,7 +4601,7 @@ function submitPasswordChange() {
 }
 
 /* ==========================================================================
-   OWNER ADMIN PANEL
+   OWNER ADMIN PANEL (PASSCODE: 112233 + REFER TRACKING FOLDER)
    ========================================================================== */
 function openAdminPanel() {
   if (!isOwnerAdmin()) return;
@@ -4532,6 +4673,11 @@ function renderAdminDashboard() {
         <input type="text" id="adm-inv-link" class="input-field" value="${escapeHtml(appSettings.inviteLink || '')}" />
       </div>
       <button class="btn btn-primary btn-block btn-sm" onclick="publishPublicLinks()">Publish Links</button>
+    </div>
+
+    <div class="folder-item" onclick="openAdminSubFolder('refer-tracking')">
+      <div class="folder-left"><div class="folder-icon" style="background:#fef3c7; color:#b45309;"><i class="fa-solid fa-user-plus"></i></div> Refers &amp; Invite Tracker</div>
+      <i class="fa-solid fa-chevron-right"></i>
     </div>
 
     <div class="folder-item" onclick="openAdminSubFolder('users')">
@@ -4640,7 +4786,49 @@ function openAdminSubFolder(type) {
   document.getElementById("admin-subfolder-modal").classList.remove("hidden");
   body.innerHTML = `<p style="text-align:center; color:var(--text-muted);">Loading...</p>`;
 
-  if (type === "users") {
+  if (type === "refer-tracking") {
+    title.textContent = "Refers & Invite Tracker";
+    const allRefs = Object.values(allReferralsMap).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+    const users = Object.values(allUsersMap).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    const summaryCardsHtml = users.map(u => {
+      const invitedByMe = allRefs.filter(r => r.inviterId === u.uid);
+      const invitedNames = invitedByMe.map(r => `${r.invitedName} (${r.invitedSex})`).join(", ");
+      return `
+        <div class="auth-card" style="margin-bottom:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <strong>${escapeHtml(u.name)}</strong> (${u.sex})
+              <div style="font-size:11px; color:var(--text-muted);">Code: <strong>${escapeHtml(u.inviteCode || '------')}</strong> • Added By: <strong>${escapeHtml(u.invitedByName || 'None')}</strong></div>
+            </div>
+            <span class="new-badge" style="background:#dcfce7; color:#15803d;">Total Invited: ${invitedByMe.length}</span>
+          </div>
+          <div style="font-size:12px; color:var(--maroon-800); margin-top:6px;">
+            <strong>Invited Users:</strong> ${invitedNames ? escapeHtml(invitedNames) : 'None'}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    const logsHtml = allRefs.map(r => `
+      <div class="auth-card" style="margin-bottom:8px; padding:12px;">
+        <div style="font-size:13px;">
+          <strong style="color:var(--maroon-900);">${escapeHtml(r.inviterName || 'User')}</strong> added
+          <strong style="color:#15803d;">${escapeHtml(r.invitedName)}</strong> (${escapeHtml(r.invitedSex)})
+        </div>
+        <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">
+          Code: ${escapeHtml(r.usedInviteCode || '')} • Reward: +${r.rewardCoins || INVITE_REWARD_COINS} Coins • ${formatDateTime(r.ts)}
+        </div>
+      </div>
+    `).join("");
+
+    body.innerHTML = `
+      <div class="section-heading"><span>Each User Total Invites &amp; Added List</span></div>
+      ${summaryCardsHtml || `<div class="auth-card" style="text-align:center;">No users found.</div>`}
+      <div class="section-heading" style="margin-top:14px;"><span>All Invite Activity Logs (${allRefs.length})</span></div>
+      ${logsHtml || `<div class="auth-card" style="text-align:center;">No invite logs yet.</div>`}
+    `;
+  } else if (type === "users") {
     title.textContent = "Users, Coins & Girls Paid Call Form";
     const users = Object.values(allUsersMap).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     body.innerHTML = users.map(u => {
@@ -4659,6 +4847,7 @@ function openAdminSubFolder(type) {
             <div>
               <strong>${escapeHtml(u.name)}</strong> (${u.sex})
               <div style="font-size:12px; color:var(--text-muted);">Mobile: <strong>${escapeHtml(u.mobile)}</strong> | Pass: <strong>${escapeHtml(u.password)}</strong></div>
+              <div style="font-size:12px; color:var(--text-muted);">Invite Code: <strong>${escapeHtml(u.inviteCode || '------')}</strong></div>
               <div style="font-size:12px; font-weight:800; color:var(--maroon-700);">Coins: ${Number(u.coins || 0).toLocaleString()} (Rs. ${Math.floor((u.coins || 0)/COINS_PER_PKR)})</div>
             </div>
             <span class="new-badge">${u.online ? 'ONLINE' : 'OFFLINE'}</span>
