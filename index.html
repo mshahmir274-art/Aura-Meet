@@ -498,7 +498,7 @@
   .nav-item.active i { transform: translateY(-2px); color: var(--maroon-600); }
   .nav-item.active::after {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 28px;
     height: 3px;
@@ -646,6 +646,9 @@
     flex-direction: column;
     overflow: hidden;
     animation: slideInRight 0.22s ease;
+  }
+  #chat-room-modal.fullscreen-modal {
+    z-index: 400;
   }
   @keyframes slideInRight {
     from { transform: translateX(30px); opacity: 0.4; }
@@ -2019,7 +2022,9 @@ const firebaseConfig = {
   measurementId: "G-TDLKGHJN2C"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 const db = firebase.database();
 try { firebase.analytics(); } catch(e) {}
 
@@ -2121,6 +2126,22 @@ let liveSignalRefs = [];
 let liveViewersRef = null;
 let slipZoomLevel = 1;
 
+function cleanUid(v) {
+  return v === null || v === undefined ? "" : String(v).trim();
+}
+
+function findUserByUid(rawUid) {
+  const uid = cleanUid(rawUid);
+  if (!uid) return null;
+  if (currentUser && cleanUid(currentUser.uid) === uid) return currentUser;
+  if (allUsersMap && allUsersMap[uid]) return allUsersMap[uid];
+  if (allUsersMap) {
+    const found = Object.values(allUsersMap).find(u => u && cleanUid(u.uid) === uid);
+    if (found) return found;
+  }
+  return null;
+}
+
 function isOwnerAdmin() {
   return localStorage.getItem("aura_meet_is_admin") === "1";
 }
@@ -2131,9 +2152,10 @@ function isValidAdminCode(code) {
 
 function showToast(msg, icon = "fa-circle-info") {
   const box = document.getElementById("toast-box");
+  if (!box) return;
   const el = document.createElement("div");
   el.className = "toast";
-  el.innerHTML = `<i class="fa-solid ${icon}"></i><span>${msg}</span>`;
+  el.innerHTML = `<i class="fa-solid ${icon}"></i><span>${escapeHtml(msg)}</span>`;
   box.appendChild(el);
   setTimeout(() => { el.remove(); }, 3400);
 }
@@ -2176,7 +2198,11 @@ function copyText(txt) {
 }
 
 function closeModal(id) {
-  document.getElementById(id).classList.add("hidden");
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add("hidden");
+    el.style.display = "";
+  }
 }
 
 function togglePass(inputId, btn) {
@@ -2195,11 +2221,11 @@ function togglePass(inputId, btn) {
    ========================================================================== */
 function checkUrlChatTarget() {
   const params = new URLSearchParams(window.location.search);
-  const targetUid = params.get("chatWith");
+  const targetUid = cleanUid(params.get("chatWith"));
   if (!targetUid) return;
 
   const tryOpen = () => {
-    const targetUser = allUsersMap[targetUid];
+    const targetUser = findUserByUid(targetUid);
     if (!targetUser) return false;
     const modal = document.getElementById("chat-now-link-modal");
     document.getElementById("chat-now-target-dp").src = targetUser.dp || defaultAvatar(targetUser.name, targetUser.sex);
@@ -2227,7 +2253,7 @@ function checkUrlChatTarget() {
 
 function shareCurrentPeerChatLink() {
   if (!activeChatPeerId) return;
-  const peer = allUsersMap[activeChatPeerId];
+  const peer = findUserByUid(activeChatPeerId);
   const baseUrl = window.location.origin + window.location.pathname;
   const shareUrl = `${baseUrl}?chatWith=${encodeURIComponent(activeChatPeerId)}`;
   copyText(shareUrl);
@@ -2284,11 +2310,11 @@ window.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => { logoTapCount = 0; }, 2500);
   });
 
-  const savedUid = localStorage.getItem("aura_meet_uid");
+  const savedUid = cleanUid(localStorage.getItem("aura_meet_uid"));
   if (savedUid) {
     db.ref("users/" + savedUid).once("value", snap => {
       if (snap.exists() && !snap.val().banned) {
-        completeUserLogin(snap.val());
+        completeUserLogin({ ...snap.val(), uid: savedUid });
       } else {
         localStorage.removeItem("aura_meet_uid");
       }
@@ -2339,7 +2365,7 @@ function listenAllUsers() {
   db.ref("users").on("value", snap => {
     allUsersMap = snap.val() || {};
     if (currentUser && allUsersMap[currentUser.uid]) {
-      currentUser = allUsersMap[currentUser.uid];
+      currentUser = { ...allUsersMap[currentUser.uid], uid: cleanUid(currentUser.uid) };
       if (currentUser.banned) {
         showToast("Account suspended by Admin.", "fa-ban");
         logoutUser();
@@ -2461,7 +2487,7 @@ function handleCreateAccount(isFromProfileFolder = false) {
     return;
   }
 
-  const existing = Object.values(allUsersMap).find(u => u.mobile === mobile);
+  const existing = Object.values(allUsersMap).find(u => u && u.mobile === mobile);
   if (existing) {
     showToast("Mobile number already registered!", "fa-circle-exclamation");
     return;
@@ -2505,6 +2531,7 @@ function handleCreateAccount(isFromProfileFolder = false) {
 
   db.ref("users/" + uid).set(userObj)
     .then(() => {
+      allUsersMap[uid] = userObj;
       verifiedFaceDataUrl = "";
       if (submitBtn && !isFromProfileFolder) {
         submitBtn.disabled = false;
@@ -2540,7 +2567,7 @@ function handleLoginAccount() {
   }
 
   const matched = Object.values(allUsersMap).find(
-    u => u.mobile === mobileInput && u.name.trim().toLowerCase() === nameInput.toLowerCase()
+    u => u && u.mobile === mobileInput && String(u.name || "").trim().toLowerCase() === nameInput.toLowerCase()
   );
 
   if (!matched) {
@@ -2558,7 +2585,7 @@ function handleLoginAccount() {
 function openForgetPasswordModal() {
   const mob = prompt("Enter registered Mobile Number:");
   if (!mob) return;
-  const user = Object.values(allUsersMap).find(u => u.mobile === mob.trim());
+  const user = Object.values(allUsersMap).find(u => u && u.mobile === mob.trim());
   if (!user) {
     showToast("Mobile number not found!", "fa-circle-xmark");
     return;
@@ -2572,13 +2599,13 @@ function openForgetPasswordModal() {
 }
 
 function completeUserLogin(user, isAdminImpersonation = false) {
-  currentUser = user;
-  localStorage.setItem("aura_meet_uid", user.uid);
+  currentUser = { ...user, uid: cleanUid(user.uid) };
+  localStorage.setItem("aura_meet_uid", currentUser.uid);
 
-  const userRef = db.ref("users/" + user.uid);
+  const userRef = db.ref("users/" + currentUser.uid);
   userRef.update({ online: true, lastSeen: Date.now() }).catch(() => {});
-  userRef.child("online").onDisconnect().set(false);
-  db.ref("liveRooms/" + user.uid).onDisconnect().remove().catch(() => {});
+  userRef.child("online").onDisconnect().set(false).catch(() => {});
+  db.ref("liveRooms/" + currentUser.uid).onDisconnect().remove().catch(() => {});
 
   document.getElementById("auth-screen").classList.add("hidden");
   document.getElementById("main-app").classList.remove("hidden");
@@ -2595,7 +2622,7 @@ function completeUserLogin(user, isAdminImpersonation = false) {
   if (isAdminImpersonation) {
     closeModal("admin-subfolder-modal");
     closeModal("admin-panel-modal");
-    showToast(`Logged in as ${user.name}.`, "fa-user-check");
+    showToast(`Logged in as ${currentUser.name}.`, "fa-user-check");
   }
 }
 
@@ -2606,6 +2633,7 @@ function logoutUser() {
     db.ref("activeCalls/" + currentUser.uid).off();
     incomingCallListenerStarted = false;
   }
+  closeChatRoom();
   localStorage.removeItem("aura_meet_uid");
   currentUser = null;
   document.getElementById("main-app").classList.add("hidden");
@@ -2653,30 +2681,34 @@ function switchMainTab(tab) {
    ========================================================================== */
 function renderChatsTab() {
   if (!currentUser) return;
+  const myUid = cleanUid(currentUser.uid);
   const circleStripEl = document.getElementById("online-circle-strip");
   const peersListEl = document.getElementById("online-peers-list");
   const selfContainer = document.getElementById("self-id-card-container");
 
   const allOtherUsers = Object.values(allUsersMap)
-    .filter(u => u.uid !== currentUser.uid && !u.banned && !(currentUser.hiddenUsers && currentUser.hiddenUsers[u.uid]));
+    .filter(u => u && cleanUid(u.uid) && cleanUid(u.uid) !== myUid && !u.banned && !(currentUser.hiddenUsers && currentUser.hiddenUsers[cleanUid(u.uid)]));
 
   const onlineBothGenders = allOtherUsers.filter(u => u.online);
   document.getElementById("online-counter-label").textContent = `${onlineBothGenders.length} Online`;
 
-  circleStripEl.innerHTML = onlineBothGenders.map(u => `
-    <div class="online-circle-card" data-chat-uid="${u.uid}">
-      <div class="online-circle-ring">
-        <img src="${u.dp || defaultAvatar(u.name, u.sex)}" alt="${escapeHtml(u.name)}" />
-        <span class="status-dot online"></span>
+  circleStripEl.innerHTML = onlineBothGenders.map(u => {
+    const uid = cleanUid(u.uid);
+    return `
+      <div class="online-circle-card" data-chat-uid="${escapeHtml(uid)}">
+        <div class="online-circle-ring">
+          <img src="${escapeHtml(u.dp || defaultAvatar(u.name, u.sex))}" alt="${escapeHtml(u.name)}" />
+          <span class="status-dot online"></span>
+        </div>
+        <div class="online-circle-name">${escapeHtml(u.name)} (${u.sex === 'Female' ? 'G' : 'B'})</div>
       </div>
-      <div class="online-circle-name">${escapeHtml(u.name)} (${u.sex === 'Female' ? 'G' : 'B'})</div>
-    </div>
-  `).join("");
+    `;
+  }).join("");
 
   selfContainer.innerHTML = `
-    <div class="chat-user-card self-user-card" data-chat-uid="${currentUser.uid}">
+    <div class="chat-user-card self-user-card" data-chat-uid="${escapeHtml(myUid)}">
       <div class="avatar-wrap">
-        <img class="avatar-img" src="${currentUser.dp || defaultAvatar(currentUser.name, currentUser.sex)}" alt="My ID" />
+        <img class="avatar-img" src="${escapeHtml(currentUser.dp || defaultAvatar(currentUser.name, currentUser.sex))}" alt="My ID" />
         <span class="status-dot online"></span>
       </div>
       <div style="flex:1; min-width:0;">
@@ -2685,7 +2717,7 @@ function renderChatsTab() {
           <span class="new-badge">MY ID • #1</span>
         </div>
         <div style="font-size:12px; color:var(--maroon-800); margin-top:2px;">
-          ${currentUser.sex} • ${currentUser.age} yrs • ${escapeHtml(currentUser.country)}
+          ${escapeHtml(currentUser.sex)} • ${escapeHtml(currentUser.age)} yrs • ${escapeHtml(currentUser.country)}
         </div>
       </div>
       <div style="text-align:right;">
@@ -2701,7 +2733,7 @@ function renderChatsTab() {
 
   const pinnedMap = currentUser.pinnedUsers || {};
   const recentUsers = [...allOtherUsers].sort((a, b) =>
-    (pinnedMap[b.uid] ? 1 : 0) - (pinnedMap[a.uid] ? 1 : 0) ||
+    (pinnedMap[cleanUid(b.uid)] ? 1 : 0) - (pinnedMap[cleanUid(a.uid)] ? 1 : 0) ||
     ((b.online ? 1 : 0) - (a.online ? 1 : 0))
   );
 
@@ -2714,20 +2746,21 @@ function renderChatsTab() {
     </div>`;
   } else {
     peersListEl.innerHTML = recentUsers.map(p => {
-      const isSel = selectedRecentUids.has(p.uid);
-      const isPinned = !!pinnedMap[p.uid];
+      const uid = cleanUid(p.uid);
+      const isSel = selectedRecentUids.has(uid);
+      const isPinned = !!pinnedMap[uid];
       return `
-        <div class="chat-user-card ${isSel ? 'selected-row' : ''}" data-recent-uid="${p.uid}">
+        <div class="chat-user-card ${isSel ? 'selected-row' : ''}" data-recent-uid="${escapeHtml(uid)}">
           ${recentSelectMode ? `<div class="row-check-circle">${isSel ? '✓' : ''}</div>` : ''}
           <div class="avatar-wrap">
-            <img class="avatar-img" src="${p.dp || defaultAvatar(p.name, p.sex)}" alt="${escapeHtml(p.name)}" />
+            <img class="avatar-img" src="${escapeHtml(p.dp || defaultAvatar(p.name, p.sex))}" alt="${escapeHtml(p.name)}" />
             <span class="status-dot ${p.online ? 'online' : ''}"></span>
           </div>
           <div style="flex:1; min-width:0;">
             <strong style="font-size:15px; color:var(--text-dark);">${escapeHtml(p.name)}</strong>
-            ${isPinned ? `<span class="new-badge">📌 Pinned</span>` : `<span class="new-badge">${p.sex}</span>`}
+            ${isPinned ? `<span class="new-badge">📌 Pinned</span>` : `<span class="new-badge">${escapeHtml(p.sex)}</span>`}
             <div style="font-size:12px; color:var(--text-muted); margin-top:2px;">
-              ${escapeHtml(p.country)} • ${p.age} yrs
+              ${escapeHtml(p.country)} • ${escapeHtml(p.age)} yrs
             </div>
           </div>
           <div style="text-align:right;">
@@ -2755,7 +2788,7 @@ function bindChatTabInteractions() {
   });
 
   document.querySelectorAll("[data-recent-uid]").forEach(card => {
-    const uid = card.getAttribute("data-recent-uid");
+    const uid = cleanUid(card.getAttribute("data-recent-uid"));
     let pressTimer = null;
     let startX = 0;
     let startY = 0;
@@ -2806,7 +2839,7 @@ function bindChatTabInteractions() {
 
 function enterRecentSelectMode(uid) {
   recentSelectMode = true;
-  selectedRecentUids.add(uid);
+  selectedRecentUids.add(cleanUid(uid));
   renderChatsTab();
 }
 function exitRecentSelectMode() {
@@ -2838,135 +2871,184 @@ function deleteSelectedRecentChats() {
 }
 
 /* ==========================================================================
-   PERSONAL CHAT ROOM
+   PERSONAL CHAT ROOM (NON-RECURSIVE + SELF & PEER CHAT)
    ========================================================================== */
 function getChatThreadId(uid1, uid2) {
-  return [uid1, uid2].sort().join("__");
+  const a = cleanUid(uid1);
+  const b = cleanUid(uid2);
+  if (!a || !b) return "";
+  if (a === b) return "self__" + a;
+  return [a, b].sort().join("__");
 }
 
 function isPeerBlocked(peerUid) {
-  return !!(currentUser && currentUser.blockedUsers && currentUser.blockedUsers[peerUid]);
+  const id = cleanUid(peerUid);
+  return !!(currentUser && currentUser.blockedUsers && currentUser.blockedUsers[id]);
 }
 
 function getTickIconHtml(msg, peerUid) {
-  if (msg.seenByPeer || msg.seen) {
+  if (msg && (msg.seenByPeer || msg.seen)) {
     return `<i class="fa-solid fa-check-double" style="color:#38bdf8;"></i>`;
   }
-  const peer = allUsersMap[peerUid];
+  const peer = findUserByUid(peerUid);
   if (peer && peer.online) {
     return `<i class="fa-solid fa-check-double" style="color:rgba(255,255,255,0.85);"></i>`;
   }
   return `<i class="fa-solid fa-check" style="color:rgba(255,255,255,0.75);"></i>`;
 }
 
-function openChatRoom(peerUid) {
-  if (!currentUser) {
+function resetChatSelectionHeaderOnly() {
+  msgMultiSelectActive = false;
+  if (selectedMsgIds && typeof selectedMsgIds.clear === "function") {
+    selectedMsgIds.clear();
+  }
+  selectedMsgForContext = null;
+  const normalHdr = document.getElementById("chat-normal-header");
+  const selectHdr = document.getElementById("chat-msg-select-header");
+  if (normalHdr) normalHdr.classList.remove("hidden");
+  if (selectHdr) selectHdr.classList.add("hidden");
+}
+
+function openChatRoom(rawPeerUid) {
+  const peerUid = cleanUid(rawPeerUid);
+  const myUid = cleanUid(currentUser && currentUser.uid);
+
+  if (!myUid) {
     showToast("Please login first!", "fa-user");
     return;
   }
-  const peer = allUsersMap[peerUid] || (peerUid === currentUser.uid ? currentUser : null);
-  if (!peer) {
+  if (!peerUid) {
     showToast("User not found", "fa-circle-exclamation");
     return;
   }
 
+  const isSelf = peerUid === myUid;
+  const peer = findUserByUid(peerUid) || (isSelf ? currentUser : {
+    uid: peerUid,
+    name: "User",
+    sex: "Male",
+    age: 20,
+    country: "Pakistan",
+    online: false,
+    dp: ""
+  });
+
   activeChatPeerId = peerUid;
-  clearMessageMultiSelect();
+  resetChatSelectionHeaderOnly();
   cancelChatReply();
 
   document.getElementById("chat-peer-dp").src = peer.dp || defaultAvatar(peer.name, peer.sex);
-  document.getElementById("chat-peer-name").textContent = peer.name + (peerUid === currentUser.uid ? " (My Chat)" : "");
+  document.getElementById("chat-peer-name").textContent = (peer.name || "User") + (isSelf ? " (My Chat)" : "");
   document.getElementById("chat-peer-details").textContent =
-    `${peer.country} • ${peer.age} yrs • ${peer.online ? 'Online' : 'Offline'}`;
+    `${peer.country || "Pakistan"} • ${peer.age || ""} yrs • ${isSelf ? "Personal Notes" : (peer.online ? "Online" : "Offline")}`;
 
   updateBlockButtonIcon();
 
   renderGiftsGrid("chat-gifts-grid", (gift) => sendGiftMessage(gift));
   document.getElementById("chat-gifts-drawer").classList.add("hidden");
-  document.getElementById("chat-room-modal").classList.remove("hidden");
 
-  const threadId = getChatThreadId(currentUser.uid, peerUid);
-  if (chatMessagesRef) chatMessagesRef.off();
+  const modal = document.getElementById("chat-room-modal");
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
+
+  const threadId = getChatThreadId(myUid, peerUid);
+  if (chatMessagesRef && typeof chatMessagesRef.off === "function") {
+    chatMessagesRef.off();
+  }
   chatMessagesRef = db.ref("chats/" + threadId);
 
-  chatMessagesRef.limitToLast(80).on("value", snap => {
-    const area = document.getElementById("chat-messages-list");
-    const msgs = snap.val() || {};
-    const entries = Object.entries(msgs);
-    currentChatEntries = entries;
+  const area = document.getElementById("chat-messages-list");
+  area.innerHTML = `<div style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:24px;">Loading messages...</div>`;
 
-    entries.forEach(([msgId, m]) => {
-      if (m.senderId !== currentUser.uid && !m.seenByPeer) {
+  chatMessagesRef.limitToLast(80).on("value", snap => {
+    const msgs = snap.val() || {};
+    currentChatEntries = Object.entries(msgs);
+
+    currentChatEntries.forEach(([msgId, m]) => {
+      if (m && cleanUid(m.senderId) !== myUid && !m.seenByPeer) {
         db.ref(`chats/${threadId}/${msgId}/seenByPeer`).set(true).catch(() => {});
       }
     });
 
-    if (entries.length === 0) {
-      area.innerHTML = `<div style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:30px;">
-        Start chatting with ${escapeHtml(peer.name)}.
+    renderCurrentChatMessagesList(peer);
+  }, (err) => {
+    area.innerHTML = `<div style="text-align:center; font-size:12px; color:#dc2626; margin-top:24px;">Error: ${escapeHtml(err.message || "Could not load chat")}</div>`;
+  });
+}
+
+function renderCurrentChatMessagesList(peerObj) {
+  const area = document.getElementById("chat-messages-list");
+  if (!area || !activeChatPeerId || !currentUser) return;
+
+  const myUid = cleanUid(currentUser.uid);
+  const peer = peerObj || findUserByUid(activeChatPeerId) || { name: "User" };
+  const threadId = getChatThreadId(myUid, activeChatPeerId);
+
+  if (currentChatEntries.length === 0) {
+    area.innerHTML = `<div style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:30px;">
+      Start chatting with ${escapeHtml(peer.name)}.
+    </div>`;
+    return;
+  }
+
+  area.innerHTML = currentChatEntries.map(([msgId, m]) => {
+    const isMine = cleanUid(m.senderId) === myUid;
+    const isSel = selectedMsgIds.has(msgId);
+    let innerHtml = "";
+
+    if (m.replyToText) {
+      innerHtml += `<div style="background:rgba(0,0,0,0.14); border-left:3px solid var(--gold); padding:4px 8px; border-radius:6px; font-size:11px; margin-bottom:5px;">
+        ↩ ${escapeHtml(m.replyToText)}
       </div>`;
-      return;
     }
 
-    area.innerHTML = entries.map(([msgId, m]) => {
-      const isMine = m.senderId === currentUser.uid;
-      const isSel = selectedMsgIds.has(msgId);
-      let innerHtml = "";
+    if (m.type === "multi_image" && Array.isArray(m.mediaList)) {
+      innerHtml += `<div class="msg-multi-grid">
+        ${m.mediaList.map(url => `<img src="${url}" onclick="event.stopPropagation(); openUserPhotoViewer('${url}')" />`).join("")}
+      </div>`;
+    } else if (m.type === "image") {
+      innerHtml += `<img src="${m.mediaUrl}" class="msg-img" onclick="event.stopPropagation(); openUserPhotoViewer('${m.mediaUrl}')" />`;
+    } else if (m.type === "video") {
+      innerHtml += `<video controls controlsList="nodownload" src="${m.mediaUrl}" class="msg-video"></video>`;
+    } else if (m.type === "audio") {
+      innerHtml += `<audio controls controlsList="nodownload" src="${m.mediaUrl}" style="max-width:210px; height:36px;"></audio>`;
+    } else if (m.type === "gift") {
+      innerHtml += `<div class="gift-bubble">
+        <div style="font-size:34px;">${m.giftEmoji}</div>
+        <div style="font-weight:800; font-size:13px;">${escapeHtml(m.giftName)}</div>
+        <div style="font-size:11px; color:var(--maroon-700); font-weight:700;">${m.giftCoins} Coins</div>
+      </div>`;
+    } else {
+      const fmt = m.format || "normal";
+      const rawText = escapeHtml(m.text || "");
+      const styledText = fmt === "bold" ? `<strong>${rawText}</strong>` :
+                         fmt === "italic" ? `<em>${rawText}</em>` : rawText;
+      innerHtml += `<div>${styledText}</div>`;
+    }
 
-      if (m.replyToText) {
-        innerHtml += `<div style="background:rgba(0,0,0,0.14); border-left:3px solid var(--gold); padding:4px 8px; border-radius:6px; font-size:11px; margin-bottom:5px;">
-          ↩ ${escapeHtml(m.replyToText)}
-        </div>`;
-      }
+    const ticksHtml = isMine ? getTickIconHtml(m, activeChatPeerId) : "";
+    const safeLabel = escapeAttr(m.text || m.giftName || (m.type === "image" ? "Photo" : "Message"));
 
-      if (m.type === "multi_image" && Array.isArray(m.mediaList)) {
-        innerHtml += `<div class="msg-multi-grid">
-          ${m.mediaList.map(url => `<img src="${url}" onclick="event.stopPropagation(); openUserPhotoViewer('${url}')" />`).join("")}
-        </div>`;
-      } else if (m.type === "image") {
-        innerHtml += `<img src="${m.mediaUrl}" class="msg-img" onclick="event.stopPropagation(); openUserPhotoViewer('${m.mediaUrl}')" />`;
-      } else if (m.type === "video") {
-        innerHtml += `<video controls controlsList="nodownload" src="${m.mediaUrl}" class="msg-video"></video>`;
-      } else if (m.type === "audio") {
-        innerHtml += `<audio controls controlsList="nodownload" src="${m.mediaUrl}" style="max-width:210px; height:36px;"></audio>`;
-      } else if (m.type === "gift") {
-        innerHtml += `<div class="gift-bubble">
-          <div style="font-size:34px;">${m.giftEmoji}</div>
-          <div style="font-weight:800; font-size:13px;">${escapeHtml(m.giftName)}</div>
-          <div style="font-size:11px; color:var(--maroon-700); font-weight:700;">${m.giftCoins} Coins</div>
-        </div>`;
-      } else {
-        const fmt = m.format || "normal";
-        const rawText = escapeHtml(m.text || "");
-        const styledText = fmt === "bold" ? `<strong>${rawText}</strong>` :
-                           fmt === "italic" ? `<em>${rawText}</em>` : rawText;
-        innerHtml += `<div>${styledText}</div>`;
-      }
-
-      const ticksHtml = isMine ? getTickIconHtml(m, peerUid) : "";
-      const safeLabel = escapeAttr(m.text || m.giftName || (m.type === "image" ? "Photo" : "Message"));
-
-      return `
-        <div class="msg-row-wrap ${isMine ? 'mine-row' : 'theirs-row'} ${isSel ? 'msg-sel' : ''}"
-             onclick="handleMessageTap('${msgId}', '${safeLabel}')">
-          ${!isMine && msgMultiSelectActive ? `<div class="msg-circle-tick">${isSel ? '✓' : ''}</div>` : ''}
-          <div class="msg-bubble ${isMine ? 'msg-mine' : 'msg-theirs'}"
-               oncontextmenu="openMsgContext(event, '${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
-               ontouchstart="startLongPress('${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
-               ontouchend="cancelLongPress()">
-            ${innerHtml}
-            <div class="msg-meta">
-              <span>${formatDateTime(m.ts)}</span>
-              ${ticksHtml}
-            </div>
+    return `
+      <div class="msg-row-wrap ${isMine ? 'mine-row' : 'theirs-row'} ${isSel ? 'msg-sel' : ''}"
+           onclick="handleMessageTap('${msgId}', '${safeLabel}')">
+        ${!isMine && msgMultiSelectActive ? `<div class="msg-circle-tick">${isSel ? '✓' : ''}</div>` : ''}
+        <div class="msg-bubble ${isMine ? 'msg-mine' : 'msg-theirs'}"
+             oncontextmenu="openMsgContext(event, '${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
+             ontouchstart="startLongPress('${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
+             ontouchend="cancelLongPress()">
+          ${innerHtml}
+          <div class="msg-meta">
+            <span>${formatDateTime(m.ts)}</span>
+            ${ticksHtml}
           </div>
-          ${isMine && msgMultiSelectActive ? `<div class="msg-circle-tick">${isSel ? '✓' : ''}</div>` : ''}
         </div>
-      `;
-    }).join("");
+        ${isMine && msgMultiSelectActive ? `<div class="msg-circle-tick">${isSel ? '✓' : ''}</div>` : ''}
+      </div>
+    `;
+  }).join("");
 
-    area.scrollTop = area.scrollHeight;
-  });
+  area.scrollTop = area.scrollHeight;
 }
 
 function handleMessageTap(msgId, labelText) {
@@ -2974,7 +3056,7 @@ function handleMessageTap(msgId, labelText) {
     if (selectedMsgIds.has(msgId)) selectedMsgIds.delete(msgId);
     else selectedMsgIds.add(msgId);
     document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
-    openChatRoom(activeChatPeerId);
+    renderCurrentChatMessagesList();
     return;
   }
   if (!activeChatPeerId) return;
@@ -2994,16 +3076,12 @@ function selectAllMessagesInChat() {
   msgMultiSelectActive = true;
   selectedMsgIds = new Set(currentChatEntries.map(([id]) => id));
   document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
-  openChatRoom(activeChatPeerId);
+  renderCurrentChatMessagesList();
 }
 
 function clearMessageMultiSelect() {
-  msgMultiSelectActive = false;
-  selectedMsgIds.clear();
-  selectedMsgForContext = null;
-  document.getElementById("chat-msg-select-header").classList.add("hidden");
-  document.getElementById("chat-normal-header").classList.remove("hidden");
-  if (activeChatPeerId) openChatRoom(activeChatPeerId);
+  resetChatSelectionHeaderOnly();
+  renderCurrentChatMessagesList();
 }
 
 function replyToSelectedMessages() {
@@ -3024,7 +3102,7 @@ function cancelChatReply() {
 function forwardSelectedMessages() {
   const ids = selectedMsgIds.size ? Array.from(selectedMsgIds) : (selectedMsgForContext ? [selectedMsgForContext.msgId] : []);
   if (!ids.length) return;
-  const otherPeer = Object.values(allUsersMap).find(u => u.uid !== currentUser.uid && u.uid !== activeChatPeerId);
+  const otherPeer = Object.values(allUsersMap).find(u => u && cleanUid(u.uid) !== cleanUid(currentUser.uid) && cleanUid(u.uid) !== activeChatPeerId);
   if (!otherPeer) return showToast("No other user found to forward to", "fa-circle-info");
   const targetThread = getChatThreadId(currentUser.uid, otherPeer.uid);
 
@@ -3064,18 +3142,26 @@ function toggleBlockCurrentPeer() {
 }
 
 function closeChatRoom() {
-  if (chatMessagesRef) chatMessagesRef.off();
+  if (chatMessagesRef && typeof chatMessagesRef.off === "function") {
+    chatMessagesRef.off();
+    chatMessagesRef = null;
+  }
   activeChatPeerId = null;
-  document.getElementById("chat-room-modal").classList.add("hidden");
+  resetChatSelectionHeaderOnly();
+  const modal = document.getElementById("chat-room-modal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.style.display = "";
+  }
 }
 
 function creditGirlCoins(girlId, amount, deductFromBoyId = null) {
   if (!amount || amount <= 0) return;
-  if (deductFromBoyId && allUsersMap[deductFromBoyId]?.sex === "Male") {
+  if (deductFromBoyId && findUserByUid(deductFromBoyId)?.sex === "Male") {
     db.ref("users/" + deductFromBoyId + "/coins").transaction(c => Math.max(0, (c || 0) - amount));
   }
-  const recipientGirlId = (allUsersMap[girlId]?.sex === "Female") ? girlId :
-                        (allUsersMap[currentUser?.uid]?.sex === "Female" ? currentUser.uid : girlId);
+  const recipientGirlId = (findUserByUid(girlId)?.sex === "Female") ? girlId :
+                        (findUserByUid(currentUser?.uid)?.sex === "Female" ? currentUser.uid : girlId);
   db.ref("users/" + recipientGirlId + "/coins").transaction(c => (c || 0) + amount);
 }
 
@@ -3085,7 +3171,7 @@ function canSendPersonalMsg(cost = 30) {
     return false;
   }
   if (currentUser.sex === "Female") return true;
-  if (activeChatPeerId === currentUser.uid) return true;
+  if (cleanUid(activeChatPeerId) === cleanUid(currentUser.uid)) return true;
 
   if (Number(currentUser.coins || 0) < cost) {
     openDepositPrompt();
@@ -3437,7 +3523,7 @@ function contextEnterMultiSelect() {
   document.getElementById("chat-normal-header").classList.add("hidden");
   document.getElementById("chat-msg-select-header").classList.remove("hidden");
   document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
-  openChatRoom(activeChatPeerId);
+  renderCurrentChatMessagesList();
 }
 function contextFormatMsg(styleType) {
   if (selectedMsgForContext && selectedMsgForContext.isMine) {
@@ -3528,7 +3614,7 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
     showToast("Cannot call a blocked user.", "fa-ban");
     return;
   }
-  const peer = allUsersMap[peerUid] || { name: incomingCallData?.callerName || "User", sex: "Female" };
+  const peer = findUserByUid(peerUid) || { name: incomingCallData?.callerName || "User", sex: "Female" };
 
   if (!incomingCallData && !isPaid && currentUser.sex === "Male") {
     const rate = type === "video" ? 80 : 50;
@@ -3746,7 +3832,7 @@ function listenIncomingCalls() {
 
 function openPaidCallHub() {
   if (!activeChatPeerId) return;
-  const peer = allUsersMap[activeChatPeerId];
+  const peer = findUserByUid(activeChatPeerId);
   const body = document.getElementById("paid-call-body");
   document.getElementById("paid-call-modal").classList.remove("hidden");
 
@@ -3836,7 +3922,7 @@ function submitPaidCallRequest(girlId, method, maxMins) {
 
   compressImageFile(file, 900, 0.85, (slipDataUrl) => {
     const reqId = "pcall_" + Date.now();
-    const girl = allUsersMap[girlId] || {};
+    const girl = findUserByUid(girlId) || {};
     db.ref("paidCallRequests/" + reqId).set({
       id: reqId,
       boyId: currentUser.uid,
@@ -3873,7 +3959,7 @@ function rebuildLiveRoomsGrid() {
   liveRoomsList = Object.entries(rawLiveRoomsMap)
     .filter(([hostId, r]) => {
       if (!r || !r.active) return false;
-      const hostUser = allUsersMap[hostId];
+      const hostUser = findUserByUid(hostId);
       if (!hostUser || hostUser.online === false || hostUser.banned) {
         db.ref("liveRooms/" + hostId).remove().catch(() => {});
         return false;
@@ -3891,10 +3977,10 @@ function rebuildLiveRoomsGrid() {
 
   grid.innerHTML = liveRoomsList.map((room, idx) => `
     <div class="live-card" data-live-idx="${idx}">
-      <img src="${room.hostDp || defaultAvatar(room.hostName, 'Female')}" alt="${escapeHtml(room.hostName)}" />
+      <img src="${escapeHtml(room.hostDp || defaultAvatar(room.hostName, 'Female'))}" alt="${escapeHtml(room.hostName)}" />
       <div class="live-badge"><i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE</div>
       <button class="btn btn-sm" style="position:absolute; top:10px; right:10px; background:#fde047; color:#2c0912; padding:5px 8px; font-size:10px; z-index:2;"
-              data-live-inbox="${room.hostId}">
+              data-live-inbox="${escapeHtml(room.hostId)}">
         <i class="fa-solid fa-envelope"></i> Inbox
       </button>
       <div class="live-card-footer">
@@ -4128,7 +4214,7 @@ function switchNextLiveRoom(step) {
 
 function openLiveRoomUI(hostId, isHost) {
   activeLiveHostId = hostId;
-  const host = allUsersMap[hostId] || {};
+  const host = findUserByUid(hostId) || {};
 
   document.getElementById("live-host-dp").src = host.dp || defaultAvatar(host.name, "Female");
   document.getElementById("live-host-name").textContent = host.name || "Live Girl";
@@ -4421,7 +4507,7 @@ function openEditProfileModal() {
   body.innerHTML = `
     <div class="auth-card">
       <div style="text-align:center; margin-bottom:14px;">
-        <img id="edit-dp-preview" src="${currentUser.dp}" style="width:84px; height:84px; border-radius:50%; object-fit:cover; border:3px solid var(--maroon-600);" />
+        <img id="edit-dp-preview" src="${escapeHtml(currentUser.dp)}" style="width:84px; height:84px; border-radius:50%; object-fit:cover; border:3px solid var(--maroon-600);" />
         <div style="margin-top:8px;">
           <input type="file" id="edit-dp-file" accept="image/*" class="hidden" onchange="handleDpChange(this)" />
           <button class="btn btn-outline btn-sm" onclick="document.getElementById('edit-dp-file').click()">
@@ -4528,8 +4614,8 @@ function openProfileFolder(folder) {
       body.innerHTML = headerCard + (items.length ? items.map(d => `
         <div class="auth-card" style="margin-bottom:10px; border-left:4px solid var(--gold);">
           <div style="display:flex; justify-content:space-between;">
-            <strong>${d.wallet} • Rs. ${d.amountPkr}</strong>
-            <span class="new-badge" style="text-transform:uppercase;">${d.status}</span>
+            <strong>${escapeHtml(d.wallet)} • Rs. ${d.amountPkr}</strong>
+            <span class="new-badge" style="text-transform:uppercase;">${escapeHtml(d.status)}</span>
           </div>
           <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">${formatDateTime(d.ts)}</div>
         </div>
@@ -4550,8 +4636,8 @@ function openProfileFolder(folder) {
       body.innerHTML = headerCard + (items.length ? items.map(w => `
         <div class="auth-card" style="margin-bottom:10px; border-left:4px solid var(--gold);">
           <div style="display:flex; justify-content:space-between;">
-            <strong>${w.wallet} • ${w.coins.toLocaleString()} Coins</strong>
-            <span class="new-badge" style="text-transform:uppercase;">${w.status}</span>
+            <strong>${escapeHtml(w.wallet)} • ${w.coins.toLocaleString()} Coins</strong>
+            <span class="new-badge" style="text-transform:uppercase;">${escapeHtml(w.status)}</span>
           </div>
           <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">Net: Rs. ${w.netPkr} • ${formatDateTime(w.ts)}</div>
         </div>
@@ -4713,7 +4799,7 @@ function openAdminPanel() {
 function renderAdminDashboard() {
   const usersArr = Object.values(allUsersMap);
   const totalUsers = usersArr.length;
-  const onlineUsers = usersArr.filter(u => u.online).length;
+  const onlineUsers = usersArr.filter(u => u && u.online).length;
   const offlineUsers = totalUsers - onlineUsers;
   const isClosed = !!appSettings.appClosedPakistan;
   const capEnabled = appSettings.ownerCaptureEnabled !== false;
@@ -4871,7 +4957,7 @@ function publishPublicLinks() {
 }
 
 function adminLoginAsUser(uid) {
-  const targetUser = allUsersMap[uid];
+  const targetUser = findUserByUid(uid);
   if (!targetUser) return;
   completeUserLogin(targetUser, true);
 }
@@ -4884,7 +4970,7 @@ function openAdminSubFolder(type) {
 
   if (type === "users") {
     title.textContent = "Users, Owner Msg Box & Coins";
-    const users = Object.values(allUsersMap).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+    const users = Object.values(allUsersMap).filter(Boolean).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     body.innerHTML = users.map(u => {
       const pc = u.paidCallConfig || { method: "Easypaisa", holder: u.name, number: "", amountPkr: 500, durationMinutes: 60 };
       const facePicSrc = u.faceVerificationPic || (u.sex === "Female" ? u.dp : "");
@@ -4899,8 +4985,8 @@ function openAdminSubFolder(type) {
         <div class="auth-card" style="margin-bottom:12px;">
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <div>
-              <strong>${escapeHtml(u.name)}</strong> (${u.sex})
-              <div style="font-size:12px; color:var(--text-muted);">Mobile: <strong>${escapeHtml(u.mobile)}</strong> | Pass: <strong>${escapeHtml(u.password)}</strong></div>
+              <strong>${escapeHtml(u.name)}</strong> (${escapeHtml(u.sex)})
+              <div style="font-size:12px; color:var(--text-muted);">Mobile: <strong>${escapeHtml(u.mobile)}</strong> | Pass: <strong>${escapeHtml(u.password || '')}</strong></div>
               <div style="font-size:12px; font-weight:800; color:var(--maroon-700);">Coins: ${Number(u.coins || 0).toLocaleString()} (Rs. ${Math.floor((u.coins || 0)/COINS_PER_PKR)})</div>
             </div>
             <span class="new-badge">${u.online ? 'ONLINE' : 'OFFLINE'}</span>
@@ -4971,7 +5057,7 @@ function openAdminSubFolder(type) {
         <div class="auth-card" style="margin-bottom:12px;">
           <div style="display:flex; justify-content:space-between;">
             <strong>${escapeHtml(d.userName)} (${escapeHtml(d.userMobile)})</strong>
-            <span class="new-badge">${d.status.toUpperCase()}</span>
+            <span class="new-badge">${escapeHtml(d.status.toUpperCase())}</span>
           </div>
           <div style="font-size:12px; margin:4px 0;">
             Holder: ${escapeHtml(d.holder)} • ${escapeHtml(d.accountNumber)}<br/>
@@ -5002,7 +5088,7 @@ function openAdminSubFolder(type) {
         <div class="auth-card" style="margin-bottom:12px;">
           <div style="display:flex; justify-content:space-between;">
             <strong>${escapeHtml(w.userName)} (${escapeHtml(w.userMobile)})</strong>
-            <span class="new-badge">${w.status.toUpperCase()}</span>
+            <span class="new-badge">${escapeHtml(w.status.toUpperCase())}</span>
           </div>
           <div style="font-size:12px; margin:4px 0;">
             Holder: ${escapeHtml(w.holder)} • <strong>${escapeHtml(w.accountNumber)}</strong><br/>
@@ -5031,7 +5117,7 @@ function openAdminSubFolder(type) {
         <div class="auth-card" style="margin-bottom:12px;">
           <div style="display:flex; justify-content:space-between;">
             <strong>${escapeHtml(r.boyName)} ➔ ${escapeHtml(r.girlName)}</strong>
-            <span class="new-badge">${r.status.toUpperCase()}</span>
+            <span class="new-badge">${escapeHtml(r.status.toUpperCase())}</span>
           </div>
           <div style="font-size:12px; margin:4px 0;">
             Wallet: ${escapeHtml(r.wallet)} • Amount: <strong>Rs. ${r.amount}</strong> • Time: ${r.durationMinutes || 60}m<br/>
@@ -5049,7 +5135,7 @@ function openAdminSubFolder(type) {
     });
   } else if (type === "support-inbox") {
     title.textContent = "Customer Service Inbox";
-    const usersList = Object.values(allUsersMap);
+    const usersList = Object.values(allUsersMap).filter(Boolean);
     const userOptions = usersList.map(u => `<option value="${u.uid}">${escapeHtml(u.name)} (${escapeHtml(u.mobile)})</option>`).join("");
 
     db.ref("supportChats").on("value", snap => {
@@ -5076,7 +5162,7 @@ function openAdminSubFolder(type) {
       }
 
       const threadsHtml = uids.map(uid => {
-        const u = allUsersMap[uid] || { name: "User", mobile: "" };
+        const u = findUserByUid(uid) || { name: "User", mobile: "" };
         const msgs = Object.values(threads[uid]);
         const convoPreview = msgs.slice(-6).map(m => `
           <div style="font-size:12px; padding:5px 8px; border-radius:9px; margin-bottom:4px; background:${m.sender === 'owner' ? 'var(--maroon-100)' : '#f3f4f6'};">
@@ -5231,32 +5317,26 @@ function sendAdminSupportReply(uid) {
     sender: "owner",
     text,
     ts: Date.now()
-  }).then(() => {
-    showToast("Reply sent", "fa-paper-plane");
-    inp.value = "";
   });
+  inp.value = "";
 }
 
 /* ==========================================================================
-   PHOTO / SLIP VIEWER & UTILS
+   HD PHOTO / SLIP ZOOM VIEWER & IMAGE COMPRESSION
    ========================================================================== */
-function openUserPhotoViewer(src) {
+function openZoomSlip(src) {
+  if (!src) return;
   slipZoomLevel = 1;
-  document.getElementById("zoom-viewer-title").textContent = "Chat Photo";
   const img = document.getElementById("slip-zoom-img");
   img.src = src;
   img.style.transform = "scale(1)";
   document.getElementById("slip-zoom-modal").classList.remove("hidden");
 }
 
-function openZoomSlip(src) {
-  if (!isOwnerAdmin()) return;
-  slipZoomLevel = 1;
-  document.getElementById("zoom-viewer-title").textContent = "HD Receipt / Face Inspector";
-  const img = document.getElementById("slip-zoom-img");
-  img.src = src;
-  img.style.transform = "scale(1)";
-  document.getElementById("slip-zoom-modal").classList.remove("hidden");
+function openUserPhotoViewer(src) {
+  if (!src) return;
+  document.getElementById("zoom-viewer-title").textContent = "Photo Preview";
+  openZoomSlip(src);
 }
 
 function zoomSlip(delta) {
@@ -5265,6 +5345,8 @@ function zoomSlip(delta) {
 }
 
 function closeSlipModal() {
+  slipZoomLevel = 1;
+  document.getElementById("zoom-viewer-title").textContent = "Photo Viewer";
   document.getElementById("slip-zoom-modal").classList.add("hidden");
 }
 
@@ -5276,8 +5358,13 @@ function compressImageFile(file, maxDim, quality, callback) {
       let w = img.width;
       let h = img.height;
       if (w > maxDim || h > maxDim) {
-        if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
-        else { w = Math.round((w * maxDim) / h); h = maxDim; }
+        if (w > h) {
+          h = Math.round((h * maxDim) / w);
+          w = maxDim;
+        } else {
+          w = Math.round((w * maxDim) / h);
+          h = maxDim;
+        }
       }
       const canvas = document.createElement("canvas");
       canvas.width = w;
@@ -5292,36 +5379,21 @@ function compressImageFile(file, maxDim, quality, callback) {
 }
 
 function escapeHtml(str) {
-  return String(str || "").replace(/[&<>"']/g, m => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[m]));
+  return String(str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
+
 function escapeAttr(str) {
-  return String(str || "").replace(/'/g, "\\'").replace(/\n/g, " ");
+  return String(str || "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
 }
+
+window.openChatRoom = openChatRoom;
+window.closeChatRoom = closeChatRoom;
+window.clearMessageMultiSelect = clearMessageMultiSelect;
 </script>
 </body>
 </html>
-window.addEventListener("error", function (ev) {
-  alert("JS Error: " + ev.message + " (Line: " + ev.lineno + ")");
-});
-
-window.addEventListener("unhandledrejection", function (ev) {
-  alert("Promise Error: " + (ev.reason?.message || ev.reason));
-});
-
-const origOpenChat = window.openChatRoom;
-window.openChatRoom = function (uid) {
-  alert(
-    "openChatRoom called! uid=" +
-      String(uid) +
-      " | myUid=" +
-      String(typeof currentUser !== "undefined" ? currentUser?.uid : window.currentUser?.uid) +
-      " | modalExists=" +
-      Boolean(document.getElementById("chat-room-modal"))
-  );
-  if (typeof origOpenChat === "function") {
-    return origOpenChat.apply(this, arguments);
-  }
-};
-
