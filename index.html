@@ -175,6 +175,47 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Luxury Admin Login Modal */
+  #luxury-admin-login-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(24, 3, 9, 0.85);
+    backdrop-filter: blur(6px);
+    z-index: 97000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .luxury-admin-box {
+    width: 100%;
+    max-width: 360px;
+    background: linear-gradient(160deg, #320611 0%, #5c1023 55%, #7c1831 100%);
+    color: #fff;
+    border-radius: 24px;
+    padding: 22px 20px;
+    border: 1.5px solid rgba(253, 224, 71, 0.7);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+  }
+  .luxury-admin-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(253, 224, 71, 0.45);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    outline: none;
+    margin-bottom: 14px;
+  }
+  .luxury-admin-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: normal;
+    font-weight: 500;
+  }
+
   #deposit-prompt-modal, #chat-now-link-modal {
     position: fixed;
     inset: 0;
@@ -405,7 +446,6 @@
     border: 1px solid rgba(255,255,255,0.2);
   }
 
-  /* Multi-select Bar on Recent Chats */
   .recent-select-bar {
     background: #2b0711;
     color: #fff;
@@ -476,7 +516,6 @@
     justify-content: space-between;
   }
 
-  /* Single Horizontal Row of Online Circles (5 visible + scroll) */
   .online-circle-row {
     display: flex;
     flex-direction: row;
@@ -641,7 +680,6 @@
     padding: 14px;
   }
 
-  /* Labeled Action Strip Inside Chat */
   .labeled-chat-strip {
     background: #fff;
     border-bottom: 1px solid var(--border-light);
@@ -706,7 +744,6 @@
     background: var(--maroon-700);
   }
 
-  /* Distinct Sender vs Receiver Bubble Colors */
   .msg-bubble {
     max-width: 78%;
     padding: 10px 13px;
@@ -808,7 +845,6 @@
     50% { transform: scale(1.08); }
   }
 
-  /* Photo Editor Modal */
   #photo-editor-modal {
     position: fixed;
     inset: 0;
@@ -822,7 +858,6 @@
     color: #fff;
   }
 
-  /* Direct Camera Modal */
   #direct-camera-modal {
     position: fixed;
     inset: 0;
@@ -1007,12 +1042,29 @@
   .live-room-top {
     position: relative;
     z-index: 4;
-    padding: 14px;
+    padding: 10px 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(rgba(0,0,0,0.5), transparent);
+    gap: 6px;
+    background: linear-gradient(rgba(0,0,0,0.62), transparent);
     color: #fff;
+    flex-wrap: nowrap;
+  }
+  .live-top-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .live-top-actions .btn,
+  .live-top-actions .back-btn {
+    padding: 6px 8px;
+    font-size: 10px;
+    height: 30px;
+    width: auto;
+    border-radius: 9px;
+    white-space: nowrap;
   }
   .live-room-bottom {
     position: relative;
@@ -1222,6 +1274,26 @@
 
 <div id="toast-box"></div>
 
+<!-- Luxury Admin Passcode Modal -->
+<div id="luxury-admin-login-modal" class="hidden">
+  <div class="luxury-admin-box">
+    <div style="text-align:center; margin-bottom:14px;">
+      <div style="width:54px; height:54px; border-radius:18px; background:rgba(253,224,71,0.16); border:1.5px solid var(--gold-light); color:var(--gold-light); display:inline-flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:8px;">
+        <i class="fa-solid fa-crown"></i>
+      </div>
+      <div style="font-size:11px; font-weight:800; color:var(--gold-light); letter-spacing:1.2px;">✦ ROYAL OWNER ACCESS ✦</div>
+      <h3 style="font-size:19px; font-weight:800; margin-top:3px;">Admin Panel Login</h3>
+    </div>
+    <input type="password" id="luxury-admin-code-input" class="luxury-admin-input" placeholder="Enter Admin Passcode" onkeypress="if(event.key==='Enter') submitLuxuryAdminCode()" />
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+      <button type="button" class="btn btn-outline btn-sm" style="background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.28);" onclick="closeLuxuryAdminModal()">Cancel</button>
+      <button type="button" class="btn btn-sm" style="background:linear-gradient(135deg,#fde047,#d4af37); color:#2c0912; font-weight:800;" onclick="submitLuxuryAdminCode()">
+        <i class="fa-solid fa-unlock"></i> Unlock
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- 1-Tap "Chat Now" Link Modal -->
 <div id="chat-now-link-modal" class="hidden">
   <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
@@ -1422,7 +1494,6 @@
         <span id="online-peers-heading">Online Girls &amp; Boys</span>
         <span id="online-counter-label" style="font-size:11px; color:var(--text-muted);">0 Online</span>
       </div>
-      <!-- 1 Horizontal Row of Online Circles (5 visible + horizontal scroll) -->
       <div id="online-circle-strip" class="online-circle-row"></div>
 
       <div class="section-heading" style="margin-top:10px;">
@@ -1673,7 +1744,6 @@
     <button class="back-btn" onclick="shareCurrentPeerChatLink()" title="Share User Chat Link"><i class="fa-solid fa-share-nodes"></i></button>
   </div>
 
-  <!-- Top Bar When Message Selected / Reply / Forward / Select All -->
   <div id="chat-msg-select-header" class="modal-header hidden" style="background:#2b0711;">
     <div style="display:flex; align-items:center; gap:8px;">
       <button class="back-btn" onclick="clearMessageMultiSelect()"><i class="fa-solid fa-xmark"></i></button>
@@ -1686,7 +1756,6 @@
     </div>
   </div>
 
-  <!-- Labeled Action Toolbar Inside Chat (With Names) -->
   <div class="labeled-chat-strip">
     <button class="labeled-chat-btn" onclick="initiateCall('audio')">
       <i class="fa-solid fa-phone"></i><span>Audio Call</span>
@@ -1734,7 +1803,7 @@
   </div>
 </div>
 
-<!-- ==================== PHOTO EDITOR MODAL (CROP + MARK + MULTIPLE COLORS) ==================== -->
+<!-- ==================== PHOTO EDITOR MODAL ==================== -->
 <div id="photo-editor-modal" class="hidden">
   <div style="padding:12px 14px; background:#2b0711; display:flex; justify-content:space-between; align-items:center;">
     <button class="back-btn" onclick="closePhotoEditor()"><i class="fa-solid fa-xmark"></i></button>
@@ -1823,21 +1892,21 @@
   <img id="live-fallback-bg" src="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;" />
 
   <div class="live-room-top">
-    <div style="display:flex; align-items:center; gap:9px;">
-      <img id="live-host-dp" src="" style="width:40px; height:40px; border-radius:50%; object-fit:cover; border:2px solid #e11d48;" />
-      <div>
-        <div id="live-host-name" style="font-size:14px; font-weight:800;">Host Name</div>
-        <div id="live-stream-status" style="font-size:10px; color:#fda4af;">
-          <i class="fa-solid fa-eye"></i> <span id="live-viewer-count-label">1</span> Watching • Auto-clear 1m
+    <div style="display:flex; align-items:center; gap:7px; min-width:0;">
+      <img id="live-host-dp" src="" style="width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid #e11d48; flex-shrink:0;" />
+      <div style="min-width:0;">
+        <div id="live-host-name" style="font-size:12px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:74px;">Host Name</div>
+        <div id="live-stream-status" style="font-size:9px; color:#fda4af; white-space:nowrap;">
+          <i class="fa-solid fa-eye"></i> <span id="live-viewer-count-label">1</span> • 1m auto
         </div>
       </div>
     </div>
 
-    <div style="display:flex; gap:6px; align-items:center;">
+    <div class="live-top-actions">
       <button id="btn-live-inbox" class="btn btn-sm" style="background:#fde047; color:#2c0912;" onclick="openInboxFromLiveHost()">
         <i class="fa-solid fa-envelope"></i> Inbox
       </button>
-      <button id="btn-live-mic-toggle" class="back-btn" style="width:34px; height:34px;" title="Voice Call Mic" onclick="toggleLiveVoiceMic(this)">
+      <button id="btn-live-mic-toggle" class="back-btn" title="Voice Call Mic" onclick="toggleLiveVoiceMic(this)">
         <i class="fa-solid fa-microphone"></i>
       </button>
       <button id="btn-live-clear-chat" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="clearLiveRoomChat()">
@@ -1846,7 +1915,7 @@
       <button id="btn-live-next-room" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="switchNextLiveRoom(1)">
         <i class="fa-solid fa-angles-down"></i> Next
       </button>
-      <button class="btn btn-danger btn-sm" onclick="leaveLiveRoom()">
+      <button id="btn-live-leave" class="btn btn-danger btn-sm" onclick="leaveLiveRoom()">
         <i class="fa-solid fa-right-from-bracket"></i> Leave
       </button>
     </div>
@@ -2003,6 +2072,7 @@ const GIFTS_CATALOG = [
 
 let currentUser = null;
 let allUsersMap = {};
+let rawLiveRoomsMap = {};
 let appSettings = {
   appClosedPakistan: false,
   downloadAppLink: "https://aura-meet-6f81b.web.app/AuraMeet.apk",
@@ -2085,7 +2155,6 @@ function defaultAvatar(name, sex) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || 'User')}&background=${bg}&color=fff&bold=true&size=160`;
 }
 
-// Full Day / Date / Month / Year Format (e.g., Fri, 27 Nov 2026 • 11:26 PM)
 function formatDateTime(ts) {
   const d = new Date(ts || Date.now());
   const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -2202,6 +2271,7 @@ window.addEventListener("DOMContentLoaded", () => {
   setupCaptureProtection();
   listenAppSettings();
   listenAllUsers();
+  listenLiveRooms();
   checkUrlChatTarget();
 
   let logoTapCount = 0;
@@ -2209,7 +2279,7 @@ window.addEventListener("DOMContentLoaded", () => {
     logoTapCount++;
     if (logoTapCount >= 5) {
       logoTapCount = 0;
-      openAdminLoginPrompt();
+      openLuxuryAdminModal();
     }
     setTimeout(() => { logoTapCount = 0; }, 2500);
   });
@@ -2231,7 +2301,7 @@ function handleHeaderSecretTap() {
   headerTapCounter++;
   if (headerTapCounter >= 5) {
     headerTapCounter = 0;
-    openAdminLoginPrompt();
+    openLuxuryAdminModal();
   }
   setTimeout(() => { headerTapCounter = 0; }, 2500);
 }
@@ -2241,9 +2311,7 @@ function handleAdminShortcutClick() {
   adminBtnTapCounter++;
   if (adminBtnTapCounter >= 5) {
     adminBtnTapCounter = 0;
-    openAdminLoginPrompt();
-  } else {
-    showToast(`Tap ${5 - adminBtnTapCounter} more times & login`, "fa-lock");
+    openLuxuryAdminModal();
   }
   setTimeout(() => { adminBtnTapCounter = 0; }, 2500);
 }
@@ -2282,6 +2350,7 @@ function listenAllUsers() {
     if (currentUser) {
       renderChatsTab();
     }
+    rebuildLiveRoomsGrid();
   });
 }
 
@@ -2350,7 +2419,6 @@ function captureFaceSnapshot() {
   canvas.width = 420;
   canvas.height = 420;
   const ctx = canvas.getContext("2d");
-  // Capture wider uncropped full-face frame so eyes-only or close crop is discouraged
   ctx.drawImage(vid, 0, 0, canvas.width, canvas.height);
   verifiedFaceDataUrl = canvas.toDataURL("image/jpeg", 0.85);
 
@@ -2510,6 +2578,7 @@ function completeUserLogin(user, isAdminImpersonation = false) {
   const userRef = db.ref("users/" + user.uid);
   userRef.update({ online: true, lastSeen: Date.now() }).catch(() => {});
   userRef.child("online").onDisconnect().set(false);
+  db.ref("liveRooms/" + user.uid).onDisconnect().remove().catch(() => {});
 
   document.getElementById("auth-screen").classList.add("hidden");
   document.getElementById("main-app").classList.remove("hidden");
@@ -2522,17 +2591,17 @@ function completeUserLogin(user, isAdminImpersonation = false) {
   renderChatsTab();
   switchMainTab("chats");
   listenIncomingCalls();
-  listenLiveRooms();
 
   if (isAdminImpersonation) {
     closeModal("admin-subfolder-modal");
     closeModal("admin-panel-modal");
-    showToast(`Logged in as ${user.name}. Tap Admin 5 times & login to return.`, "fa-user-check");
+    showToast(`Logged in as ${user.name}.`, "fa-user-check");
   }
 }
 
 function logoutUser() {
   if (currentUser) {
+    db.ref("liveRooms/" + currentUser.uid).remove().catch(() => {});
     db.ref("users/" + currentUser.uid + "/online").set(false).catch(() => {});
     db.ref("activeCalls/" + currentUser.uid).off();
     incomingCallListenerStarted = false;
@@ -2580,7 +2649,7 @@ function switchMainTab(tab) {
 }
 
 /* ==========================================================================
-   TAB 1: CHATS (GIRLS & BOYS ONLINE + 5-CIRCLE HORIZONTAL ROW + RECENT MULTI-SELECT)
+   TAB 1: CHATS (TAP OPENS CHAT IMMEDIATELY; SCROLL DOES NOT SELECT)
    ========================================================================== */
 function renderChatsTab() {
   if (!currentUser) return;
@@ -2588,7 +2657,6 @@ function renderChatsTab() {
   const peersListEl = document.getElementById("online-peers-list");
   const selfContainer = document.getElementById("self-id-card-container");
 
-  // Show both Girls and Boys online to every user
   const allOtherUsers = Object.values(allUsersMap)
     .filter(u => u.uid !== currentUser.uid && !u.banned && !(currentUser.hiddenUsers && currentUser.hiddenUsers[u.uid]));
 
@@ -2596,7 +2664,7 @@ function renderChatsTab() {
   document.getElementById("online-counter-label").textContent = `${onlineBothGenders.length} Online`;
 
   circleStripEl.innerHTML = onlineBothGenders.map(u => `
-    <div class="online-circle-card" onclick="openChatRoom('${u.uid}')">
+    <div class="online-circle-card" data-chat-uid="${u.uid}">
       <div class="online-circle-ring">
         <img src="${u.dp || defaultAvatar(u.name, u.sex)}" alt="${escapeHtml(u.name)}" />
         <span class="status-dot online"></span>
@@ -2605,9 +2673,8 @@ function renderChatsTab() {
     </div>
   `).join("");
 
-  // Your Account at 1st Position
   selfContainer.innerHTML = `
-    <div class="chat-user-card self-user-card" onclick="openChatRoom('${currentUser.uid}')">
+    <div class="chat-user-card self-user-card" data-chat-uid="${currentUser.uid}">
       <div class="avatar-wrap">
         <img class="avatar-img" src="${currentUser.dp || defaultAvatar(currentUser.name, currentUser.sex)}" alt="My ID" />
         <span class="status-dot online"></span>
@@ -2632,7 +2699,6 @@ function renderChatsTab() {
     </div>
   `;
 
-  // Recent Chats list (pinned first)
   const pinnedMap = currentUser.pinnedUsers || {};
   const recentUsers = [...allOtherUsers].sort((a, b) =>
     (pinnedMap[b.uid] ? 1 : 0) - (pinnedMap[a.uid] ? 1 : 0) ||
@@ -2651,11 +2717,7 @@ function renderChatsTab() {
       const isSel = selectedRecentUids.has(p.uid);
       const isPinned = !!pinnedMap[p.uid];
       return `
-        <div class="chat-user-card ${isSel ? 'selected-row' : ''}"
-             oncontextmenu="event.preventDefault(); enterRecentSelectMode('${p.uid}')"
-             ontouchstart="startRecentLongPress('${p.uid}')"
-             ontouchend="cancelRecentLongPress()"
-             onclick="handleRecentCardTap('${p.uid}')">
+        <div class="chat-user-card ${isSel ? 'selected-row' : ''}" data-recent-uid="${p.uid}">
           ${recentSelectMode ? `<div class="row-check-circle">${isSel ? '✓' : ''}</div>` : ''}
           <div class="avatar-wrap">
             <img class="avatar-img" src="${p.dp || defaultAvatar(p.name, p.sex)}" alt="${escapeHtml(p.name)}" />
@@ -2680,15 +2742,68 @@ function renderChatsTab() {
       `;
     }).join("");
   }
+
+  bindChatTabInteractions();
 }
 
-let recentPressTimer = null;
-function startRecentLongPress(uid) {
-  recentPressTimer = setTimeout(() => enterRecentSelectMode(uid), 450);
+function bindChatTabInteractions() {
+  document.querySelectorAll("[data-chat-uid]").forEach(el => {
+    el.onclick = () => {
+      const uid = el.getAttribute("data-chat-uid");
+      if (uid) openChatRoom(uid);
+    };
+  });
+
+  document.querySelectorAll("[data-recent-uid]").forEach(card => {
+    const uid = card.getAttribute("data-recent-uid");
+    let pressTimer = null;
+    let startX = 0;
+    let startY = 0;
+    let movedDuringTouch = false;
+
+    card.oncontextmenu = (e) => {
+      e.preventDefault();
+      enterRecentSelectMode(uid);
+    };
+
+    card.addEventListener("touchstart", (e) => {
+      movedDuringTouch = false;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      pressTimer = setTimeout(() => {
+        if (!movedDuringTouch) {
+          enterRecentSelectMode(uid);
+        }
+      }, 520);
+    }, { passive: true });
+
+    card.addEventListener("touchmove", (e) => {
+      const dx = Math.abs(e.touches[0].clientX - startX);
+      const dy = Math.abs(e.touches[0].clientY - startY);
+      if (dx > 8 || dy > 8) {
+        movedDuringTouch = true;
+        clearTimeout(pressTimer);
+      }
+    }, { passive: true });
+
+    card.addEventListener("touchend", () => {
+      clearTimeout(pressTimer);
+    });
+
+    card.onclick = () => {
+      if (movedDuringTouch) return;
+      if (recentSelectMode) {
+        if (selectedRecentUids.has(uid)) selectedRecentUids.delete(uid);
+        else selectedRecentUids.add(uid);
+        if (selectedRecentUids.size === 0) exitRecentSelectMode();
+        else renderChatsTab();
+      } else {
+        openChatRoom(uid);
+      }
+    };
+  });
 }
-function cancelRecentLongPress() {
-  clearTimeout(recentPressTimer);
-}
+
 function enterRecentSelectMode(uid) {
   recentSelectMode = true;
   selectedRecentUids.add(uid);
@@ -2698,16 +2813,6 @@ function exitRecentSelectMode() {
   recentSelectMode = false;
   selectedRecentUids.clear();
   renderChatsTab();
-}
-function handleRecentCardTap(uid) {
-  if (recentSelectMode) {
-    if (selectedRecentUids.has(uid)) selectedRecentUids.delete(uid);
-    else selectedRecentUids.add(uid);
-    if (selectedRecentUids.size === 0) exitRecentSelectMode();
-    else renderChatsTab();
-  } else {
-    openChatRoom(uid);
-  }
 }
 function pinSelectedRecentChats() {
   if (!currentUser || !selectedRecentUids.size) return;
@@ -2733,7 +2838,7 @@ function deleteSelectedRecentChats() {
 }
 
 /* ==========================================================================
-   PERSONAL CHAT ROOM (MULTI-SELECT, REPLY, FORWARD, SELECT ALL, PHOTO EDITOR)
+   PERSONAL CHAT ROOM
    ========================================================================== */
 function getChatThreadId(uid1, uid2) {
   return [uid1, uid2].sort().join("__");
@@ -2755,8 +2860,16 @@ function getTickIconHtml(msg, peerUid) {
 }
 
 function openChatRoom(peerUid) {
-  const peer = allUsersMap[peerUid];
-  if (!peer) return;
+  if (!currentUser) {
+    showToast("Please login first!", "fa-user");
+    return;
+  }
+  const peer = allUsersMap[peerUid] || (peerUid === currentUser.uid ? currentUser : null);
+  if (!peer) {
+    showToast("User not found", "fa-circle-exclamation");
+    return;
+  }
+
   activeChatPeerId = peerUid;
   clearMessageMultiSelect();
   cancelChatReply();
@@ -3003,7 +3116,7 @@ function sendTextMessage() {
 }
 
 /* ==========================================================================
-   PHOTO EDITOR (GALLERY & CAMERA: CROP + MARK + MULTIPLE COLORS)
+   PHOTO EDITOR & CAMERA
    ========================================================================== */
 const editorCanvas = document.getElementById("photo-editor-canvas");
 const editorCtx = editorCanvas.getContext("2d");
@@ -3019,7 +3132,7 @@ function setEditorColor(color) {
 function openPhotoEditorFromGallery(inputEl) {
   const file = inputEl.files[0];
   if (!file || !activeChatPeerId) return;
-  compressImageFile(file, 720, 0.8, (dataUrl) => {
+  compressImageFile(file, 900, 0.88, (dataUrl) => {
     const img = new Image();
     img.onload = () => {
       editorSourceImg = img;
@@ -3105,7 +3218,7 @@ function sendEditedPhotoToChat() {
     closePhotoEditor();
     return;
   }
-  const finalDataUrl = editorCanvas.toDataURL("image/jpeg", 0.82);
+  const finalDataUrl = editorCanvas.toDataURL("image/jpeg", 0.88);
   const threadId = getChatThreadId(currentUser.uid, activeChatPeerId);
   db.ref("chats/" + threadId).push({
     senderId: currentUser.uid,
@@ -3148,7 +3261,7 @@ function captureAndEditCameraPhoto() {
     closeDirectCameraCapture();
     document.getElementById("photo-editor-modal").classList.remove("hidden");
   };
-  img.src = tempCanvas.toDataURL("image/jpeg", 0.85);
+  img.src = tempCanvas.toDataURL("image/jpeg", 0.88);
 }
 
 function toggleCameraVideoCapture() {
@@ -3205,13 +3318,18 @@ async function toggleVoiceRecording() {
   const btn = document.getElementById("btn-voice-record");
   if (!isRecordingVoice) {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+      });
       mediaRecorder = new MediaRecorder(stream);
       audioChunks = [];
-      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.ondataavailable = e => {
+        if (e.data && e.data.size > 0) audioChunks.push(e.data);
+      };
       mediaRecorder.onstop = () => {
         stream.getTracks().forEach(t => t.stop());
-        const blob = new Blob(audioChunks, { type: "audio/webm" });
+        const mime = mediaRecorder.mimeType || "audio/webm";
+        const blob = new Blob(audioChunks, { type: mime });
         const reader = new FileReader();
         reader.onloadend = () => {
           if (!canSendPersonalMsg(30)) return;
@@ -3229,7 +3347,7 @@ async function toggleVoiceRecording() {
       mediaRecorder.start();
       isRecordingVoice = true;
       btn.classList.add("recording");
-      showToast("Recording voice... Tap Mic again to send", "fa-microphone");
+      showToast("Recording voice note... Tap Mic again to send", "fa-microphone");
     } catch (e) {
       showToast("Microphone permission required!", "fa-microphone-slash");
     }
@@ -3346,7 +3464,7 @@ function contextDeleteMsg() {
 }
 
 /* ==========================================================================
-   REAL-TIME WEBRTC PERSONAL CALLS
+   REAL-TIME WEBRTC PERSONAL CALLS (CLEAR AUDIO + PAID CALL)
    ========================================================================== */
 function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) {
   const pc = new RTCPeerConnection(RTC_CONFIG);
@@ -3360,16 +3478,23 @@ function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) 
   const remoteAud = document.getElementById("call-remote-audio");
 
   pc.ontrack = (event) => {
-    event.streams[0].getTracks().forEach(track => remoteStream.addTrack(track));
+    event.streams[0].getTracks().forEach(track => {
+      track.enabled = true;
+      remoteStream.addTrack(track);
+    });
     if (remoteVid) {
       remoteVid.srcObject = remoteStream;
+      remoteVid.muted = false;
+      remoteVid.volume = 1.0;
       remoteVid.play().catch(() => {});
     }
     if (remoteAud) {
       remoteAud.srcObject = remoteStream;
+      remoteAud.muted = false;
+      remoteAud.volume = 1.0;
       remoteAud.play().catch(() => {});
     }
-    document.getElementById("call-billing-note").textContent = "Connected • Live";
+    document.getElementById("call-billing-note").textContent = "Connected • Clear Voice";
   };
 
   const candPath = isCaller
@@ -3426,8 +3551,9 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   let localStream = null;
   try {
     localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+    localStream.getAudioTracks().forEach(t => { t.enabled = true; });
   } catch (e) {
-    showToast("Camera/Microphone permission required for call.", "fa-video-slash");
+    showToast("Microphone/Camera permission required for clear voice call.", "fa-microphone-slash");
   }
 
   const callScreen = document.getElementById("active-call-screen");
@@ -3450,7 +3576,7 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   document.getElementById("call-peer-dp").src = peer.dp || defaultAvatar(peer.name, peer.sex);
   document.getElementById("call-peer-name").textContent = peer.name;
   document.getElementById("call-timer-display").textContent = "00:00";
-  document.getElementById("call-billing-note").textContent = incomingCallData ? "Connected • Live" : "Calling...";
+  document.getElementById("call-billing-note").textContent = incomingCallData ? "Connected • Clear Voice" : "Calling...";
 
   document.getElementById("call-gifts-strip").innerHTML = GIFTS_CATALOG.map(g => `
     <button onclick='sendInCallGift(${JSON.stringify(g)})' style="background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.25); color:#fff; border-radius:12px; padding:6px 10px; font-size:12px; white-space:nowrap; cursor:pointer;">
@@ -3595,8 +3721,10 @@ function endActiveCall(reachedFullTime = false) {
   }
   const rv = document.getElementById("call-remote-video");
   const lp = document.getElementById("call-local-pip");
+  const ra = document.getElementById("call-remote-audio");
   if (rv) rv.srcObject = null;
   if (lp) lp.srcObject = null;
+  if (ra) ra.srcObject = null;
   document.getElementById("active-call-screen").classList.add("hidden");
 }
 
@@ -3729,35 +3857,66 @@ function submitPaidCallRequest(girlId, method, maxMins) {
 }
 
 /* ==========================================================================
-   TAB 2: LIVE ROOM (1-MIN AUTO-REMOVE CHATS/GIFTS + VIEWER COUNT + INBOX)
+   TAB 2: LIVE ROOM (IMMEDIATE REMOVE ON EXIT/OFFLINE + INBOX + LEAVE)
    ========================================================================== */
 function listenLiveRooms() {
   db.ref("liveRooms").on("value", snap => {
-    const data = snap.val() || {};
-    liveRoomsList = Object.values(data).filter(r => r.active);
-    const grid = document.getElementById("live-girls-grid");
+    rawLiveRoomsMap = snap.val() || {};
+    rebuildLiveRoomsGrid();
+  });
+}
 
-    if (liveRoomsList.length === 0) {
-      grid.innerHTML = `<div class="auth-card" style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:28px;">
-        No live girls right now.
-      </div>`;
-      return;
-    }
+function rebuildLiveRoomsGrid() {
+  const grid = document.getElementById("live-girls-grid");
+  if (!grid) return;
 
-    grid.innerHTML = liveRoomsList.map((room, idx) => `
-      <div class="live-card" onclick="joinLiveRoom(${idx})">
-        <img src="${room.hostDp || defaultAvatar(room.hostName, 'Female')}" alt="${escapeHtml(room.hostName)}" />
-        <div class="live-badge"><i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE</div>
-        <button class="btn btn-sm" style="position:absolute; top:10px; right:10px; background:#fde047; color:#2c0912; padding:5px 8px; font-size:10px;"
-                onclick="event.stopPropagation(); openChatRoom('${room.hostId}')">
-          <i class="fa-solid fa-envelope"></i> Inbox
-        </button>
-        <div class="live-card-footer">
-          <div style="font-weight:800; font-size:14px;">${escapeHtml(room.hostName)}</div>
-          <div style="font-size:11px; opacity:0.85;">Tap to Join Live</div>
-        </div>
+  liveRoomsList = Object.entries(rawLiveRoomsMap)
+    .filter(([hostId, r]) => {
+      if (!r || !r.active) return false;
+      const hostUser = allUsersMap[hostId];
+      if (!hostUser || hostUser.online === false || hostUser.banned) {
+        db.ref("liveRooms/" + hostId).remove().catch(() => {});
+        return false;
+      }
+      return true;
+    })
+    .map(([hostId, r]) => ({ ...r, hostId }));
+
+  if (liveRoomsList.length === 0) {
+    grid.innerHTML = `<div class="auth-card" style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:28px;">
+      No live girls right now.
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = liveRoomsList.map((room, idx) => `
+    <div class="live-card" data-live-idx="${idx}">
+      <img src="${room.hostDp || defaultAvatar(room.hostName, 'Female')}" alt="${escapeHtml(room.hostName)}" />
+      <div class="live-badge"><i class="fa-solid fa-circle" style="font-size:7px;"></i> LIVE</div>
+      <button class="btn btn-sm" style="position:absolute; top:10px; right:10px; background:#fde047; color:#2c0912; padding:5px 8px; font-size:10px; z-index:2;"
+              data-live-inbox="${room.hostId}">
+        <i class="fa-solid fa-envelope"></i> Inbox
+      </button>
+      <div class="live-card-footer">
+        <div style="font-weight:800; font-size:14px;">${escapeHtml(room.hostName)}</div>
+        <div style="font-size:11px; opacity:0.85;">Tap to Join Live</div>
       </div>
-    `).join("");
+    </div>
+  `).join("");
+
+  grid.querySelectorAll("[data-live-idx]").forEach(card => {
+    card.onclick = () => {
+      const idx = Number(card.getAttribute("data-live-idx"));
+      joinLiveRoom(idx);
+    };
+  });
+
+  grid.querySelectorAll("[data-live-inbox]").forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      const targetHostId = btn.getAttribute("data-live-inbox");
+      if (targetHostId) openChatRoom(targetHostId);
+    };
   });
 }
 
@@ -3777,7 +3936,7 @@ async function startGirlGoLive() {
   try {
     liveStreamObj = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: { echoCancellation: true, noiseSuppression: true }
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
     });
     const vid = document.getElementById("live-video-el");
     vid.srcObject = liveStreamObj;
@@ -3788,13 +3947,15 @@ async function startGirlGoLive() {
     return;
   }
 
-  await db.ref("liveRooms/" + currentUser.uid).set({
+  const roomRef = db.ref("liveRooms/" + currentUser.uid);
+  await roomRef.set({
     hostId: currentUser.uid,
     hostName: currentUser.name,
     hostDp: currentUser.dp || defaultAvatar(currentUser.name, "Female"),
     active: true,
     startedAt: Date.now()
   });
+  roomRef.onDisconnect().remove().catch(() => {});
 
   setupHostLiveWebRTC(currentUser.uid);
   openLiveRoomUI(currentUser.uid, true);
@@ -3818,9 +3979,14 @@ function setupHostLiveWebRTC(hostId) {
     const viewerAudioEl = document.getElementById("live-remote-audio");
     const vStream = new MediaStream();
     pc.ontrack = (ev) => {
-      ev.streams[0].getTracks().forEach(t => vStream.addTrack(t));
+      ev.streams[0].getTracks().forEach(t => {
+        t.enabled = true;
+        vStream.addTrack(t);
+      });
       if (viewerAudioEl) {
         viewerAudioEl.srcObject = vStream;
+        viewerAudioEl.muted = false;
+        viewerAudioEl.volume = 1.0;
         viewerAudioEl.play().catch(() => {});
       }
     };
@@ -3858,7 +4024,7 @@ async function setupViewerLiveWebRTC(hostId) {
 
   try {
     liveVoiceStream = await navigator.mediaDevices.getUserMedia({
-      audio: { echoCancellation: true, noiseSuppression: true },
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
       video: false
     });
     liveVoiceStream.getTracks().forEach(track => pc.addTrack(track, liveVoiceStream));
@@ -3869,15 +4035,21 @@ async function setupViewerLiveWebRTC(hostId) {
   const audEl = document.getElementById("live-remote-audio");
 
   pc.ontrack = (ev) => {
-    ev.streams[0].getTracks().forEach(track => hostRemoteStream.addTrack(track));
+    ev.streams[0].getTracks().forEach(track => {
+      track.enabled = true;
+      hostRemoteStream.addTrack(track);
+    });
     if (vidEl) {
       vidEl.srcObject = hostRemoteStream;
       vidEl.muted = false;
+      vidEl.volume = 1.0;
       vidEl.classList.remove("hidden");
       vidEl.play().catch(() => {});
     }
     if (audEl) {
       audEl.srcObject = hostRemoteStream;
+      audEl.muted = false;
+      audEl.volume = 1.0;
       audEl.play().catch(() => {});
     }
   };
@@ -3907,6 +4079,7 @@ async function setupViewerLiveWebRTC(hostId) {
     offer: { type: offer.type, sdp: offer.sdp },
     ts: Date.now()
   });
+  vNodeRef.onDisconnect().remove().catch(() => {});
 
   const ansRef = vNodeRef.child("answer");
   liveSignalRefs.push(ansRef);
@@ -3964,7 +4137,6 @@ function openLiveRoomUI(hostId, isHost) {
   document.getElementById("btn-live-next-room").classList.toggle("hidden", isHost);
   document.getElementById("btn-live-gift").classList.toggle("hidden", isHost);
 
-  // Real-time total viewer counter for both girl host and viewers
   liveViewersRef = db.ref(`liveStreams/${hostId}/viewers`);
   liveViewersRef.on("value", vSnap => {
     const count = Object.keys(vSnap.val() || {}).length;
@@ -3984,7 +4156,6 @@ function openLiveRoomUI(hostId, isHost) {
     if (Math.abs(diff) > 70) switchNextLiveRoom(diff > 0 ? 1 : -1);
   };
 
-  // Messages & gifts auto-remove after 1 minute (60,000 ms)
   db.ref("liveChats/" + hostId).limitToLast(25).on("value", snap => {
     const now = Date.now();
     const rawObj = snap.val() || {};
@@ -4069,7 +4240,7 @@ function clearLiveRoomChat() {
 function leaveLiveRoom() {
   cleanupLiveWebRTC();
   if (activeLiveHostId === currentUser.uid) {
-    db.ref("liveRooms/" + currentUser.uid).remove();
+    db.ref("liveRooms/" + currentUser.uid).remove().catch(() => {});
     db.ref("liveStreams/" + currentUser.uid).remove().catch(() => {});
     if (liveStreamObj) {
       liveStreamObj.getTracks().forEach(t => t.stop());
@@ -4083,10 +4254,13 @@ function leaveLiveRoom() {
     liveVoiceStream = null;
   }
   const vidEl = document.getElementById("live-video-el");
+  const audEl = document.getElementById("live-remote-audio");
   if (vidEl) vidEl.srcObject = null;
+  if (audEl) audEl.srcObject = null;
   if (activeLiveHostId) db.ref("liveChats/" + activeLiveHostId).off();
   activeLiveHostId = null;
   document.getElementById("live-room-fullscreen").classList.add("hidden");
+  rebuildLiveRoomsGrid();
 }
 
 /* ==========================================================================
@@ -4235,7 +4409,7 @@ function submitWithdrawRequest() {
 }
 
 /* ==========================================================================
-   TAB 5: PROFILE FOLDERS (LUXURY DESIGN + FULL DAY/DATE/MONTH/YEAR)
+   TAB 5: PROFILE FOLDERS
    ========================================================================== */
 function openEditProfileModal() {
   const title = document.getElementById("profile-folder-title");
@@ -4503,18 +4677,30 @@ function submitPasswordChange() {
 }
 
 /* ==========================================================================
-   OWNER ADMIN PANEL (WITH DIRECT MESSAGE BOX FOR EVERY USER ID)
+   LUXURY ADMIN LOGIN & OWNER ADMIN PANEL
    ========================================================================== */
-function openAdminLoginPrompt() {
-  const code = prompt("Admin Passcode:");
+function openLuxuryAdminModal() {
+  const inp = document.getElementById("luxury-admin-code-input");
+  inp.value = "";
+  document.getElementById("luxury-admin-login-modal").classList.remove("hidden");
+  setTimeout(() => inp.focus(), 80);
+}
+
+function closeLuxuryAdminModal() {
+  document.getElementById("luxury-admin-login-modal").classList.add("hidden");
+}
+
+function submitLuxuryAdminCode() {
+  const code = document.getElementById("luxury-admin-code-input").value.trim();
   if (isValidAdminCode(code)) {
+    closeLuxuryAdminModal();
     localStorage.setItem("aura_meet_is_admin", "1");
     document.getElementById("admin-shortcut-btn").classList.remove("hidden");
     document.getElementById("maintenance-screen").classList.add("hidden");
     updateFemaleFaceBoxVisibility();
     openAdminPanel();
-  } else if (code !== null) {
-    showToast("Invalid!", "fa-lock");
+  } else {
+    showToast("Invalid Passcode", "fa-lock");
   }
 }
 
@@ -4722,7 +4908,6 @@ function openAdminSubFolder(type) {
 
           ${facePicHtml}
 
-          <!-- Direct Owner Message Box Next to User ID -->
           <div style="display:flex; gap:6px; margin-top:10px;">
             <input type="text" id="adm-owner-msg-${u.uid}" class="input-field" style="padding:8px 10px; margin-bottom:0;" placeholder="Owner message to ${escapeHtml(u.name)}..." />
             <button class="btn btn-primary btn-sm" onclick="sendOwnerMsgToUserId('${u.uid}')">Send Msg</button>
