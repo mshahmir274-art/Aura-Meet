@@ -5302,6 +5302,26 @@ function escapeAttr(str) {
 </script>
 </body>
 </html>
+window.addEventListener("error", function (ev) {
+  alert("JS Error: " + ev.message + " (Line: " + ev.lineno + ")");
+});
 
-window.openChatRoom = openChatRoom;
-window.clearMessageMultiSelect = clearMessageMultiSelect;
+window.addEventListener("unhandledrejection", function (ev) {
+  alert("Promise Error: " + (ev.reason?.message || ev.reason));
+});
+
+const origOpenChat = window.openChatRoom;
+window.openChatRoom = function (uid) {
+  alert(
+    "openChatRoom called! uid=" +
+      String(uid) +
+      " | myUid=" +
+      String(typeof currentUser !== "undefined" ? currentUser?.uid : window.currentUser?.uid) +
+      " | modalExists=" +
+      Boolean(document.getElementById("chat-room-modal"))
+  );
+  if (typeof origOpenChat === "function") {
+    return origOpenChat.apply(this, arguments);
+  }
+};
+
