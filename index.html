@@ -14,12 +14,12 @@
 
 <style>
   :root {
-    --maroon-950: #330711;
-    --maroon-900: #4d0d1c;
-    --maroon-800: #6d152a;
-    --maroon-700: #8c1e39;
-    --maroon-600: #ad2d4d;
-    --maroon-500: #c94466;
+    --maroon-950: #2b050e;
+    --maroon-900: #480b19;
+    --maroon-800: #681227;
+    --maroon-700: #891c37;
+    --maroon-600: #ab2b4b;
+    --maroon-500: #c84264;
     --maroon-200: #f4c8d3;
     --maroon-100: #fbe7ec;
     --maroon-50: #fef5f7;
@@ -43,7 +43,7 @@
   }
 
   html, body {
-    background: #f0dce1;
+    background: #1b0409;
     color: var(--text-dark);
     height: 100%;
     width: 100%;
@@ -64,7 +64,7 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 0 40px rgba(77, 13, 28, 0.16);
+    box-shadow: 0 0 45px rgba(0, 0, 0, 0.5);
   }
 
   ::-webkit-scrollbar { width: 4px; height: 4px; }
@@ -75,15 +75,15 @@
   .btn {
     border: none;
     border-radius: 14px;
-    padding: 13px 18px;
+    padding: 12px 16px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    transition: all 0.2s ease;
+    gap: 7px;
+    transition: all 0.18s ease;
   }
   .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.65; cursor: not-allowed; }
@@ -91,6 +91,11 @@
     background: linear-gradient(135deg, var(--maroon-700), var(--maroon-500));
     color: #fff;
     box-shadow: 0 6px 18px rgba(140, 30, 57, 0.25);
+  }
+  .btn-gold {
+    background: linear-gradient(135deg, #fde047, #d4af37);
+    color: #2c0912;
+    font-weight: 800;
   }
   .btn-outline {
     background: var(--maroon-50);
@@ -100,11 +105,11 @@
   .btn-success { background: #16a34a; color: #fff; }
   .btn-danger { background: #dc2626; color: #fff; }
   .btn-warning { background: #d97706; color: #fff; }
-  .btn-sm { padding: 8px 12px; font-size: 12px; border-radius: 10px; }
+  .btn-sm { padding: 7px 11px; font-size: 11px; border-radius: 10px; }
   .btn-block { width: 100%; }
 
   .input-group {
-    margin-bottom: 13px;
+    margin-bottom: 12px;
     position: relative;
   }
   .input-group label {
@@ -116,7 +121,7 @@
   }
   .input-field {
     width: 100%;
-    padding: 12px 14px;
+    padding: 11px 13px;
     border-radius: 13px;
     border: 1.5px solid var(--border-light);
     background: #fff;
@@ -130,44 +135,43 @@
     box-shadow: 0 0 0 3px rgba(173, 45, 77, 0.12);
   }
   .pass-wrap { position: relative; }
-  .pass-wrap .input-field { padding-right: 44px; }
+  .pass-wrap .input-field { padding-right: 42px; }
   .pass-toggle {
     position: absolute;
-    right: 12px;
+    right: 11px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
     color: var(--text-muted);
-    font-size: 16px;
+    font-size: 15px;
     cursor: pointer;
     padding: 4px;
   }
 
-  /* In-App Top Message Banner & Toasts */
+  /* In-App Top Message Banner & Toasts inside #app-shell */
   #in-app-msg-banner {
-    position: fixed;
+    position: absolute;
     top: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: 92%;
-    max-width: 440px;
-    background: linear-gradient(135deg, #2d0610, #681328);
+    background: linear-gradient(135deg, #2b050e, #681227);
     color: #fff;
-    border: 1.5px solid var(--gold);
+    border: 1.5px solid var(--gold-light);
     border-radius: 18px;
-    padding: 11px 14px;
-    z-index: 99998;
+    padding: 10px 13px;
+    z-index: 950;
     display: flex;
     align-items: center;
-    gap: 11px;
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+    gap: 10px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4);
     cursor: pointer;
     animation: slideDown 0.25s ease;
   }
   #in-app-msg-banner img {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--gold-light);
@@ -175,63 +179,69 @@
   }
 
   #toast-box {
-    position: fixed;
-    top: 72px;
+    position: absolute;
+    top: 64px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 99999;
+    z-index: 960;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 7px;
     width: 90%;
-    max-width: 420px;
     pointer-events: none;
   }
   .toast {
-    background: var(--maroon-900);
+    background: #2b050e;
     color: #fff;
-    padding: 12px 16px;
+    border: 1px solid rgba(253, 224, 71, 0.45);
+    padding: 11px 14px;
     border-radius: 14px;
-    font-size: 13px;
-    font-weight: 600;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.32);
     display: flex;
     align-items: center;
-    gap: 10px;
-    animation: slideDown 0.25s ease;
+    gap: 9px;
+    animation: slideDown 0.22s ease;
   }
   @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-12px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Luxury Admin Login Modal */
-  #luxury-admin-login-modal {
-    position: fixed;
+  /* Scoped Overlays inside #app-shell */
+  .shell-overlay {
+    position: absolute;
     inset: 0;
-    background: rgba(24, 3, 9, 0.85);
-    backdrop-filter: blur(6px);
-    z-index: 97000;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  #luxury-admin-login-modal {
+    background: rgba(20, 3, 8, 0.88);
+    backdrop-filter: blur(5px);
+    z-index: 850;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 18px;
   }
   .luxury-admin-box {
     width: 100%;
-    max-width: 360px;
-    background: linear-gradient(160deg, #320611 0%, #5c1023 55%, #7c1831 100%);
+    max-width: 350px;
+    background: linear-gradient(160deg, #2b050e 0%, #580e21 60%, #7d1731 100%);
     color: #fff;
     border-radius: 24px;
-    padding: 22px 20px;
-    border: 1.5px solid rgba(253, 224, 71, 0.7);
-    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+    padding: 22px 18px;
+    border: 1.5px solid rgba(253, 224, 71, 0.75);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.5);
   }
   .luxury-admin-input {
     width: 100%;
     padding: 12px 14px;
     border-radius: 14px;
-    border: 1.5px solid rgba(253, 224, 71, 0.45);
+    border: 1.5px solid rgba(253, 224, 71, 0.5);
     background: rgba(255, 255, 255, 0.12);
     color: #fff;
     font-size: 15px;
@@ -241,28 +251,24 @@
     margin-bottom: 14px;
   }
   .luxury-admin-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.65);
     letter-spacing: normal;
     font-weight: 500;
   }
 
   #deposit-prompt-modal, #chat-now-link-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(44, 9, 18, 0.75);
-    z-index: 96000;
+    background: rgba(38, 6, 15, 0.78);
+    z-index: 820;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 18px;
   }
 
   #privacy-shield-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(51, 7, 17, 0.96);
+    background: rgba(43, 5, 14, 0.96);
     color: #fff;
-    z-index: 99500;
+    z-index: 940;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -272,11 +278,9 @@
   }
 
   #maintenance-screen {
-    position: fixed;
-    inset: 0;
     background: linear-gradient(160deg, var(--maroon-950), var(--maroon-700));
     color: #fff;
-    z-index: 90000;
+    z-index: 900;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -285,42 +289,42 @@
     padding: 28px;
   }
   #maintenance-screen .icon-circle {
-    width: 84px;
-    height: 84px;
+    width: 82px;
+    height: 82px;
     border-radius: 50%;
     background: rgba(255,255,255,0.12);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    margin-bottom: 18px;
-    border: 2px solid rgba(255,255,255,0.25);
+    font-size: 34px;
+    margin-bottom: 16px;
+    border: 2px solid var(--gold-light);
   }
 
   #auth-screen {
     flex: 1;
     overflow-y: auto;
-    padding: 16px 18px 34px;
+    padding: 16px 16px 32px;
     background: linear-gradient(180deg, var(--maroon-100) 0%, var(--bg-main) 34%);
   }
   .download-banner {
     background: linear-gradient(135deg, var(--maroon-800), var(--maroon-600));
     color: #fff;
     border-radius: 18px;
-    padding: 15px 16px;
+    padding: 14px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 10px;
     box-shadow: 0 10px 24px rgba(109, 21, 42, 0.25);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(253, 224, 71, 0.35);
   }
   .download-banner .dl-badge {
     background: #fff;
     color: var(--maroon-800);
-    padding: 9px 14px;
+    padding: 8px 13px;
     border-radius: 12px;
     font-weight: 800;
     font-size: 12px;
@@ -329,27 +333,26 @@
 
   .brand-header {
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .brand-logo {
-    width: 62px;
-    height: 62px;
+    width: 60px;
+    height: 60px;
     border-radius: 20px;
     background: linear-gradient(135deg, var(--maroon-700), var(--maroon-500));
     color: #fff;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 26px;
     box-shadow: 0 8px 20px rgba(140, 30, 57, 0.28);
     margin-bottom: 8px;
     cursor: pointer;
   }
   .brand-header h1 {
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 800;
     color: var(--maroon-900);
-    letter-spacing: -0.5px;
   }
   .brand-header p {
     font-size: 12px;
@@ -362,11 +365,11 @@
     background: var(--maroon-100);
     padding: 5px;
     border-radius: 15px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     border: 1px solid var(--maroon-200);
   }
   .auth-tab-btn {
-    padding: 11px;
+    padding: 10px;
     border: none;
     border-radius: 11px;
     font-weight: 700;
@@ -374,29 +377,27 @@
     background: transparent;
     color: var(--maroon-800);
     cursor: pointer;
-    transition: all 0.2s;
   }
   .auth-tab-btn.active {
     background: var(--maroon-700);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(140, 30, 57, 0.25);
   }
 
   .auth-card {
     background: #fff;
-    border-radius: 22px;
-    padding: 18px;
+    border-radius: 20px;
+    padding: 16px;
     box-shadow: var(--shadow-soft);
     border: 1px solid var(--border-light);
   }
 
   .luxury-folder-card {
-    background: linear-gradient(155deg, #3b0916 0%, #6d152a 65%, #8c1e39 100%);
+    background: linear-gradient(150deg, #2b050e 0%, #631125 65%, #891c37 100%);
     color: #fff;
-    border-radius: 22px;
-    padding: 18px;
-    border: 1.5px solid rgba(253, 224, 71, 0.6);
-    box-shadow: 0 12px 28px rgba(77, 13, 28, 0.25);
+    border-radius: 20px;
+    padding: 16px;
+    border: 1.5px solid rgba(253, 224, 71, 0.7);
+    box-shadow: 0 10px 24px rgba(77, 13, 28, 0.24);
     margin-bottom: 12px;
   }
 
@@ -408,14 +409,13 @@
   .gender-option {
     border: 2px solid var(--border-light);
     border-radius: 14px;
-    padding: 12px;
+    padding: 11px;
     text-align: center;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     background: var(--maroon-50);
     color: var(--maroon-800);
-    transition: all 0.2s;
   }
   .gender-option.selected {
     border-color: var(--maroon-700);
@@ -427,13 +427,13 @@
     background: var(--maroon-50);
     border: 1.5px dashed var(--maroon-500);
     border-radius: 16px;
-    padding: 14px;
+    padding: 12px;
     margin-top: 10px;
     text-align: center;
   }
   .face-verify-box video, .face-verify-box img {
     width: 100%;
-    max-height: 210px;
+    max-height: 200px;
     object-fit: cover;
     border-radius: 12px;
     margin-top: 8px;
@@ -451,33 +451,33 @@
   .top-header {
     background: linear-gradient(135deg, var(--maroon-800), var(--maroon-600));
     color: #fff;
-    padding: 14px 18px;
+    padding: 13px 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     box-shadow: 0 4px 14px rgba(109, 21, 42, 0.18);
     z-index: 10;
+    flex-shrink: 0;
   }
   .top-header h2 {
-    font-size: 19px;
+    font-size: 18px;
     font-weight: 800;
-    letter-spacing: -0.3px;
     cursor: pointer;
   }
   .header-pill {
     background: rgba(255,255,255,0.16);
-    padding: 6px 12px;
+    padding: 6px 11px;
     border-radius: 20px;
     font-size: 12px;
     font-weight: 700;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    border: 1px solid rgba(255,255,255,0.2);
+    gap: 5px;
+    border: 1px solid rgba(255,255,255,0.22);
   }
 
   .recent-select-bar {
-    background: #2b0711;
+    background: #2b050e;
     color: #fff;
     padding: 10px 14px;
     border-radius: 16px;
@@ -523,9 +523,8 @@
     height: 100%;
     position: relative;
   }
-  .nav-item i { font-size: 18px; transition: transform 0.2s; }
+  .nav-item i { font-size: 18px; }
   .nav-item.active { color: var(--maroon-700); }
-  .nav-item.active i { transform: translateY(-2px); color: var(--maroon-600); }
 
   .nav-unread-badge {
     position: absolute;
@@ -542,7 +541,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 6px rgba(225, 29, 72, 0.4);
   }
 
   .row-unread-badge {
@@ -587,7 +585,6 @@
     align-items: center;
     text-align: center;
     cursor: pointer;
-    position: relative;
   }
   .online-circle-ring {
     position: relative;
@@ -625,18 +622,15 @@
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-card);
     cursor: pointer;
-    transition: transform 0.15s;
     user-select: none;
   }
   .chat-user-card.selected-row {
     background: #fbe7ec;
     border-color: var(--maroon-700);
   }
-  .chat-user-card:active { transform: scale(0.985); }
   .self-user-card {
     background: linear-gradient(135deg, var(--maroon-100), #fff);
     border: 1.5px solid var(--maroon-500);
-    cursor: pointer;
   }
   .row-check-circle {
     width: 22px;
@@ -687,26 +681,28 @@
     font-weight: 800;
     padding: 2px 7px;
     border-radius: 8px;
-    margin-left: 6px;
+    margin-left: 5px;
   }
 
+  /* Strictly Scoped Inside #app-shell */
   .fullscreen-modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     background: var(--bg-main);
     z-index: 200;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    animation: slideInRight 0.22s ease;
+    animation: slideInRight 0.2s ease;
   }
-  #chat-room-modal.fullscreen-modal {
-    z-index: 400;
-  }
+  #chat-room-modal.fullscreen-modal { z-index: 400; }
+  #admin-panel-modal.fullscreen-modal { z-index: 300; }
+  #admin-subfolder-modal.fullscreen-modal { z-index: 350; }
+
   @keyframes slideInRight {
-    from { transform: translateX(30px); opacity: 0.4; }
+    from { transform: translateX(24px); opacity: 0.4; }
     to { transform: translateX(0); opacity: 1; }
   }
   .modal-header {
@@ -718,6 +714,7 @@
     justify-content: space-between;
     gap: 10px;
     flex-shrink: 0;
+    border-bottom: 1px solid rgba(253, 224, 71, 0.25);
   }
   .back-btn {
     background: rgba(255,255,255,0.16);
@@ -731,14 +728,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
   .modal-body {
     flex: 1;
     overflow-y: auto;
-    padding: 14px;
+    padding: 14px 14px 28px;
   }
 
-  /* Right-aligned Call & Block Strip in Chat Header/Top */
   .right-action-strip {
     background: #fff;
     border-bottom: 1px solid var(--border-light);
@@ -753,10 +750,10 @@
     background: var(--maroon-50);
     border: 1px solid var(--border-light);
     border-radius: 10px;
-    padding: 6px 9px;
+    padding: 6px 8px;
     display: inline-flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
     font-size: 11px;
     font-weight: 800;
     color: var(--maroon-900);
@@ -782,6 +779,7 @@
     align-items: center;
     gap: 8px;
     width: 100%;
+    transition: transform 0.16s ease;
   }
   .msg-row-wrap.mine-row { justify-content: flex-end; }
   .msg-row-wrap.theirs-row { justify-content: flex-start; }
@@ -893,9 +891,8 @@
     50% { transform: scale(1.08); }
   }
 
-  /* WhatsApp-style Voice Recording Live Bar */
   #voice-recording-bar {
-    background: #2b0711;
+    background: #2b050e;
     color: #fff;
     padding: 8px 12px;
     border-top: 1px solid rgba(253, 224, 71, 0.45);
@@ -920,12 +917,11 @@
     font-variant-numeric: tabular-nums;
   }
 
-  /* Photo Editor with Interactive Crop Box */
   #photo-editor-modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     background: #170409;
     z-index: 680;
     display: flex;
@@ -969,10 +965,10 @@
   }
 
   #direct-camera-modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     background: #000;
     z-index: 650;
     display: flex;
@@ -1002,12 +998,6 @@
     padding: 10px 6px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.15s;
-  }
-  .gift-card:active {
-    transform: scale(0.95);
-    border-color: var(--maroon-700);
-    background: var(--maroon-50);
   }
   .gift-emoji { font-size: 28px; margin-bottom: 3px; }
   .gift-name { font-size: 11px; font-weight: 700; color: var(--text-dark); }
@@ -1023,10 +1013,10 @@
   }
 
   #active-call-screen {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     background: #0d0205;
     color: #fff;
     z-index: 500;
@@ -1054,7 +1044,6 @@
     object-fit: cover;
     z-index: 2;
     border: 2px solid rgba(255,255,255,0.75);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.45);
     background: #1b060c;
   }
   .call-overlay-ui {
@@ -1084,7 +1073,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
   }
 
   .live-grid {
@@ -1131,10 +1119,10 @@
   }
 
   #live-room-fullscreen {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    max-width: 480px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100%;
     background: #000;
     z-index: 450;
     display: flex;
@@ -1152,14 +1140,13 @@
   .live-room-top {
     position: relative;
     z-index: 4;
-    padding: 10px 10px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 6px;
     background: linear-gradient(rgba(0,0,0,0.62), transparent);
     color: #fff;
-    flex-wrap: nowrap;
   }
   .live-top-actions {
     display: flex;
@@ -1215,7 +1202,6 @@
     text-align: center;
     font-weight: 800;
     cursor: pointer;
-    transition: all 0.2s;
   }
   .wallet-card.selected {
     border-color: var(--maroon-700);
@@ -1245,13 +1231,8 @@
     font-size: 13px;
     font-weight: 700;
   }
-  .pkg-row {
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .pkg-row:hover, .pkg-row.active-pkg {
-    background: var(--maroon-100);
-  }
+  .pkg-row { cursor: pointer; }
+  .pkg-row.active-pkg { background: var(--maroon-100); }
 
   .balance-split {
     display: grid;
@@ -1265,7 +1246,6 @@
     padding: 14px;
     border-radius: 18px;
     text-align: center;
-    box-shadow: var(--shadow-card);
   }
   .bal-box span { font-size: 11px; opacity: 0.85; display: block; }
   .bal-box strong { font-size: 20px; font-weight: 800; }
@@ -1274,7 +1254,7 @@
     background: #fff;
     border: 1px solid var(--border-light);
     border-radius: 16px;
-    padding: 14px 16px;
+    padding: 13px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1287,7 +1267,8 @@
     align-items: center;
     gap: 12px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
+    color: var(--text-dark);
   }
   .folder-icon {
     width: 38px;
@@ -1299,40 +1280,76 @@
     align-items: center;
     justify-content: center;
     font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Luxury Admin Styling */
+  .lux-hero-banner {
+    background: linear-gradient(145deg, #2b050e 0%, #631125 65%, #891c37 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 15px;
+    border: 1.5px solid rgba(253, 224, 71, 0.7);
+    box-shadow: 0 10px 24px rgba(43, 5, 14, 0.25);
+    margin-bottom: 12px;
+  }
+  .lux-folder-card {
+    background: linear-gradient(145deg, #320611 0%, #580e21 100%);
+    color: #fff;
+    border: 1.5px solid rgba(253, 224, 71, 0.55);
+    border-radius: 17px;
+    padding: 13px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(43, 5, 14, 0.18);
+  }
+  .lux-folder-card .folder-icon {
+    background: rgba(253, 224, 71, 0.16);
+    color: var(--gold-light);
+    border: 1px solid rgba(253, 224, 71, 0.45);
+  }
+  .lux-folder-card .folder-left {
+    color: #fff;
   }
 
   .admin-stat-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
   .admin-stat {
     background: #fff;
-    border: 1px solid var(--border-light);
+    border: 1.5px solid rgba(212, 175, 55, 0.5);
     border-radius: 14px;
-    padding: 12px 8px;
+    padding: 10px 6px;
     text-align: center;
   }
-  .admin-stat strong { display: block; font-size: 18px; color: var(--maroon-800); }
-  .admin-stat span { font-size: 11px; color: var(--text-muted); font-weight: 700; }
+  .admin-stat strong { display: block; font-size: 17px; color: var(--maroon-800); }
+  .admin-stat span { font-size: 10px; color: var(--text-muted); font-weight: 800; }
 
   #slip-zoom-modal {
-    position: fixed;
+    position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.94);
-    z-index: 9500;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 2, 5, 0.96);
+    z-index: 880;
     display: flex;
     flex-direction: column;
   }
   .slip-toolbar {
-    padding: 14px;
+    padding: 12px 14px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #1a050a;
+    background: #2b050e;
     color: #fff;
-    z-index: 2;
+    border-bottom: 1px solid rgba(253, 224, 71, 0.35);
+    flex-shrink: 0;
   }
   .slip-canvas {
     flex: 1;
@@ -1340,7 +1357,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
+    padding: 14px;
   }
   #slip-zoom-img {
     max-width: 100%;
@@ -1352,10 +1369,12 @@
   }
 
   #msg-context-menu {
-    position: fixed;
+    position: absolute;
     inset: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0,0,0,0.45);
-    z-index: 8000;
+    z-index: 800;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1365,7 +1384,7 @@
     border-radius: 18px;
     width: 245px;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.28);
   }
   .context-opt {
     padding: 12px 16px;
@@ -1382,90 +1401,90 @@
 </head>
 <body class="protect-capture" oncontextmenu="return handleGlobalContextMenu(event)">
 
-<!-- In-App Top Message Notification Banner -->
-<div id="in-app-msg-banner" class="hidden" onclick="openChatFromBanner()">
-  <img id="banner-sender-dp" src="" alt="Sender" />
-  <div style="flex:1; min-width:0;">
-    <div id="banner-sender-name" style="font-size:13px; font-weight:800; color:var(--gold-light); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">New Message</div>
-    <div id="banner-msg-preview" style="font-size:12px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">...</div>
-  </div>
-  <span onclick="event.stopPropagation(); hideInAppMsgBanner();" style="font-size:15px; font-weight:800; padding:4px 6px;">✕</span>
-</div>
-
-<div id="toast-box"></div>
-
-<!-- Luxury Admin Passcode Modal -->
-<div id="luxury-admin-login-modal" class="hidden">
-  <div class="luxury-admin-box">
-    <div style="text-align:center; margin-bottom:14px;">
-      <div style="width:54px; height:54px; border-radius:18px; background:rgba(253,224,71,0.16); border:1.5px solid var(--gold-light); color:var(--gold-light); display:inline-flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:8px;">
-        <i class="fa-solid fa-crown"></i>
-      </div>
-      <div style="font-size:11px; font-weight:800; color:var(--gold-light); letter-spacing:1.2px;">✦ ROYAL OWNER ACCESS ✦</div>
-      <h3 style="font-size:19px; font-weight:800; margin-top:3px;">Admin Panel Login</h3>
-    </div>
-    <input type="password" id="luxury-admin-code-input" class="luxury-admin-input" placeholder="Enter Admin Passcode" onkeypress="if(event.key==='Enter') submitLuxuryAdminCode()" />
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-      <button type="button" class="btn btn-outline btn-sm" style="background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.28);" onclick="closeLuxuryAdminModal()">Cancel</button>
-      <button type="button" class="btn btn-sm" style="background:linear-gradient(135deg,#fde047,#d4af37); color:#2c0912; font-weight:800;" onclick="submitLuxuryAdminCode()">
-        <i class="fa-solid fa-unlock"></i> Unlock
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- 1-Tap "Chat Now" Link Modal -->
-<div id="chat-now-link-modal" class="hidden">
-  <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
-    <img id="chat-now-target-dp" src="" style="width:68px; height:68px; border-radius:50%; object-fit:cover; border:2px solid var(--maroon-700); margin:0 auto 10px; display:block;" />
-    <h3 id="chat-now-target-name" style="font-size:18px; font-weight:800; color:var(--maroon-900);">User</h3>
-    <p id="chat-now-target-sub" style="font-size:12px; color:var(--text-muted); margin:4px 0 14px;">Direct User Profile Link</p>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-      <button class="btn btn-outline btn-sm" onclick="document.getElementById('chat-now-link-modal').classList.add('hidden')">Close</button>
-      <button id="btn-confirm-chat-now" class="btn btn-primary btn-sm"><i class="fa-solid fa-comment"></i> Chat Now</button>
-    </div>
-  </div>
-</div>
-
-<!-- Deposit Required Popup Modal -->
-<div id="deposit-prompt-modal" class="hidden">
-  <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
-    <div style="width:60px; height:60px; border-radius:50%; background:var(--maroon-100); color:var(--maroon-700); display:inline-flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px;">
-      <i class="fa-solid fa-coins"></i>
-    </div>
-    <h3 style="font-size:18px; font-weight:800; color:var(--maroon-900); margin-bottom:6px;">Coins / Package Finished</h3>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
-      Your coin balance is insufficient. Please deposit coins to send messages, gifts, or make calls.
-    </p>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-      <button class="btn btn-outline btn-sm" onclick="closeDepositPrompt()">Close</button>
-      <button class="btn btn-primary btn-sm" onclick="goToDepositFromPrompt()">Deposit Now</button>
-    </div>
-  </div>
-</div>
-
-<!-- Screenshot / Screen-Capture Shield for Normal Users -->
-<div id="privacy-shield-overlay" class="hidden">
-  <i class="fa-solid fa-shield-halved" style="font-size:42px; color:#fda4af; margin-bottom:14px;"></i>
-  <h3 style="font-size:19px; font-weight:800; margin-bottom:8px;">Screenshots &amp; Screen Recording Protected</h3>
-  <p style="font-size:13px; opacity:0.88; max-width:300px; margin-bottom:16px;">
-    For user privacy, saving images, screenshots, and screen recording are restricted.
-  </p>
-  <button class="btn btn-primary btn-sm" onclick="document.getElementById('privacy-shield-overlay').classList.add('hidden')">
-    Resume App
-  </button>
-</div>
-
-<!-- Pakistan Kill Switch Maintenance Screen -->
-<div id="maintenance-screen" class="hidden">
-  <div class="icon-circle"><i class="fa-solid fa-shield-halved"></i></div>
-  <h2 style="font-size:24px; font-weight:800; margin-bottom:10px;">Aura Meet Temporarily Closed</h2>
-  <p style="font-size:14px; opacity:0.9; max-width:320px; line-height:1.5;">
-    App maintenance is currently active across Pakistan. Please check back later.
-  </p>
-</div>
-
 <div id="app-shell">
+
+  <!-- In-App Top Message Notification Banner -->
+  <div id="in-app-msg-banner" class="hidden" onclick="openChatFromBanner()">
+    <img id="banner-sender-dp" src="" alt="Sender" />
+    <div style="flex:1; min-width:0;">
+      <div id="banner-sender-name" style="font-size:13px; font-weight:800; color:var(--gold-light); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">New Message</div>
+      <div id="banner-msg-preview" style="font-size:12px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px;">...</div>
+    </div>
+    <span onclick="event.stopPropagation(); hideInAppMsgBanner();" style="font-size:15px; font-weight:800; padding:4px 6px;">✕</span>
+  </div>
+
+  <div id="toast-box"></div>
+
+  <!-- Luxury Admin Passcode Modal -->
+  <div id="luxury-admin-login-modal" class="shell-overlay hidden">
+    <div class="luxury-admin-box">
+      <div style="text-align:center; margin-bottom:14px;">
+        <div style="width:54px; height:54px; border-radius:18px; background:rgba(253,224,71,0.16); border:1.5px solid var(--gold-light); color:var(--gold-light); display:inline-flex; align-items:center; justify-content:center; font-size:24px; margin-bottom:8px;">
+          <i class="fa-solid fa-crown"></i>
+        </div>
+        <div style="font-size:11px; font-weight:800; color:var(--gold-light); letter-spacing:1.2px;">✦ ROYAL OWNER ACCESS ✦</div>
+        <h3 style="font-size:19px; font-weight:800; margin-top:3px;">Admin Panel Login</h3>
+      </div>
+      <input type="password" id="luxury-admin-code-input" class="luxury-admin-input" placeholder="Enter Admin Passcode" onkeypress="if(event.key==='Enter') submitLuxuryAdminCode()" />
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <button type="button" class="btn btn-outline btn-sm" style="background:rgba(255,255,255,0.12); color:#fff; border-color:rgba(255,255,255,0.28);" onclick="closeLuxuryAdminModal()">Cancel</button>
+        <button type="button" class="btn btn-gold btn-sm" onclick="submitLuxuryAdminCode()">
+          <i class="fa-solid fa-unlock"></i> Unlock
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1-Tap "Chat Now" Link Modal -->
+  <div id="chat-now-link-modal" class="shell-overlay hidden">
+    <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
+      <img id="chat-now-target-dp" src="" style="width:68px; height:68px; border-radius:50%; object-fit:cover; border:2px solid var(--maroon-700); margin:0 auto 10px; display:block;" />
+      <h3 id="chat-now-target-name" style="font-size:18px; font-weight:800; color:var(--maroon-900);">User</h3>
+      <p id="chat-now-target-sub" style="font-size:12px; color:var(--text-muted); margin:4px 0 14px;">Direct User Profile Link</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="document.getElementById('chat-now-link-modal').classList.add('hidden')">Close</button>
+        <button id="btn-confirm-chat-now" class="btn btn-primary btn-sm"><i class="fa-solid fa-comment"></i> Chat Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deposit Required Popup Modal -->
+  <div id="deposit-prompt-modal" class="shell-overlay hidden">
+    <div class="auth-card" style="max-width:340px; width:100%; text-align:center;">
+      <div style="width:60px; height:60px; border-radius:50%; background:var(--maroon-100); color:var(--maroon-700); display:inline-flex; align-items:center; justify-content:center; font-size:26px; margin-bottom:10px;">
+        <i class="fa-solid fa-coins"></i>
+      </div>
+      <h3 style="font-size:18px; font-weight:800; color:var(--maroon-900); margin-bottom:6px;">Coins / Package Finished</h3>
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:16px;">
+        Your coin balance is insufficient. Please deposit coins to send messages, gifts, or make calls.
+      </p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <button class="btn btn-outline btn-sm" onclick="closeDepositPrompt()">Close</button>
+        <button class="btn btn-primary btn-sm" onclick="goToDepositFromPrompt()">Deposit Now</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot / Screen-Recording Shield -->
+  <div id="privacy-shield-overlay" class="shell-overlay hidden">
+    <i class="fa-solid fa-shield-halved" style="font-size:42px; color:#fda4af; margin-bottom:14px;"></i>
+    <h3 style="font-size:19px; font-weight:800; margin-bottom:8px;">Screenshots &amp; Screen Recording Protected</h3>
+    <p style="font-size:13px; opacity:0.88; max-width:300px; margin-bottom:16px;">
+      Screenshots and screen recording are restricted for normal users. Only Owner can capture when screen recording is OFF.
+    </p>
+    <button class="btn btn-primary btn-sm" onclick="document.getElementById('privacy-shield-overlay').classList.add('hidden')">
+      Resume App
+    </button>
+  </div>
+
+  <!-- Pakistan Kill Switch Maintenance Screen -->
+  <div id="maintenance-screen" class="shell-overlay hidden">
+    <div class="icon-circle"><i class="fa-solid fa-shield-halved"></i></div>
+    <h2 style="font-size:23px; font-weight:800; margin-bottom:10px;">Aura Meet Temporarily Closed</h2>
+    <p style="font-size:14px; opacity:0.9; max-width:320px; line-height:1.5;">
+      App is currently closed across Pakistan by Owner. Please check back later.
+    </p>
+  </div>
 
   <!-- ==================== AUTH SCREEN ==================== -->
   <div id="auth-screen">
@@ -1532,7 +1551,7 @@
             <i class="fa-solid fa-camera"></i> Strict Full-Face Verification Required
           </div>
           <p style="font-size:11px; color:var(--text-muted); margin-top:3px;">
-            Show your complete, clear full face (not just eyes or half face) so real girls can be verified and fake accounts blocked.
+            Show your complete, clear full face so real girls can be verified and fake accounts blocked.
           </p>
           <video id="face-cam-video" autoplay playsinline class="hidden"></video>
           <img id="face-captured-img" class="hidden" alt="Verified Face" />
@@ -1849,323 +1868,332 @@
       </button>
     </nav>
   </div>
-</div>
 
-<!-- ==================== FULLSCREEN PERSONAL CHAT MODAL ==================== -->
-<div id="chat-room-modal" class="fullscreen-modal hidden">
-  <div id="chat-normal-header" class="modal-header">
-    <div style="display:flex; align-items:center; gap:8px; min-width:0;">
-      <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
-      <img id="chat-peer-dp" src="" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid #fff;" />
-      <div style="min-width:0;">
-        <div id="chat-peer-name" style="font-size:14px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Name</div>
-        <div id="chat-peer-details" style="font-size:10px; opacity:0.9;">Country • Age • Last Seen</div>
-      </div>
-    </div>
-    <button type="button" class="back-btn" onclick="shareCurrentPeerChatLink()" title="Share User Chat Link"><i class="fa-solid fa-share-nodes"></i></button>
-  </div>
-
-  <div id="chat-msg-select-header" class="modal-header hidden" style="background:#2b0711; flex-wrap:wrap; gap:6px;">
-    <div style="display:flex; align-items:center; gap:6px;">
-      <button type="button" class="back-btn" onclick="clearMessageMultiSelect()"><i class="fa-solid fa-xmark"></i></button>
-      <span id="msg-selected-count-label" style="font-size:12px; font-weight:800;">1 Selected</span>
-    </div>
-    <div style="display:flex; gap:5px; flex-wrap:wrap;">
-      <button type="button" class="btn btn-outline btn-sm" style="background:#fff; color:var(--maroon-900); padding:6px 8px;" onclick="replyToSelectedMessages()">Reply</button>
-      <button type="button" class="btn btn-outline btn-sm" style="background:#fff; color:var(--maroon-900); padding:6px 8px;" onclick="forwardSelectedMessages()">Forward</button>
-      <button type="button" class="btn btn-warning btn-sm" style="padding:6px 8px;" onclick="selectAllMessagesInChat()">Select All</button>
-      <button type="button" class="btn btn-outline btn-sm" style="background:#fef3c7; color:#92400e; padding:6px 8px;" onclick="unsendSelectedMessages()">Unsend</button>
-      <button type="button" class="btn btn-danger btn-sm" style="padding:6px 8px;" onclick="deleteSelectedMessages()">Delete</button>
-    </div>
-  </div>
-
-  <!-- Right-Aligned Audio Call, Video Call, Paid Call, Block/Unblock -->
-  <div class="right-action-strip">
-    <button type="button" class="labeled-chat-btn" onclick="initiateCall('audio')">
-      <i class="fa-solid fa-phone"></i><span>Audio Call</span>
-    </button>
-    <button type="button" class="labeled-chat-btn" onclick="initiateCall('video')">
-      <i class="fa-solid fa-video"></i><span>Video Call</span>
-    </button>
-    <button type="button" id="btn-paid-call-top" class="labeled-chat-btn" onclick="openPaidCallHub()">
-      <i class="fa-solid fa-crown"></i><span>Paid Call</span>
-    </button>
-    <button type="button" id="btn-toggle-block-peer" class="labeled-chat-btn" onclick="toggleBlockCurrentPeer()">
-      <i class="fa-solid fa-ban"></i><span id="block-peer-label">Block</span>
-    </button>
-  </div>
-
-  <div id="chat-messages-list" class="chat-messages-area"></div>
-
-  <div id="chat-reply-bar" class="hidden" style="background:#fff8eb; border-top:1px solid var(--gold); padding:7px 12px; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
-    <span id="chat-reply-text" style="font-weight:700; color:var(--maroon-900);">Replying...</span>
-    <span onclick="cancelChatReply()" style="cursor:pointer; font-weight:800;">✕</span>
-  </div>
-
-  <div id="chat-gifts-drawer" class="hidden" style="background:#fff; border-top:2px solid var(--maroon-200); padding:12px; max-height:245px; overflow-y:auto;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-      <strong style="font-size:12px; color:var(--maroon-800);">Gifts</strong>
-      <button type="button" onclick="toggleChatGifts(false)" style="border:none; background:none; font-size:16px; color:var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div id="chat-gifts-grid" class="gifts-grid"></div>
-  </div>
-
-  <!-- WhatsApp-style Live Voice Recording Indicator Bar -->
-  <div id="voice-recording-bar" class="hidden">
-    <div class="voice-wave-badge">
-      <i class="fa-solid fa-microphone-lines" style="color:#ef4444;"></i>
-      <span>Recording Voice</span>
-    </div>
-    <div id="voice-live-timer" class="voice-live-timer">00:00</div>
-    <button type="button" class="btn btn-danger btn-sm" onclick="cancelVoiceRecording()">Cancel</button>
-  </div>
-
-  <!-- Bottom Chat Bar: Gifts, Gallery, Camera, Message Input, Voice, Send -->
-  <div class="chat-input-bar">
-    <input type="file" id="chat-gallery-input" accept="image/*" class="hidden" onchange="openPhotoEditorFromGallery(this)" />
-    <button type="button" class="chat-tool-btn" onclick="toggleChatGifts()" title="Gifts" style="background:var(--maroon-100);">
-      <i class="fa-solid fa-gift"></i>
-    </button>
-    <button type="button" class="chat-tool-btn" onclick="document.getElementById('chat-gallery-input').click()" title="Gallery" style="background:var(--maroon-100);">
-      <i class="fa-regular fa-images"></i>
-    </button>
-    <button type="button" class="chat-tool-btn" onclick="openDirectCameraCapture()" title="Camera" style="background:var(--maroon-100);">
-      <i class="fa-solid fa-camera"></i>
-    </button>
-    <input type="text" id="chat-text-input" class="input-field" style="padding:9px 11px; border-radius:20px; font-size:13px;" placeholder="Message..." onkeypress="if(event.key==='Enter') handleSendOrVoiceSend()" />
-    <button type="button" id="btn-voice-record" class="chat-tool-btn" onclick="startOrStopVoiceRecording()" title="Voice">
-      <i class="fa-solid fa-microphone"></i>
-    </button>
-    <button type="button" id="btn-chat-send" class="chat-tool-btn" style="background:var(--maroon-700); color:#fff;" onclick="handleSendOrVoiceSend()" title="Send">
-      <i class="fa-solid fa-paper-plane"></i>
-    </button>
-  </div>
-</div>
-
-<!-- ==================== PHOTO EDITOR MODAL (WHATSAPP CROP + DRAW) ==================== -->
-<div id="photo-editor-modal" class="hidden">
-  <div style="padding:12px 14px; background:#2b0711; display:flex; justify-content:space-between; align-items:center;">
-    <button type="button" class="back-btn" onclick="closePhotoEditor()"><i class="fa-solid fa-xmark"></i></button>
-    <strong style="font-size:14px;">Edit Photo</strong>
-    <button type="button" class="btn btn-success btn-sm" onclick="sendEditedPhotoToChat()">Send</button>
-  </div>
-
-  <div class="editor-stage" id="photo-editor-stage">
-    <canvas id="photo-editor-canvas" width="320" height="340"></canvas>
-    <div id="crop-selection-box" class="hidden">
-      <div id="crop-resize-handle" class="crop-resize-handle"></div>
-    </div>
-  </div>
-
-  <div style="background:#2b0711; padding:12px 14px;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
-      <button type="button" id="btn-toggle-crop-mode" class="btn btn-warning btn-sm" onclick="toggleCropBoxMode()">
-        <i class="fa-solid fa-crop"></i> Crop Box
-      </button>
-      <button type="button" id="btn-apply-crop" class="btn btn-success btn-sm hidden" onclick="applyCropSelection()">
-        <i class="fa-solid fa-check"></i> Apply Crop
-      </button>
-      <button type="button" id="btn-draw-mode" class="btn btn-outline btn-sm" onclick="setDrawModeActive()">
-        <i class="fa-solid fa-pen"></i> Mark
-      </button>
-      <button type="button" class="btn btn-outline btn-sm" onclick="resetEditorImage()">
-        <i class="fa-solid fa-rotate-left"></i> Reset
-      </button>
-    </div>
-    <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
-      <span onclick="setEditorColor('#ef4444')" style="width:22px; height:22px; border-radius:50%; background:#ef4444; border:2px solid #fff; cursor:pointer;"></span>
-      <span onclick="setEditorColor('#fde047')" style="width:22px; height:22px; border-radius:50%; background:#fde047; border:2px solid #fff; cursor:pointer;"></span>
-      <span onclick="setEditorColor('#22c55e')" style="width:22px; height:22px; border-radius:50%; background:#22c55e; border:2px solid #fff; cursor:pointer;"></span>
-      <span onclick="setEditorColor('#38bdf8')" style="width:22px; height:22px; border-radius:50%; background:#38bdf8; border:2px solid #fff; cursor:pointer;"></span>
-      <span onclick="setEditorColor('#ffffff')" style="width:22px; height:22px; border-radius:50%; background:#ffffff; border:2px solid #fff; cursor:pointer;"></span>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== DIRECT CAMERA CAPTURE MODAL (FRONT + BACK FLIP) ==================== -->
-<div id="direct-camera-modal" class="hidden">
-  <div style="display:flex; justify-content:space-between; align-items:center;">
-    <span style="font-weight:800; font-size:15px;"><i class="fa-solid fa-camera"></i> Camera</span>
-    <div style="display:flex; gap:8px;">
-      <button type="button" class="back-btn" onclick="flipDirectCamera()" title="Flip Front/Back Camera"><i class="fa-solid fa-camera-rotate"></i></button>
-      <button type="button" class="back-btn" onclick="closeDirectCameraCapture()"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-  </div>
-  <video id="direct-camera-preview" autoplay playsinline></video>
-  <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-    <button type="button" class="btn btn-primary" onclick="captureAndEditCameraPhoto()">
-      <i class="fa-solid fa-crop"></i> Capture &amp; Edit
-    </button>
-    <button type="button" class="btn btn-success" id="btn-record-cam-video" onclick="toggleCameraVideoCapture()">
-      <i class="fa-solid fa-video"></i> Record Video
-    </button>
-  </div>
-</div>
-
-<!-- ==================== PAID CALL DEPOSIT / CALL MODAL ==================== -->
-<div id="paid-call-modal" class="fullscreen-modal hidden">
-  <div class="modal-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
-      <h3 style="font-size:16px; font-weight:800;">Paid Call</h3>
-    </div>
-  </div>
-  <div class="modal-body" id="paid-call-body"></div>
-</div>
-
-<!-- ==================== FULLSCREEN PERSONAL CALL SCREEN ==================== -->
-<div id="active-call-screen" class="hidden">
-  <video id="call-remote-video" class="call-remote-video hidden" autoplay playsinline></video>
-  <audio id="call-remote-audio" autoplay playsinline></audio>
-  <video id="call-local-pip" class="call-local-pip hidden" autoplay muted playsinline></video>
-
-  <div class="call-overlay-ui">
-    <div id="call-center-info" style="text-align:center; margin-top:20px;">
-      <div id="call-type-badge" style="background:rgba(255,255,255,0.18); padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; display:inline-block; margin-bottom:14px;">
-        Audio Call
-      </div>
-      <img id="call-peer-dp" src="" style="width:96px; height:96px; border-radius:50%; object-fit:cover; border:3px solid #fff; display:block; margin:0 auto 12px;" />
-      <h2 id="call-peer-name" style="font-size:22px; font-weight:800;">Name</h2>
-      <div id="call-timer-display" style="font-size:28px; font-weight:800; color:#fde047; margin-top:8px; font-variant-numeric:tabular-nums;">00:00</div>
-      <div id="call-billing-note" style="font-size:12px; opacity:0.88; margin-top:4px;">Connecting...</div>
-    </div>
-
-    <div style="width:100%; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); border-radius:18px; padding:10px;">
-      <div style="font-size:11px; font-weight:700; margin-bottom:6px; text-align:center;">Send Gift During Call</div>
-      <div id="call-gifts-strip" style="display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;"></div>
-    </div>
-
-    <div class="call-controls">
-      <button type="button" class="call-btn" style="background:rgba(255,255,255,0.2);" onclick="toggleCallMute(this)"><i class="fa-solid fa-microphone"></i></button>
-      <button type="button" id="btn-flip-call-cam" class="call-btn hidden" style="background:rgba(255,255,255,0.2);" onclick="flipPersonalCallCamera()" title="Flip Camera"><i class="fa-solid fa-camera-rotate"></i></button>
-      <button type="button" class="call-btn" style="background:#dc2626; width:64px; height:64px; font-size:24px;" onclick="endActiveCall()"><i class="fa-solid fa-phone-slash"></i></button>
-    </div>
-  </div>
-</div>
-
-<!-- ==================== FULLSCREEN LIVE ROOM ==================== -->
-<div id="live-room-fullscreen" class="hidden">
-  <video id="live-video-el" autoplay playsinline></video>
-  <audio id="live-remote-audio" autoplay playsinline></audio>
-  <img id="live-fallback-bg" src="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;" />
-
-  <div class="live-room-top">
-    <div style="display:flex; align-items:center; gap:7px; min-width:0;">
-      <img id="live-host-dp" src="" style="width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid #e11d48; flex-shrink:0;" />
-      <div style="min-width:0;">
-        <div id="live-host-name" style="font-size:12px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:74px;">Host Name</div>
-        <div id="live-stream-status" style="font-size:9px; color:#fda4af; white-space:nowrap;">
-          <i class="fa-solid fa-eye"></i> <span id="live-viewer-count-label">1</span> • 1m auto
+  <!-- ==================== FULLSCREEN PERSONAL CHAT MODAL ==================== -->
+  <div id="chat-room-modal" class="fullscreen-modal hidden">
+    <div id="chat-normal-header" class="modal-header">
+      <div style="display:flex; align-items:center; gap:8px; min-width:0;">
+        <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
+        <img id="chat-peer-dp" src="" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:2px solid #fff;" />
+        <div style="min-width:0;">
+          <div id="chat-peer-name" style="font-size:14px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Name</div>
+          <div id="chat-peer-details" style="font-size:10px; opacity:0.9;">Country • Age • Last Seen</div>
         </div>
       </div>
+      <button type="button" class="back-btn" onclick="shareCurrentPeerChatLink()" title="Share User Chat Link"><i class="fa-solid fa-share-nodes"></i></button>
     </div>
 
-    <div class="live-top-actions">
-      <button type="button" id="btn-live-flip-cam" class="back-btn hidden" title="Flip Front/Back Camera" onclick="flipLiveHostCamera()">
-        <i class="fa-solid fa-camera-rotate"></i>
-      </button>
-      <button type="button" id="btn-live-inbox" class="btn btn-sm" style="background:#fde047; color:#2c0912;" onclick="openInboxFromLiveHost()">
-        <i class="fa-solid fa-envelope"></i> Inbox
-      </button>
-      <button type="button" id="btn-live-mic-toggle" class="back-btn" title="Voice Call Mic" onclick="toggleLiveVoiceMic(this)">
-        <i class="fa-solid fa-microphone"></i>
-      </button>
-      <button type="button" id="btn-live-clear-chat" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="clearLiveRoomChat()">
-        <i class="fa-solid fa-broom"></i> Clear
-      </button>
-      <button type="button" id="btn-live-next-room" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="switchNextLiveRoom(1)">
-        <i class="fa-solid fa-angles-down"></i> Next
-      </button>
-      <button type="button" id="btn-live-leave" class="btn btn-danger btn-sm" onclick="leaveLiveRoom()">
-        <i class="fa-solid fa-right-from-bracket"></i> Leave
-      </button>
-    </div>
-  </div>
-
-  <div class="live-room-bottom">
-    <div id="live-comments-list" class="live-comments-box"></div>
-
-    <div id="live-gifts-drawer" class="hidden" style="background:rgba(45, 7, 17, 0.94); border-radius:16px; padding:10px; margin-bottom:8px; max-height:195px; overflow-y:auto;">
-      <div style="display:flex; justify-content:space-between; color:#fff; font-size:12px; font-weight:700; margin-bottom:6px;">
-        <span>Send Gift</span>
-        <span onclick="document.getElementById('live-gifts-drawer').classList.add('hidden')" style="cursor:pointer;">✕</span>
+    <div id="chat-msg-select-header" class="modal-header hidden" style="background:#2b050e; flex-wrap:wrap; gap:6px;">
+      <div style="display:flex; align-items:center; gap:6px;">
+        <button type="button" class="back-btn" onclick="clearMessageMultiSelect()"><i class="fa-solid fa-xmark"></i></button>
+        <span id="msg-selected-count-label" style="font-size:12px; font-weight:800;">1 Selected</span>
       </div>
-      <div id="live-gifts-grid" class="gifts-grid"></div>
+      <div style="display:flex; gap:5px; flex-wrap:wrap;">
+        <button type="button" class="btn btn-gold btn-sm" style="padding:6px 9px;" onclick="replyToSelectedMessages()">
+          <i class="fa-solid fa-reply"></i> Reply
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" style="background:#fff; color:var(--maroon-900); padding:6px 9px;" onclick="forwardSelectedMessages()">
+          <i class="fa-solid fa-share"></i> Forward
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" style="padding:6px 8px;" onclick="selectAllMessagesInChat()">All</button>
+        <button type="button" class="btn btn-outline btn-sm" style="background:#fef3c7; color:#92400e; padding:6px 8px;" onclick="unsendSelectedMessages()">Unsend</button>
+        <button type="button" class="btn btn-danger btn-sm" style="padding:6px 8px;" onclick="deleteSelectedMessages()">Delete</button>
+      </div>
     </div>
 
-    <div style="display:flex; gap:7px; align-items:center;">
-      <input type="text" id="live-chat-input" class="input-field" style="background:rgba(255,255,255,0.18); color:#fff; border-color:rgba(255,255,255,0.25); padding:9px 13px; border-radius:20px;" placeholder="Live message..." onkeypress="if(event.key==='Enter') sendLiveComment()" />
-      <button type="button" id="btn-live-gift" class="chat-tool-btn" style="background:#e11d48; color:#fff;" onclick="document.getElementById('live-gifts-drawer').classList.toggle('hidden')">
+    <div class="right-action-strip">
+      <button type="button" class="labeled-chat-btn" onclick="initiateCall('audio')">
+        <i class="fa-solid fa-phone"></i><span>Audio Call</span>
+      </button>
+      <button type="button" class="labeled-chat-btn" onclick="initiateCall('video')">
+        <i class="fa-solid fa-video"></i><span>Video Call</span>
+      </button>
+      <button type="button" id="btn-paid-call-top" class="labeled-chat-btn" onclick="openPaidCallHub()">
+        <i class="fa-solid fa-crown"></i><span>Paid Call</span>
+      </button>
+      <button type="button" id="btn-toggle-block-peer" class="labeled-chat-btn" onclick="toggleBlockCurrentPeer()">
+        <i class="fa-solid fa-ban"></i><span id="block-peer-label">Block</span>
+      </button>
+    </div>
+
+    <div id="chat-messages-list" class="chat-messages-area"></div>
+
+    <div id="chat-reply-bar" class="hidden" style="background:#fff8eb; border-top:1.5px solid var(--gold); padding:8px 12px; display:flex; justify-content:space-between; align-items:center; font-size:12px;">
+      <span id="chat-reply-text" style="font-weight:700; color:var(--maroon-900);">Replying...</span>
+      <span onclick="cancelChatReply()" style="cursor:pointer; font-weight:800; padding:2px 6px;">✕</span>
+    </div>
+
+    <div id="chat-gifts-drawer" class="hidden" style="background:#fff; border-top:2px solid var(--maroon-200); padding:12px; max-height:245px; overflow-y:auto;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <strong style="font-size:12px; color:var(--maroon-800);">Gifts</strong>
+        <button type="button" onclick="toggleChatGifts(false)" style="border:none; background:none; font-size:16px; color:var(--text-muted);"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="chat-gifts-grid" class="gifts-grid"></div>
+    </div>
+
+    <div id="voice-recording-bar" class="hidden">
+      <div class="voice-wave-badge">
+        <i class="fa-solid fa-microphone-lines" style="color:#ef4444;"></i>
+        <span>Recording Voice</span>
+      </div>
+      <div id="voice-live-timer" class="voice-live-timer">00:00</div>
+      <button type="button" class="btn btn-danger btn-sm" onclick="cancelVoiceRecording()">Cancel</button>
+    </div>
+
+    <div class="chat-input-bar">
+      <input type="file" id="chat-gallery-input" accept="image/*" class="hidden" onchange="openPhotoEditorFromGallery(this)" />
+      <button type="button" class="chat-tool-btn" onclick="toggleChatGifts()" title="Gifts" style="background:var(--maroon-100);">
         <i class="fa-solid fa-gift"></i>
       </button>
-      <button type="button" class="chat-tool-btn" style="background:var(--maroon-600); color:#fff;" onclick="sendLiveComment()">
+      <button type="button" class="chat-tool-btn" onclick="document.getElementById('chat-gallery-input').click()" title="Gallery" style="background:var(--maroon-100);">
+        <i class="fa-regular fa-images"></i>
+      </button>
+      <button type="button" class="chat-tool-btn" onclick="openDirectCameraCapture()" title="Camera" style="background:var(--maroon-100);">
+        <i class="fa-solid fa-camera"></i>
+      </button>
+      <input type="text" id="chat-text-input" class="input-field" style="padding:9px 11px; border-radius:20px; font-size:13px;" placeholder="Message..." onkeypress="if(event.key==='Enter') handleSendOrVoiceSend()" />
+      <button type="button" id="btn-voice-record" class="chat-tool-btn" onclick="startOrStopVoiceRecording()" title="Voice">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+      <button type="button" id="btn-chat-send" class="chat-tool-btn" style="background:var(--maroon-700); color:#fff;" onclick="handleSendOrVoiceSend()" title="Send">
         <i class="fa-solid fa-paper-plane"></i>
       </button>
     </div>
   </div>
-</div>
 
-<!-- ==================== FULLSCREEN PROFILE FOLDER MODAL ==================== -->
-<div id="profile-folder-modal" class="fullscreen-modal hidden">
-  <div class="modal-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
-      <h3 id="profile-folder-title" style="font-size:16px; font-weight:800;">Folder</h3>
+  <!-- ==================== PHOTO EDITOR MODAL ==================== -->
+  <div id="photo-editor-modal" class="hidden">
+    <div style="padding:12px 14px; background:#2b050e; display:flex; justify-content:space-between; align-items:center;">
+      <button type="button" class="back-btn" onclick="closePhotoEditor()"><i class="fa-solid fa-xmark"></i></button>
+      <strong style="font-size:14px;">Edit Photo</strong>
+      <button type="button" class="btn btn-success btn-sm" onclick="sendEditedPhotoToChat()">Send</button>
     </div>
-    <button type="button" id="support-clear-btn" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.2); color:#fff;" onclick="clearSupportChat()">
-      <i class="fa-solid fa-trash"></i> Clear Chat
-    </button>
-  </div>
-  <div id="profile-folder-body" class="modal-body"></div>
-</div>
 
-<!-- ==================== FULLSCREEN ADMIN PANEL ==================== -->
-<div id="admin-panel-modal" class="fullscreen-modal hidden">
-  <div class="modal-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
-      <h3 style="font-size:16px; font-weight:800;"><i class="fa-solid fa-crown"></i> Owner Admin Panel</h3>
+    <div class="editor-stage" id="photo-editor-stage">
+      <canvas id="photo-editor-canvas" width="320" height="340"></canvas>
+      <div id="crop-selection-box" class="hidden">
+        <div id="crop-resize-handle" class="crop-resize-handle"></div>
+      </div>
     </div>
-  </div>
-  <div class="modal-body" id="admin-main-body"></div>
-</div>
 
-<div id="admin-subfolder-modal" class="fullscreen-modal hidden" style="z-index:260;">
-  <div class="modal-header">
-    <div style="display:flex; align-items:center; gap:10px;">
-      <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
-      <h3 id="admin-subfolder-title" style="font-size:16px; font-weight:800;">Admin Folder</h3>
-    </div>
-  </div>
-  <div class="modal-body" id="admin-subfolder-body"></div>
-</div>
-
-<!-- ==================== HD ZOOMABLE PHOTO / SLIP VIEWER ==================== -->
-<div id="slip-zoom-modal" class="hidden">
-  <div class="slip-toolbar">
-    <span id="zoom-viewer-title" style="font-size:13px; font-weight:800;">Photo Viewer</span>
-    <div style="display:flex; gap:8px;">
-      <button type="button" class="btn btn-sm btn-outline" onclick="zoomSlip(0.35)"><i class="fa-solid fa-magnifying-glass-plus"></i> +</button>
-      <button type="button" class="btn btn-sm btn-outline" onclick="zoomSlip(-0.35)"><i class="fa-solid fa-magnifying-glass-minus"></i> -</button>
-      <button type="button" class="btn btn-sm btn-danger" onclick="closeSlipModal()">Close</button>
+    <div style="background:#2b050e; padding:12px 14px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; margin-bottom:10px; flex-wrap:wrap;">
+        <button type="button" id="btn-toggle-crop-mode" class="btn btn-warning btn-sm" onclick="toggleCropBoxMode()">
+          <i class="fa-solid fa-crop"></i> Crop Box
+        </button>
+        <button type="button" id="btn-apply-crop" class="btn btn-success btn-sm hidden" onclick="applyCropSelection()">
+          <i class="fa-solid fa-check"></i> Apply Crop
+        </button>
+        <button type="button" id="btn-draw-mode" class="btn btn-outline btn-sm" onclick="setDrawModeActive()">
+          <i class="fa-solid fa-pen"></i> Mark
+        </button>
+        <button type="button" class="btn btn-outline btn-sm" onclick="resetEditorImage()">
+          <i class="fa-solid fa-rotate-left"></i> Reset
+        </button>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center; justify-content:center;">
+        <span onclick="setEditorColor('#ef4444')" style="width:22px; height:22px; border-radius:50%; background:#ef4444; border:2px solid #fff; cursor:pointer;"></span>
+        <span onclick="setEditorColor('#fde047')" style="width:22px; height:22px; border-radius:50%; background:#fde047; border:2px solid #fff; cursor:pointer;"></span>
+        <span onclick="setEditorColor('#22c55e')" style="width:22px; height:22px; border-radius:50%; background:#22c55e; border:2px solid #fff; cursor:pointer;"></span>
+        <span onclick="setEditorColor('#38bdf8')" style="width:22px; height:22px; border-radius:50%; background:#38bdf8; border:2px solid #fff; cursor:pointer;"></span>
+        <span onclick="setEditorColor('#ffffff')" style="width:22px; height:22px; border-radius:50%; background:#ffffff; border:2px solid #fff; cursor:pointer;"></span>
+      </div>
     </div>
   </div>
-  <div class="slip-canvas">
-    <img id="slip-zoom-img" src="" alt="Photo Preview" />
-  </div>
-</div>
 
-<!-- Long Press Menu -->
-<div id="msg-context-menu" class="hidden" onclick="this.classList.add('hidden')">
-  <div class="context-card" onclick="event.stopPropagation()">
-    <div class="context-opt" onclick="contextCopyMsg()"><i class="fa-regular fa-copy" style="color:var(--maroon-700);"></i> Copy</div>
-    <div class="context-opt" onclick="contextPasteMsg()"><i class="fa-solid fa-paste" style="color:var(--maroon-700);"></i> Paste</div>
-    <div class="context-opt" onclick="contextEnterMultiSelect()"><i class="fa-solid fa-circle-check" style="color:var(--maroon-700);"></i> Select</div>
-    <div class="context-opt" onclick="contextFormatMsg('bold')"><i class="fa-solid fa-bold" style="color:var(--maroon-700);"></i> Bold</div>
-    <div class="context-opt" onclick="contextFormatMsg('italic')"><i class="fa-solid fa-italic" style="color:var(--maroon-700);"></i> Italic</div>
-    <div class="context-opt" onclick="contextUnsendMsg()" style="color:#b45309;"><i class="fa-solid fa-rotate-left"></i> Unsend</div>
-    <div class="context-opt" onclick="contextDeleteMsg()" style="color:#dc2626;"><i class="fa-solid fa-trash"></i> Delete</div>
+  <!-- ==================== DIRECT CAMERA CAPTURE MODAL ==================== -->
+  <div id="direct-camera-modal" class="hidden">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <span style="font-weight:800; font-size:15px;"><i class="fa-solid fa-camera"></i> Camera</span>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="back-btn" onclick="flipDirectCamera()" title="Flip Front/Back Camera"><i class="fa-solid fa-camera-rotate"></i></button>
+        <button type="button" class="back-btn" onclick="closeDirectCameraCapture()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+    <video id="direct-camera-preview" autoplay playsinline></video>
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <button type="button" class="btn btn-primary" onclick="captureAndEditCameraPhoto()">
+        <i class="fa-solid fa-crop"></i> Capture &amp; Edit
+      </button>
+      <button type="button" class="btn btn-success" id="btn-record-cam-video" onclick="toggleCameraVideoCapture()">
+        <i class="fa-solid fa-video"></i> Record Video
+      </button>
+    </div>
   </div>
+
+  <!-- ==================== PAID CALL DEPOSIT / CALL MODAL ==================== -->
+  <div id="paid-call-modal" class="fullscreen-modal hidden">
+    <div class="modal-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
+        <h3 style="font-size:16px; font-weight:800;">Paid Call</h3>
+      </div>
+    </div>
+    <div class="modal-body" id="paid-call-body"></div>
+  </div>
+
+  <!-- ==================== FULLSCREEN PERSONAL CALL SCREEN ==================== -->
+  <div id="active-call-screen" class="hidden">
+    <video id="call-remote-video" class="call-remote-video hidden" autoplay playsinline></video>
+    <audio id="call-remote-audio" autoplay playsinline></audio>
+    <video id="call-local-pip" class="call-local-pip hidden" autoplay muted playsinline></video>
+
+    <div class="call-overlay-ui">
+      <div id="call-center-info" style="text-align:center; margin-top:20px;">
+        <div id="call-type-badge" style="background:rgba(255,255,255,0.18); padding:5px 14px; border-radius:20px; font-size:12px; font-weight:700; display:inline-block; margin-bottom:14px;">
+          Audio Call
+        </div>
+        <img id="call-peer-dp" src="" style="width:96px; height:96px; border-radius:50%; object-fit:cover; border:3px solid #fff; display:block; margin:0 auto 12px;" />
+        <h2 id="call-peer-name" style="font-size:22px; font-weight:800;">Name</h2>
+        <div id="call-timer-display" style="font-size:28px; font-weight:800; color:#fde047; margin-top:8px; font-variant-numeric:tabular-nums;">00:00</div>
+        <div id="call-billing-note" style="font-size:12px; opacity:0.88; margin-top:4px;">Connecting...</div>
+      </div>
+
+      <div style="width:100%; background:rgba(0,0,0,0.45); backdrop-filter:blur(6px); border-radius:18px; padding:10px;">
+        <div style="font-size:11px; font-weight:700; margin-bottom:6px; text-align:center;">Send Gift During Call</div>
+        <div id="call-gifts-strip" style="display:flex; gap:8px; overflow-x:auto; padding-bottom:4px;"></div>
+      </div>
+
+      <div class="call-controls">
+        <button type="button" class="call-btn" style="background:rgba(255,255,255,0.2);" onclick="toggleCallMute(this)"><i class="fa-solid fa-microphone"></i></button>
+        <button type="button" id="btn-flip-call-cam" class="call-btn hidden" style="background:rgba(255,255,255,0.2);" onclick="flipPersonalCallCamera()" title="Flip Camera"><i class="fa-solid fa-camera-rotate"></i></button>
+        <button type="button" class="call-btn" style="background:#dc2626; width:64px; height:64px; font-size:24px;" onclick="endActiveCall()"><i class="fa-solid fa-phone-slash"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FULLSCREEN LIVE ROOM ==================== -->
+  <div id="live-room-fullscreen" class="hidden">
+    <video id="live-video-el" autoplay playsinline></video>
+    <audio id="live-remote-audio" autoplay playsinline></audio>
+    <img id="live-fallback-bg" src="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;" />
+
+    <div class="live-room-top">
+      <div style="display:flex; align-items:center; gap:7px; min-width:0;">
+        <img id="live-host-dp" src="" style="width:34px; height:34px; border-radius:50%; object-fit:cover; border:2px solid #e11d48; flex-shrink:0;" />
+        <div style="min-width:0;">
+          <div id="live-host-name" style="font-size:12px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:74px;">Host Name</div>
+          <div id="live-stream-status" style="font-size:9px; color:#fda4af; white-space:nowrap;">
+            <i class="fa-solid fa-eye"></i> <span id="live-viewer-count-label">1</span> • 1m auto
+          </div>
+        </div>
+      </div>
+
+      <div class="live-top-actions">
+        <button type="button" id="btn-live-flip-cam" class="back-btn hidden" title="Flip Front/Back Camera" onclick="flipLiveHostCamera()">
+          <i class="fa-solid fa-camera-rotate"></i>
+        </button>
+        <button type="button" id="btn-live-inbox" class="btn btn-sm" style="background:#fde047; color:#2c0912;" onclick="openInboxFromLiveHost()">
+          <i class="fa-solid fa-envelope"></i> Inbox
+        </button>
+        <button type="button" id="btn-live-mic-toggle" class="back-btn" title="Voice Call Mic" onclick="toggleLiveVoiceMic(this)">
+          <i class="fa-solid fa-microphone"></i>
+        </button>
+        <button type="button" id="btn-live-clear-chat" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="clearLiveRoomChat()">
+          <i class="fa-solid fa-broom"></i> Clear
+        </button>
+        <button type="button" id="btn-live-next-room" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.22); color:#fff;" onclick="switchNextLiveRoom(1)">
+          <i class="fa-solid fa-angles-down"></i> Next
+        </button>
+        <button type="button" id="btn-live-leave" class="btn btn-danger btn-sm" onclick="leaveLiveRoom()">
+          <i class="fa-solid fa-right-from-bracket"></i> Leave
+        </button>
+      </div>
+    </div>
+
+    <div class="live-room-bottom">
+      <div id="live-comments-list" class="live-comments-box"></div>
+
+      <div id="live-gifts-drawer" class="hidden" style="background:rgba(45, 7, 17, 0.94); border-radius:16px; padding:10px; margin-bottom:8px; max-height:195px; overflow-y:auto;">
+        <div style="display:flex; justify-content:space-between; color:#fff; font-size:12px; font-weight:700; margin-bottom:6px;">
+          <span>Send Gift</span>
+          <span onclick="document.getElementById('live-gifts-drawer').classList.add('hidden')" style="cursor:pointer;">✕</span>
+        </div>
+        <div id="live-gifts-grid" class="gifts-grid"></div>
+      </div>
+
+      <div style="display:flex; gap:7px; align-items:center;">
+        <input type="text" id="live-chat-input" class="input-field" style="background:rgba(255,255,255,0.18); color:#fff; border-color:rgba(255,255,255,0.25); padding:9px 13px; border-radius:20px;" placeholder="Live message..." onkeypress="if(event.key==='Enter') sendLiveComment()" />
+        <button type="button" id="btn-live-gift" class="chat-tool-btn" style="background:#e11d48; color:#fff;" onclick="document.getElementById('live-gifts-drawer').classList.toggle('hidden')">
+          <i class="fa-solid fa-gift"></i>
+        </button>
+        <button type="button" class="chat-tool-btn" style="background:var(--maroon-600); color:#fff;" onclick="sendLiveComment()">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FULLSCREEN PROFILE FOLDER MODAL ==================== -->
+  <div id="profile-folder-modal" class="fullscreen-modal hidden">
+    <div class="modal-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
+        <h3 id="profile-folder-title" style="font-size:16px; font-weight:800;">Folder</h3>
+      </div>
+      <button type="button" id="support-clear-btn" class="btn btn-sm hidden" style="background:rgba(255,255,255,0.2); color:#fff;" onclick="clearSupportChat()">
+        <i class="fa-solid fa-trash"></i> Clear Chat
+      </button>
+    </div>
+    <div id="profile-folder-body" class="modal-body"></div>
+  </div>
+
+  <!-- ==================== LUXURY OWNER ADMIN PANEL (SCOPED FULL-SCREEN SCROLL) ==================== -->
+  <div id="admin-panel-modal" class="fullscreen-modal hidden">
+    <div class="modal-header" style="background:linear-gradient(135deg,#2b050e,#631125);">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
+        <div>
+          <div style="font-size:9px; font-weight:800; color:var(--gold-light); letter-spacing:1px;">✦ LUXURY COMMAND CENTER ✦</div>
+          <h3 style="font-size:15px; font-weight:800;"><i class="fa-solid fa-crown" style="color:var(--gold-light);"></i> Owner Admin Panel</h3>
+        </div>
+      </div>
+      <button type="button" class="btn btn-sm" id="admin-pk-quick-btn" onclick="togglePakistanKillSwitch()">PK Switch</button>
+    </div>
+    <div class="modal-body" id="admin-main-body"></div>
+  </div>
+
+  <!-- ==================== LUXURY ADMIN SUB-FOLDER MODAL (SCOPED FULL-SCREEN SCROLL) ==================== -->
+  <div id="admin-subfolder-modal" class="fullscreen-modal hidden">
+    <div class="modal-header" style="background:linear-gradient(135deg,#2b050e,#631125);">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button type="button" class="back-btn" onclick="handleAppBackAction()"><i class="fa-solid fa-arrow-left"></i></button>
+        <h3 id="admin-subfolder-title" style="font-size:15px; font-weight:800; color:var(--gold-light);">Admin Folder</h3>
+      </div>
+    </div>
+    <div class="modal-body" id="admin-subfolder-body"></div>
+  </div>
+
+  <!-- ==================== HD ZOOMABLE PHOTO / SLIP VIEWER ==================== -->
+  <div id="slip-zoom-modal" class="hidden">
+    <div class="slip-toolbar">
+      <span id="zoom-viewer-title" style="font-size:13px; font-weight:800; color:var(--gold-light);">Photo Viewer</span>
+      <div style="display:flex; gap:6px;">
+        <button type="button" class="btn btn-sm btn-gold" onclick="zoomSlip(0.4)"><i class="fa-solid fa-magnifying-glass-plus"></i> +</button>
+        <button type="button" class="btn btn-sm btn-outline" onclick="zoomSlip(-0.4)"><i class="fa-solid fa-magnifying-glass-minus"></i> -</button>
+        <button type="button" class="btn btn-sm btn-danger" onclick="closeSlipModal()">Close</button>
+      </div>
+    </div>
+    <div class="slip-canvas">
+      <img id="slip-zoom-img" src="" alt="Photo Preview" />
+    </div>
+  </div>
+
+  <!-- Long Press Menu -->
+  <div id="msg-context-menu" class="hidden" onclick="this.classList.add('hidden')">
+    <div class="context-card" onclick="event.stopPropagation()">
+      <div class="context-opt" onclick="contextReplyMsg()"><i class="fa-solid fa-reply" style="color:var(--maroon-700);"></i> Reply</div>
+      <div class="context-opt" onclick="contextForwardMsg()"><i class="fa-solid fa-share" style="color:var(--maroon-700);"></i> Forward</div>
+      <div class="context-opt" onclick="contextCopyMsg()"><i class="fa-regular fa-copy" style="color:var(--maroon-700);"></i> Copy</div>
+      <div class="context-opt" onclick="contextPasteMsg()"><i class="fa-solid fa-paste" style="color:var(--maroon-700);"></i> Paste</div>
+      <div class="context-opt" onclick="contextEnterMultiSelect()"><i class="fa-solid fa-circle-check" style="color:var(--maroon-700);"></i> Select</div>
+      <div class="context-opt" onclick="contextFormatMsg('bold')"><i class="fa-solid fa-bold" style="color:var(--maroon-700);"></i> Bold</div>
+      <div class="context-opt" onclick="contextFormatMsg('italic')"><i class="fa-solid fa-italic" style="color:var(--maroon-700);"></i> Italic</div>
+      <div class="context-opt" onclick="contextUnsendMsg()" style="color:#b45309;"><i class="fa-solid fa-rotate-left"></i> Unsend</div>
+      <div class="context-opt" onclick="contextDeleteMsg()" style="color:#dc2626;"><i class="fa-solid fa-trash"></i> Delete</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -2238,6 +2266,7 @@ let allUsersMap = {};
 let rawLiveRoomsMap = {};
 let appSettings = {
   appClosedPakistan: false,
+  screenRecordingAllowedForAll: false,
   downloadAppLink: "https://aura-meet-6f81b.web.app/AuraMeet.apk",
   inviteLink: window.location.href,
   ownerCaptureEnabled: true,
@@ -2262,12 +2291,10 @@ let selectedMsgIds = new Set();
 let replyTargetMsg = null;
 let copiedMsgText = "";
 
-/* Unseen message tracking per peer & total unread threads */
 let perPeerUnreadCounts = {};
 let bannerTimer = null;
 let bannerTargetUid = null;
 
-/* Voice recording state (WhatsApp style with live mm:ss timer) */
 let mediaRecorder = null;
 let audioChunks = [];
 let isRecordingVoice = false;
@@ -2275,7 +2302,6 @@ let voiceRecordSeconds = 0;
 let voiceRecordTimer = null;
 let voiceCancelFlag = false;
 
-/* Direct Camera & Call Camera Facing Mode */
 let directCamStream = null;
 let directCamFacingMode = "user";
 let directCamRecorder = null;
@@ -2321,14 +2347,19 @@ function isValidAdminCode(code) {
   return code === ADMIN_PASSCODE || code === ALT_ADMIN_PASSCODE;
 }
 
+function canCaptureScreenOrRecord() {
+  if (isOwnerAdmin()) return true;
+  return appSettings.screenRecordingAllowedForAll === true;
+}
+
 function showToast(msg, icon = "fa-circle-info") {
   const box = document.getElementById("toast-box");
   if (!box) return;
   const el = document.createElement("div");
   el.className = "toast";
-  el.innerHTML = `<i class="fa-solid ${icon}"></i><span>${escapeHtml(msg)}</span>`;
+  el.innerHTML = `<i class="fa-solid ${icon}" style="color:var(--gold-light);"></i><span>${escapeHtml(msg)}</span>`;
   box.appendChild(el);
-  setTimeout(() => { el.remove(); }, 3400);
+  setTimeout(() => { el.remove(); }, 3200);
 }
 
 /* ==========================================================================
@@ -2618,7 +2649,7 @@ function shareCurrentPeerChatLink() {
    SCREENSHOT, IMAGE SAVE & SCREEN RECORDING PROTECTION
    ========================================================================== */
 function handleGlobalContextMenu(e) {
-  if (isOwnerAdmin() && appSettings.ownerCaptureEnabled !== false) return true;
+  if (canCaptureScreenOrRecord()) return true;
   if (e.target && (e.target.tagName === "IMG" || e.target.tagName === "VIDEO")) {
     e.preventDefault();
     return false;
@@ -2628,7 +2659,7 @@ function handleGlobalContextMenu(e) {
 
 function setupCaptureProtection() {
   document.addEventListener("keydown", (e) => {
-    if (isOwnerAdmin() && appSettings.ownerCaptureEnabled !== false) return;
+    if (canCaptureScreenOrRecord()) return;
     if (e.key === "PrintScreen" || ((e.ctrlKey || e.metaKey) && e.shiftKey && ["s", "S", "i", "I"].includes(e.key))) {
       e.preventDefault();
       document.getElementById("privacy-shield-overlay").classList.remove("hidden");
@@ -2636,7 +2667,7 @@ function setupCaptureProtection() {
   });
 
   document.addEventListener("visibilitychange", () => {
-    if (isOwnerAdmin() && appSettings.ownerCaptureEnabled !== false) return;
+    if (canCaptureScreenOrRecord()) return;
     if (document.hidden && (activeChatPeerId || activeLiveHostId || activeCallState)) {
       document.getElementById("privacy-shield-overlay").classList.remove("hidden");
     }
@@ -2706,12 +2737,35 @@ function listenAppSettings() {
     document.getElementById("admin-shortcut-btn").classList.toggle("hidden", !adminFlag);
 
     updateFemaleFaceBoxVisibility();
+    syncPkQuickButtonUI();
 
     const maint = document.getElementById("maintenance-screen");
     if (appSettings.appClosedPakistan && !adminFlag) {
       maint.classList.remove("hidden");
     } else {
       maint.classList.add("hidden");
+    }
+  });
+}
+
+function syncPkQuickButtonUI() {
+  const btn = document.getElementById("admin-pk-quick-btn");
+  if (!btn) return;
+  if (appSettings.appClosedPakistan) {
+    btn.className = "btn btn-sm btn-success";
+    btn.innerHTML = `<i class="fa-solid fa-power-off"></i> PK: CLOSED`;
+  } else {
+    btn.className = "btn btn-sm btn-danger";
+    btn.innerHTML = `<i class="fa-solid fa-ban"></i> Close PK`;
+  }
+}
+
+function togglePakistanKillSwitch() {
+  const nextVal = !appSettings.appClosedPakistan;
+  db.ref("settings/appClosedPakistan").set(nextVal).then(() => {
+    showToast(nextVal ? "App closed across Pakistan!" : "App opened in Pakistan!", "fa-shield-halved");
+    if (!document.getElementById("admin-panel-modal").classList.contains("hidden")) {
+      renderAdminMainDashboard();
     }
   });
 }
@@ -3025,9 +3079,6 @@ function refreshCurrentUserUI() {
   document.getElementById("girl-go-live-banner").classList.toggle("hidden", currentUser.sex !== "Female");
 }
 
-/* ==========================================================================
-   BOTTOM TABS
-   ========================================================================== */
 function switchMainTab(tab) {
   const tabs = ["chats", "live", "deposit", "withdraw", "profile"];
   const titles = {
@@ -3046,7 +3097,7 @@ function switchMainTab(tab) {
 }
 
 /* ==========================================================================
-   TAB 1: CHATS (LAST SEEN + UNSEEN COUNT + TAP OPEN + SCROLL SAFE)
+   TAB 1: CHATS
    ========================================================================== */
 function renderChatsTab() {
   if (!currentUser) return;
@@ -3185,9 +3236,7 @@ function bindChatTabInteractions() {
       startX = e.touches[0].clientX;
       startY = e.touches[0].clientY;
       pressTimer = setTimeout(() => {
-        if (!movedDuringTouch) {
-          enterRecentSelectMode(uid);
-        }
+        if (!movedDuringTouch) enterRecentSelectMode(uid);
       }, 520);
     }, { passive: true });
 
@@ -3200,9 +3249,7 @@ function bindChatTabInteractions() {
       }
     }, { passive: true });
 
-    card.addEventListener("touchend", () => {
-      clearTimeout(pressTimer);
-    });
+    card.addEventListener("touchend", () => clearTimeout(pressTimer));
 
     card.onclick = () => {
       if (movedDuringTouch) return;
@@ -3231,9 +3278,7 @@ function exitRecentSelectMode() {
 function pinSelectedRecentChats() {
   if (!currentUser || !selectedRecentUids.size) return;
   const pinnedMap = { ...(currentUser.pinnedUsers || {}) };
-  selectedRecentUids.forEach(uid => {
-    pinnedMap[uid] = !pinnedMap[uid];
-  });
+  selectedRecentUids.forEach(uid => { pinnedMap[uid] = !pinnedMap[uid]; });
   db.ref(`users/${currentUser.uid}/pinnedUsers`).set(pinnedMap).then(() => {
     showToast("Pin status updated", "fa-thumbtack");
     exitRecentSelectMode();
@@ -3242,9 +3287,7 @@ function pinSelectedRecentChats() {
 function deleteSelectedRecentChats() {
   if (!currentUser || !selectedRecentUids.size) return;
   const hiddenMap = { ...(currentUser.hiddenUsers || {}) };
-  selectedRecentUids.forEach(uid => {
-    hiddenMap[uid] = true;
-  });
+  selectedRecentUids.forEach(uid => { hiddenMap[uid] = true; });
   db.ref(`users/${currentUser.uid}/hiddenUsers`).set(hiddenMap).then(() => {
     showToast("Selected recent chats removed", "fa-trash");
     exitRecentSelectMode();
@@ -3252,7 +3295,7 @@ function deleteSelectedRecentChats() {
 }
 
 /* ==========================================================================
-   PERSONAL CHAT ROOM (LAST SEEN + LONG-PRESS MULTI-SELECT + WHATSAPP VOICE)
+   PERSONAL CHAT ROOM (SWIPE TO REPLY + LONG-PRESS REPLY/FORWARD/MULTI-SELECT)
    ========================================================================== */
 function getChatThreadId(uid1, uid2) {
   const a = cleanUid(uid1);
@@ -3283,7 +3326,6 @@ function resetChatSelectionHeaderOnly() {
   if (selectedMsgIds && typeof selectedMsgIds.clear === "function") {
     selectedMsgIds.clear();
   }
-  selectedMsgForContext = null;
   const normalHdr = document.getElementById("chat-normal-header");
   const selectHdr = document.getElementById("chat-msg-select-header");
   if (normalHdr) normalHdr.classList.remove("hidden");
@@ -3374,7 +3416,7 @@ function renderCurrentChatMessagesList(peerObj) {
 
   if (currentChatEntries.length === 0) {
     area.innerHTML = `<div style="text-align:center; font-size:12px; color:var(--text-muted); margin-top:30px;">
-      Start chatting with ${escapeHtml(peer.name)}.
+      Start chatting with ${escapeHtml(peer.name)}. Swipe any message to reply!
     </div>`;
     return;
   }
@@ -3421,12 +3463,12 @@ function renderCurrentChatMessagesList(peerObj) {
 
     return `
       <div class="msg-row-wrap ${isMine ? 'mine-row' : 'theirs-row'} ${isSel ? 'msg-sel' : ''}"
-           onclick="handleMessageTap('${msgId}', '${safeLabel}')">
+           data-msg-id="${escapeAttr(msgId)}"
+           data-msg-label="${safeLabel}"
+           data-msg-mine="${isMine ? '1' : '0'}"
+           data-thread-id="${escapeAttr(threadId)}">
         ${!isMine && msgMultiSelectActive ? `<div class="msg-circle-tick">${isSel ? '✓' : ''}</div>` : ''}
-        <div class="msg-bubble ${isMine ? 'msg-mine' : 'msg-theirs'}"
-             oncontextmenu="openMsgContext(event, '${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
-             ontouchstart="startLongPress('${threadId}', '${msgId}', '${safeLabel}', ${isMine})"
-             ontouchend="cancelLongPress()">
+        <div class="msg-bubble ${isMine ? 'msg-mine' : 'msg-theirs'}">
           ${innerHtml}
           <div class="msg-meta">
             <span>${formatDateTime(m.ts)}</span>
@@ -3438,7 +3480,92 @@ function renderCurrentChatMessagesList(peerObj) {
     `;
   }).join("");
 
+  bindMessageSwipeAndLongPress();
   area.scrollTop = area.scrollHeight;
+}
+
+function bindMessageSwipeAndLongPress() {
+  document.querySelectorAll("#chat-messages-list .msg-row-wrap").forEach(row => {
+    const msgId = row.getAttribute("data-msg-id");
+    const labelText = row.getAttribute("data-msg-label") || "Message";
+    const isMine = row.getAttribute("data-msg-mine") === "1";
+    const threadId = row.getAttribute("data-thread-id");
+
+    let startX = 0;
+    let startY = 0;
+    let swipeTriggered = false;
+    let longPressTimer = null;
+    let moved = false;
+
+    row.oncontextmenu = (e) => {
+      e.preventDefault();
+      selectedMsgForContext = { threadId, msgId, text: labelText, isMine };
+      if (!selectedMsgIds.size) selectedMsgIds = new Set([msgId]);
+      document.getElementById("msg-context-menu").classList.remove("hidden");
+    };
+
+    row.addEventListener("touchstart", (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      swipeTriggered = false;
+      moved = false;
+
+      longPressTimer = setTimeout(() => {
+        if (!moved && !swipeTriggered) {
+          selectedMsgForContext = { threadId, msgId, text: labelText, isMine };
+          selectedMsgIds.add(msgId);
+          enterMultiSelectWithMessage(msgId);
+        }
+      }, 480);
+    }, { passive: true });
+
+    row.addEventListener("touchmove", (e) => {
+      const dx = e.touches[0].clientX - startX;
+      const dy = Math.abs(e.touches[0].clientY - startY);
+      if (Math.abs(dx) > 10 || dy > 10) {
+        moved = true;
+        clearTimeout(longPressTimer);
+      }
+      if (dy < 35 && Math.abs(dx) > 20) {
+        const clamped = Math.max(-55, Math.min(55, dx));
+        row.style.transform = `translateX(${clamped}px)`;
+        if (Math.abs(dx) > 52 && !swipeTriggered) {
+          swipeTriggered = true;
+          setReplyTargetDirectly(labelText);
+        }
+      }
+    }, { passive: true });
+
+    row.addEventListener("touchend", () => {
+      clearTimeout(longPressTimer);
+      row.style.transform = "";
+    });
+
+    row.onclick = () => {
+      if (moved || swipeTriggered) return;
+      if (msgMultiSelectActive) {
+        if (selectedMsgIds.has(msgId)) selectedMsgIds.delete(msgId);
+        else selectedMsgIds.add(msgId);
+        if (selectedMsgIds.size === 0) {
+          clearMessageMultiSelect();
+          return;
+        }
+        document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
+        renderCurrentChatMessagesList();
+      } else {
+        selectedMsgForContext = { threadId, msgId, text: labelText, isMine };
+        selectedMsgIds = new Set([msgId]);
+        enterMultiSelectWithMessage(msgId);
+      }
+    };
+  });
+}
+
+function setReplyTargetDirectly(text) {
+  replyTargetMsg = text || "Message";
+  document.getElementById("chat-reply-text").textContent = `Replying to: ${replyTargetMsg}`;
+  document.getElementById("chat-reply-bar").classList.remove("hidden");
+  document.getElementById("chat-text-input").focus();
 }
 
 function enterMultiSelectWithMessage(msgId) {
@@ -3448,28 +3575,6 @@ function enterMultiSelectWithMessage(msgId) {
   document.getElementById("chat-msg-select-header").classList.remove("hidden");
   document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
   renderCurrentChatMessagesList();
-}
-
-function handleMessageTap(msgId, labelText) {
-  if (msgMultiSelectActive) {
-    if (selectedMsgIds.has(msgId)) selectedMsgIds.delete(msgId);
-    else selectedMsgIds.add(msgId);
-    if (selectedMsgIds.size === 0) {
-      clearMessageMultiSelect();
-      return;
-    }
-    document.getElementById("msg-selected-count-label").textContent = `${selectedMsgIds.size} Selected`;
-    renderCurrentChatMessagesList();
-    return;
-  }
-  selectedMsgForContext = {
-    threadId: getChatThreadId(currentUser.uid, activeChatPeerId),
-    msgId,
-    text: labelText,
-    isMine: true
-  };
-  selectedMsgIds = new Set([msgId]);
-  enterMultiSelectWithMessage(msgId);
 }
 
 function selectAllMessagesInChat() {
@@ -3522,9 +3627,7 @@ function replyToSelectedMessages() {
   const targetId = Array.from(selectedMsgIds)[0] || selectedMsgForContext?.msgId;
   const found = currentChatEntries.find(([id]) => id === targetId);
   const replyText = found ? (found[1].text || found[1].giftName || (found[1].type === "audio" ? "Voice message" : "Photo")) : (selectedMsgForContext?.text || "Message");
-  replyTargetMsg = replyText;
-  document.getElementById("chat-reply-text").textContent = `Replying to: ${replyText}`;
-  document.getElementById("chat-reply-bar").classList.remove("hidden");
+  setReplyTargetDirectly(replyText);
   clearMessageMultiSelect();
 }
 
@@ -3556,6 +3659,63 @@ function forwardSelectedMessages() {
   });
   showToast(`Forwarded to ${otherPeer.name}`, "fa-share");
   clearMessageMultiSelect();
+}
+
+function contextReplyMsg() {
+  document.getElementById("msg-context-menu").classList.add("hidden");
+  if (selectedMsgForContext) setReplyTargetDirectly(selectedMsgForContext.text);
+}
+function contextForwardMsg() {
+  document.getElementById("msg-context-menu").classList.add("hidden");
+  if (selectedMsgForContext && selectedMsgForContext.msgId) {
+    selectedMsgIds = new Set([selectedMsgForContext.msgId]);
+    forwardSelectedMessages();
+  }
+}
+function contextCopyMsg() {
+  if (selectedMsgForContext) copyText(selectedMsgForContext.text);
+  document.getElementById("msg-context-menu").classList.add("hidden");
+}
+function contextPasteMsg() {
+  const inp = document.getElementById("chat-text-input");
+  if (navigator.clipboard && navigator.clipboard.readText) {
+    navigator.clipboard.readText().then(t => {
+      inp.value = (inp.value + " " + (t || copiedMsgText)).trim();
+    }).catch(() => {
+      inp.value = (inp.value + " " + copiedMsgText).trim();
+    });
+  } else {
+    inp.value = (inp.value + " " + copiedMsgText).trim();
+  }
+  document.getElementById("msg-context-menu").classList.add("hidden");
+}
+function contextEnterMultiSelect() {
+  document.getElementById("msg-context-menu").classList.add("hidden");
+  selectedMsgIds = new Set(selectedMsgForContext?.msgId ? [selectedMsgForContext.msgId] : []);
+  enterMultiSelectWithMessage(selectedMsgForContext?.msgId);
+}
+function contextFormatMsg(styleType) {
+  if (selectedMsgForContext && selectedMsgForContext.isMine) {
+    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}/format`).set(styleType);
+    showToast(`Formatted as ${styleType}`, "fa-font");
+  }
+  document.getElementById("msg-context-menu").classList.add("hidden");
+}
+function contextUnsendMsg() {
+  if (selectedMsgForContext && selectedMsgForContext.isMine) {
+    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}`).remove();
+    showToast("Message unsent", "fa-rotate-left");
+  } else {
+    showToast("You can only unsend your own messages", "fa-circle-info");
+  }
+  document.getElementById("msg-context-menu").classList.add("hidden");
+}
+function contextDeleteMsg() {
+  if (selectedMsgForContext) {
+    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}`).remove();
+    showToast("Message deleted", "fa-trash");
+  }
+  document.getElementById("msg-context-menu").classList.add("hidden");
 }
 
 function updateBlockButtonIcon() {
@@ -3645,7 +3805,7 @@ function sendTextMessage() {
 }
 
 /* ==========================================================================
-   WHATSAPP-STYLE VOICE RECORDING (LIVE MM:SS TIMER + SEND VIA SEND BUTTON)
+   WHATSAPP-STYLE VOICE RECORDING
    ========================================================================== */
 async function startOrStopVoiceRecording() {
   if (!activeChatPeerId) return;
@@ -3733,7 +3893,7 @@ function cancelVoiceRecording() {
 }
 
 /* ==========================================================================
-   WHATSAPP-STYLE PHOTO CROP BOX + DRAWING & CAMERA FLIP
+   PHOTO CROP BOX + DRAWING & CAMERA FLIP
    ========================================================================== */
 const editorCanvas = document.getElementById("photo-editor-canvas");
 const editorCtx = editorCanvas.getContext("2d");
@@ -3742,11 +3902,10 @@ const cropHandleEl = document.getElementById("crop-resize-handle");
 
 let editorSourceImg = null;
 let editorBrushColor = "#ef4444";
-let editorMode = "draw"; // "draw" or "crop"
+let editorMode = "draw";
 let editorDrawing = false;
-
 let cropBoxRect = { x: 40, y: 50, w: 240, h: 240 };
-let cropDragState = null; // { mode: 'move' | 'resize', startX, startY, origX, origY, origW, origH }
+let cropDragState = null;
 
 function setEditorColor(color) {
   editorBrushColor = color;
@@ -3799,9 +3958,7 @@ function applyCropSelection() {
   editorCtx.putImageData(croppedData, 0, 0);
 
   const imgCopy = new Image();
-  imgCopy.onload = () => {
-    editorSourceImg = imgCopy;
-  };
+  imgCopy.onload = () => { editorSourceImg = imgCopy; };
   imgCopy.src = editorCanvas.toDataURL("image/png");
 
   setDrawModeActive();
@@ -3930,9 +4087,7 @@ function closePhotoEditor() {
 
 function sendEditedPhotoToChat() {
   if (!activeChatPeerId) return;
-  if (editorMode === "crop") {
-    applyCropSelection();
-  }
+  if (editorMode === "crop") applyCropSelection();
   if (!canSendPersonalMsg(30)) {
     closePhotoEditor();
     return;
@@ -3957,9 +4112,7 @@ async function openDirectCameraCapture() {
     return;
   }
   try {
-    if (directCamStream) {
-      directCamStream.getTracks().forEach(t => t.stop());
-    }
+    if (directCamStream) directCamStream.getTracks().forEach(t => t.stop());
     directCamStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: directCamFacingMode },
       audio: true
@@ -4086,68 +4239,8 @@ function sendGiftMessage(gift) {
   showToast(`Sent ${gift.name} (${gift.coins} Coins)!`, "fa-gift");
 }
 
-/* Long Press Menu */
-let longPressTimer = null;
-function startLongPress(threadId, msgId, text, isMine) {
-  longPressTimer = setTimeout(() => {
-    selectedMsgForContext = { threadId, msgId, text, isMine };
-    document.getElementById("msg-context-menu").classList.remove("hidden");
-  }, 480);
-}
-function cancelLongPress() { clearTimeout(longPressTimer); }
-function openMsgContext(e, threadId, msgId, text, isMine) {
-  e.preventDefault();
-  selectedMsgForContext = { threadId, msgId, text, isMine };
-  document.getElementById("msg-context-menu").classList.remove("hidden");
-}
-function contextCopyMsg() {
-  if (selectedMsgForContext) copyText(selectedMsgForContext.text);
-  document.getElementById("msg-context-menu").classList.add("hidden");
-}
-function contextPasteMsg() {
-  const inp = document.getElementById("chat-text-input");
-  if (navigator.clipboard && navigator.clipboard.readText) {
-    navigator.clipboard.readText().then(t => {
-      inp.value = (inp.value + " " + (t || copiedMsgText)).trim();
-    }).catch(() => {
-      inp.value = (inp.value + " " + copiedMsgText).trim();
-    });
-  } else {
-    inp.value = (inp.value + " " + copiedMsgText).trim();
-  }
-  document.getElementById("msg-context-menu").classList.add("hidden");
-}
-function contextEnterMultiSelect() {
-  document.getElementById("msg-context-menu").classList.add("hidden");
-  selectedMsgIds = new Set(selectedMsgForContext?.msgId ? [selectedMsgForContext.msgId] : []);
-  enterMultiSelectWithMessage(selectedMsgForContext?.msgId);
-}
-function contextFormatMsg(styleType) {
-  if (selectedMsgForContext && selectedMsgForContext.isMine) {
-    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}/format`).set(styleType);
-    showToast(`Formatted as ${styleType}`, "fa-font");
-  }
-  document.getElementById("msg-context-menu").classList.add("hidden");
-}
-function contextUnsendMsg() {
-  if (selectedMsgForContext && selectedMsgForContext.isMine) {
-    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}`).remove();
-    showToast("Message unsent", "fa-rotate-left");
-  } else {
-    showToast("You can only unsend your own messages", "fa-circle-info");
-  }
-  document.getElementById("msg-context-menu").classList.add("hidden");
-}
-function contextDeleteMsg() {
-  if (selectedMsgForContext) {
-    db.ref(`chats/${selectedMsgForContext.threadId}/${selectedMsgForContext.msgId}`).remove();
-    showToast("Message deleted", "fa-trash");
-  }
-  document.getElementById("msg-context-menu").classList.add("hidden");
-}
-
 /* ==========================================================================
-   REAL-TIME WEBRTC PERSONAL CALLS (FRONT/BACK CAM + PAID CALL RULES)
+   REAL-TIME WEBRTC PERSONAL CALLS & PAID CALL RULES
    ========================================================================== */
 function shouldShowPaidCallFormToCurrentUser(peerUid) {
   if (isOwnerAdmin()) return false;
@@ -4157,7 +4250,7 @@ function shouldShowPaidCallFormToCurrentUser(peerUid) {
   return true;
 }
 
-function createPersonalPeerConnection(callId, isCaller, localStream, remoteUid) {
+function createPersonalPeerConnection(callId, isCaller, localStream) {
   const pc = new RTCPeerConnection(RTC_CONFIG);
 
   if (localStream) {
@@ -4284,7 +4377,7 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
   const callId = incomingCallData ? incomingCallData.callId : ("call_" + Date.now() + "_" + currentUser.uid);
   const isCaller = !incomingCallData;
 
-  const { pc, candRef } = createPersonalPeerConnection(callId, isCaller, localStream, peerUid);
+  const { pc, candRef } = createPersonalPeerConnection(callId, isCaller, localStream);
   const answerRef = db.ref(`callSignals/${callId}/answer`);
   const offerRef = db.ref(`callSignals/${callId}/offer`);
 
@@ -4307,6 +4400,7 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
       callerName: currentUser.name,
       type,
       isPaid,
+      paidReqId: paidReqId || null,
       ts: Date.now()
     });
 
@@ -4336,6 +4430,7 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
     isPaid,
     paidReqId,
     maxDurationSec,
+    startedAt: Date.now(),
     seconds: 0,
     timerInterval: null,
     localStream,
@@ -4353,8 +4448,15 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
     document.getElementById("call-timer-display").textContent = `${mins}:${secs}`;
 
     if (isPaid && s >= maxDurationSec) {
-      showToast("Paid call time limit reached! Form required for next call.", "fa-clock");
-      if (paidReqId) db.ref("paidCallRequests/" + paidReqId).update({ status: "completed", completedAt: Date.now() });
+      showToast("1 Hour paid call limit reached! Call ended.", "fa-clock");
+      if (paidReqId) {
+        db.ref("paidCallRequests/" + paidReqId).update({
+          status: "completed",
+          completedAt: Date.now(),
+          durationSec: s
+        });
+      }
+      logPaidCallHistoryEntry(activeCallState, "Completed (1 Hr Limit)");
       endActiveCall(true);
       return;
     }
@@ -4369,6 +4471,26 @@ async function initiateCall(type, isPaid = false, paidReqId = null, maxDurationS
       creditGirlCoins(peerUid, rate, currentUser.uid);
     }
   }, 1000);
+}
+
+function logPaidCallHistoryEntry(callObj, outcomeLabel) {
+  if (!callObj || !callObj.isPaid) return;
+  const boyId = callObj.isCaller ? currentUser.uid : callObj.peerId;
+  const girlId = callObj.isCaller ? callObj.peerId : currentUser.uid;
+  const boyObj = findUserByUid(boyId) || { name: "Boy" };
+  const girlObj = findUserByUid(girlId) || { name: "Girl" };
+
+  db.ref("paidCallHistory").push({
+    reqId: callObj.paidReqId || null,
+    boyId,
+    boyName: boyObj.name,
+    girlId,
+    girlName: girlObj.name,
+    callType: callObj.type,
+    durationSec: callObj.seconds || 0,
+    outcome: outcomeLabel,
+    ts: Date.now()
+  }).catch(() => {});
 }
 
 async function flipPersonalCallCamera() {
@@ -4428,12 +4550,15 @@ function endActiveCall(reachedFullTime = false) {
     if (activeCallState.localStream) {
       activeCallState.localStream.getTracks().forEach(t => t.stop());
     }
-    if (activeCallState.isPaid && activeCallState.paidReqId && !reachedFullTime) {
-      db.ref("paidCallRequests/" + activeCallState.paidReqId).update({
-        status: "cut_early",
-        endedAt: Date.now()
-      });
-      showToast("Paid call ended before time limit. Fill form & pay again for next call.", "fa-circle-info");
+    if (activeCallState.isPaid && !reachedFullTime) {
+      if (activeCallState.paidReqId) {
+        db.ref("paidCallRequests/" + activeCallState.paidReqId).update({
+          status: "completed",
+          endedAt: Date.now()
+        });
+      }
+      logPaidCallHistoryEntry(activeCallState, `Ended (${formatMmSs(activeCallState.seconds)})`);
+      showToast("Paid call ended. Submit paid call form again for next call.", "fa-circle-info");
     }
     if (activeCallState.isCaller) {
       db.ref("activeCalls/" + activeCallState.peerId).remove();
@@ -4458,7 +4583,7 @@ function listenIncomingCalls() {
     if (!call || activeCallState) return;
     if (confirm(`Incoming ${call.isPaid ? 'PAID ' : ''}${call.type.toUpperCase()} Call from ${call.callerName}. Accept?`)) {
       activeChatPeerId = call.callerId;
-      initiateCall(call.type, call.isPaid, null, 3600, call);
+      initiateCall(call.type, call.isPaid, call.paidReqId || null, 3600, call);
     } else {
       db.ref("activeCalls/" + currentUser.uid).remove();
       if (call.callId) db.ref("callSignals/" + call.callId).remove().catch(() => {});
@@ -4470,7 +4595,6 @@ function openPaidCallHub() {
   if (!activeChatPeerId) return;
   const peer = findUserByUid(activeChatPeerId);
 
-  /* Owner or Girl calling anyone goes direct without paid call form */
   if (!shouldShowPaidCallFormToCurrentUser(activeChatPeerId)) {
     initiateCall("video", false);
     return;
@@ -4506,7 +4630,7 @@ function openPaidCallHub() {
           </div>
           <h3 style="font-size:18px; font-weight:800; color:#15803d;">Paid Call Approved</h3>
           <p style="font-size:13px; color:var(--text-muted); margin:8px 0 16px;">
-            Max Time: <strong>${maxMins} Minutes</strong> (1 Hour max). If cut early, you must submit the form &amp; pay again for next call.
+            Max Time: <strong>${maxMins} Minutes</strong> (1 Hour max). After call ends, fill form &amp; pay again for next call.
           </p>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
             <button class="btn btn-primary" onclick="closeModal('paid-call-modal'); initiateCall('audio', true, '${reqId}', ${maxMins * 60})">
@@ -4529,13 +4653,20 @@ function openPaidCallHub() {
           <div style="font-size:18px; font-weight:800; color:var(--maroon-900); margin:3px 0;">${escapeHtml(cfg.number)}</div>
           <div style="font-size:12px; color:var(--text-muted);">Account: ${escapeHtml(cfg.holder)}</div>
           <div style="margin-top:6px; font-size:12px; font-weight:800; color:var(--maroon-800);">
-            Paid Video Call Amount: Rs. ${cfg.amountPkr} • Call Time: ${maxMins} Mins
+            Paid Call Amount: Rs. ${cfg.amountPkr} • Max Time: ${maxMins} Mins (1 Hr)
           </div>
           <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="copyText('${escapeHtml(cfg.number)}')">
             <i class="fa-regular fa-copy"></i> Copy Number
           </button>
         </div>
 
+        <div class="input-group">
+          <label>Select Payment Wallet</label>
+          <select id="pc-wallet" class="input-field">
+            <option value="Easypaisa" ${cfg.method === 'Easypaisa' ? 'selected' : ''}>Easypaisa</option>
+            <option value="JazzCash" ${cfg.method === 'JazzCash' ? 'selected' : ''}>JazzCash</option>
+          </select>
+        </div>
         <div class="input-group">
           <label>Your Name</label>
           <input type="text" id="pc-boy-name" class="input-field" value="${escapeHtml(currentUser.name)}" />
@@ -4548,7 +4679,7 @@ function openPaidCallHub() {
           <label>Payment Screenshot (Mandatory)</label>
           <input type="file" id="pc-slip-file" accept="image/*" class="input-field" />
         </div>
-        <button class="btn btn-primary btn-block" onclick="submitPaidCallRequest('${peer.uid}', '${escapeAttr(cfg.method)}', ${maxMins})">
+        <button class="btn btn-primary btn-block" onclick="submitPaidCallRequest('${peer.uid}', ${maxMins})">
           <i class="fa-solid fa-paper-plane"></i> Submit Call Request
         </button>
       </div>
@@ -4556,7 +4687,8 @@ function openPaidCallHub() {
   });
 }
 
-function submitPaidCallRequest(girlId, method, maxMins) {
+function submitPaidCallRequest(girlId, maxMins) {
+  const wallet = document.getElementById("pc-wallet").value;
   const boyName = document.getElementById("pc-boy-name").value.trim();
   const amount = document.getElementById("pc-amount").value.trim();
   const file = document.getElementById("pc-slip-file").files[0];
@@ -4566,7 +4698,7 @@ function submitPaidCallRequest(girlId, method, maxMins) {
     return;
   }
 
-  compressImageFile(file, 900, 0.85, (slipDataUrl) => {
+  compressImageFile(file, 960, 0.88, (slipDataUrl) => {
     const reqId = "pcall_" + Date.now();
     const girl = findUserByUid(girlId) || {};
     db.ref("paidCallRequests/" + reqId).set({
@@ -4575,21 +4707,21 @@ function submitPaidCallRequest(girlId, method, maxMins) {
       boyName,
       girlId,
       girlName: girl.name || "Girl",
-      wallet: method,
+      wallet,
       amount: Number(amount),
-      durationMinutes: maxMins,
+      durationMinutes: Math.min(60, Number(maxMins || 60)),
       slip: slipDataUrl,
       status: "pending",
       ts: Date.now()
     }).then(() => {
-      showToast("Call request submitted! Admin will review & approve.", "fa-circle-check");
+      showToast("Paid call request submitted! Admin will review & approve.", "fa-circle-check");
       closeModal("paid-call-modal");
     });
   });
 }
 
 /* ==========================================================================
-   TAB 2: LIVE ROOM (FRONT/BACK CAM FLIP FOR GIRL + INBOX + LEAVE)
+   TAB 2: LIVE ROOM
    ========================================================================== */
 function listenLiveRooms() {
   db.ref("liveRooms").on("value", snap => {
@@ -4637,10 +4769,7 @@ function rebuildLiveRoomsGrid() {
   `).join("");
 
   grid.querySelectorAll("[data-live-idx]").forEach(card => {
-    card.onclick = () => {
-      const idx = Number(card.getAttribute("data-live-idx"));
-      joinLiveRoom(idx);
-    };
+    card.onclick = () => joinLiveRoom(Number(card.getAttribute("data-live-idx")));
   });
 
   grid.querySelectorAll("[data-live-inbox]").forEach(btn => {
@@ -4712,9 +4841,7 @@ async function flipLiveHostCamera() {
 
     Object.values(livePeerConnections).forEach(pc => {
       const sender = pc.getSenders().find(s => s.track && s.track.kind === "video");
-      if (sender && newVideoTrack) {
-        sender.replaceTrack(newVideoTrack).catch(() => {});
-      }
+      if (sender && newVideoTrack) sender.replaceTrack(newVideoTrack).catch(() => {});
     });
     showToast(liveCameraFacingMode === "user" ? "Front Camera Live" : "Back Camera Live", "fa-camera-rotate");
   } catch (e) {
@@ -4734,7 +4861,6 @@ function setupHostLiveWebRTC(hostId) {
 
     const pc = new RTCPeerConnection(RTC_CONFIG);
     livePeerConnections[viewerId] = pc;
-
     liveStreamObj.getTracks().forEach(track => pc.addTrack(track, liveStreamObj));
 
     const viewerAudioEl = document.getElementById("live-remote-audio");
@@ -4756,9 +4882,7 @@ function setupHostLiveWebRTC(hostId) {
     liveSignalRefs.push(viewerCandRef);
     viewerCandRef.on("child_added", cSnap => {
       const c = cSnap.val();
-      if (c && pc.signalingState !== "closed") {
-        pc.addIceCandidate(new RTCIceCandidate(c)).catch(() => {});
-      }
+      if (c && pc.signalingState !== "closed") pc.addIceCandidate(new RTCIceCandidate(c)).catch(() => {});
     });
 
     pc.onicecandidate = (ev) => {
@@ -4770,10 +4894,7 @@ function setupHostLiveWebRTC(hostId) {
     await pc.setRemoteDescription(new RTCSessionDescription(viewerData.offer));
     const ans = await pc.createAnswer();
     await pc.setLocalDescription(ans);
-    await db.ref(`liveStreams/${hostId}/viewers/${viewerId}/answer`).set({
-      type: ans.type,
-      sdp: ans.sdp
-    });
+    await db.ref(`liveStreams/${hostId}/viewers/${viewerId}/answer`).set({ type: ans.type, sdp: ans.sdp });
   });
 }
 
@@ -4796,9 +4917,9 @@ async function setupViewerLiveWebRTC(hostId) {
   const audEl = document.getElementById("live-remote-audio");
 
   pc.ontrack = (ev) => {
-    ev.streams[0].getTracks().forEach(track => {
-      track.enabled = true;
-      hostRemoteStream.addTrack(track);
+    ev.streams[0].getTracks().forEach(t => {
+      t.enabled = true;
+      hostRemoteStream.addTrack(t);
     });
     if (vidEl) {
       vidEl.srcObject = hostRemoteStream;
@@ -4819,9 +4940,7 @@ async function setupViewerLiveWebRTC(hostId) {
   liveSignalRefs.push(hostCandRef);
   hostCandRef.on("child_added", cSnap => {
     const c = cSnap.val();
-    if (c && pc.signalingState !== "closed") {
-      pc.addIceCandidate(new RTCIceCandidate(c)).catch(() => {});
-    }
+    if (c && pc.signalingState !== "closed") pc.addIceCandidate(new RTCIceCandidate(c)).catch(() => {});
   });
 
   pc.onicecandidate = (ev) => {
@@ -4853,17 +4972,10 @@ async function setupViewerLiveWebRTC(hostId) {
 }
 
 function cleanupLiveWebRTC() {
-  liveSignalRefs.forEach(ref => {
-    try { ref.off(); } catch(e) {}
-  });
+  liveSignalRefs.forEach(ref => { try { ref.off(); } catch(e) {} });
   liveSignalRefs = [];
-  if (liveViewersRef) {
-    try { liveViewersRef.off(); } catch(e) {}
-    liveViewersRef = null;
-  }
-  Object.values(livePeerConnections).forEach(pc => {
-    try { pc.close(); } catch(e) {}
-  });
+  if (liveViewersRef) { try { liveViewersRef.off(); } catch(e) {} liveViewersRef = null; }
+  Object.values(livePeerConnections).forEach(pc => { try { pc.close(); } catch(e) {} });
   livePeerConnections = {};
 }
 
@@ -4872,9 +4984,7 @@ function joinLiveRoom(index) {
   currentLiveIndex = index;
   const room = liveRoomsList[index];
   const isHost = room.hostId === currentUser.uid;
-  if (!isHost) {
-    setupViewerLiveWebRTC(room.hostId);
-  }
+  if (!isHost) setupViewerLiveWebRTC(room.hostId);
   openLiveRoomUI(room.hostId, isHost);
 }
 
@@ -4943,9 +5053,7 @@ function openLiveRoomUI(hostId, isHost) {
 
 function pushLiveMessageWithAutoExpire(hostId, payload) {
   db.ref("liveChats/" + hostId).push(payload).then(ref => {
-    setTimeout(() => {
-      ref.remove().catch(() => {});
-    }, 60000);
+    setTimeout(() => { ref.remove().catch(() => {}); }, 60000);
   });
 }
 
@@ -5082,7 +5190,7 @@ function submitDepositRequest() {
   const matchedPkg = DEPOSIT_PACKAGES.find(p => p.pkr === amount);
   const expectedCoins = matchedPkg ? matchedPkg.coins : Math.round(amount * 1.6);
 
-  compressImageFile(file, 1080, 0.90, (slipDataUrl) => {
+  compressImageFile(file, 1080, 0.92, (slipDataUrl) => {
     const depId = "dep_" + Date.now();
     db.ref("deposits/" + depId).set({
       id: depId,
@@ -5342,13 +5450,9 @@ function openProfileFolder(folder) {
       listEl.innerHTML = msgs.map(m => {
         const isUser = m.sender === "user";
         return `
-          <div class="msg-bubble ${isUser ? 'msg-mine' : 'msg-theirs'}">
-            <div style="display:flex; align-items:center; gap:6px; margin-bottom:4px;">
-              <img src="${isUser ? currentUser.dp : defaultAvatar('Owner', 'Male')}" style="width:20px; height:20px; border-radius:50%;" />
-              <strong style="font-size:11px;">${isUser ? escapeHtml(currentUser.name) : 'Owner / Customer Service'}</strong>
-            </div>
+          <div class="msg-bubble ${isUser ? 'msg-mine' : 'msg-theirs'}" style="align-self:${isUser ? 'flex-end' : 'flex-start'};">
             <div>${escapeHtml(m.text)}</div>
-            <div class="msg-meta"><span>${formatDateTime(m.ts)}</span></div>
+            <div class="msg-meta">${formatDateTime(m.ts)}</div>
           </div>
         `;
       }).join("");
@@ -5359,27 +5463,14 @@ function openProfileFolder(folder) {
     body.innerHTML = `
       <div class="auth-card">
         <div class="input-group">
-          <label>Old Password</label>
-          <div class="pass-wrap">
-            <input type="password" id="cp-old" class="input-field" placeholder="Old Password" />
-            <button type="button" class="pass-toggle" onclick="togglePass('cp-old', this)"><i class="fa-regular fa-eye"></i></button>
-          </div>
+          <label>Current Password</label>
+          <input type="password" id="curr-pass-inp" class="input-field" placeholder="Enter current password" />
         </div>
         <div class="input-group">
           <label>New Password</label>
-          <div class="pass-wrap">
-            <input type="password" id="cp-new" class="input-field" placeholder="New Password" />
-            <button type="button" class="pass-toggle" onclick="togglePass('cp-new', this)"><i class="fa-regular fa-eye"></i></button>
-          </div>
+          <input type="password" id="new-pass-inp" class="input-field" placeholder="Enter new password" />
         </div>
-        <div class="input-group">
-          <label>Confirm Password</label>
-          <div class="pass-wrap">
-            <input type="password" id="cp-confirm" class="input-field" placeholder="Confirm Password" />
-            <button type="button" class="pass-toggle" onclick="togglePass('cp-confirm', this)"><i class="fa-regular fa-eye"></i></button>
-          </div>
-        </div>
-        <button class="btn btn-primary btn-block" onclick="submitPasswordChange()">Update Password</button>
+        <button class="btn btn-primary btn-block" onclick="updateUserPassword()">Update Password</button>
       </div>
     `;
   } else if (folder === "create-another") {
@@ -5388,16 +5479,26 @@ function openProfileFolder(folder) {
       <div class="auth-card">
         <div class="input-group"><label>Full Name</label><input type="text" id="alt-reg-name" class="input-field" /></div>
         <div class="input-group"><label>Mobile Number</label><input type="tel" id="alt-reg-mobile" class="input-field" /></div>
-        <div class="input-group"><label>Password</label><input type="password" id="alt-reg-pass" class="input-field" placeholder="Password" /></div>
-        <div class="input-group"><label>Confirm Password</label><input type="password" id="alt-reg-cpass" class="input-field" placeholder="Confirm Password" /></div>
-        <div class="input-group"><label>Gender</label>
-          <select id="alt-reg-sex" class="input-field"><option value="Male">Male</option><option value="Female">Female</option></select>
+        <div class="input-group"><label>Password</label><input type="password" id="alt-reg-pass" class="input-field" /></div>
+        <div class="input-group"><label>Confirm Password</label><input type="password" id="alt-reg-cpass" class="input-field" /></div>
+        <div class="input-group">
+          <label>Gender</label>
+          <select id="alt-reg-sex" class="input-field">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
         </div>
-        <div class="input-group"><label>Age</label><input type="number" id="alt-reg-age" class="input-field" value="22" /></div>
-        <div class="input-group"><label>Country</label>
-          <select id="alt-reg-country" class="input-field"><option value="Pakistan">Pakistan</option><option value="India">India</option></select>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div class="input-group"><label>Age</label><input type="number" id="alt-reg-age" class="input-field" value="22" /></div>
+          <div class="input-group">
+            <label>Country</label>
+            <select id="alt-reg-country" class="input-field">
+              <option value="Pakistan">Pakistan</option>
+              <option value="India">India</option>
+            </select>
+          </div>
         </div>
-        <button class="btn btn-primary btn-block" onclick="handleCreateAccount(true)">Create Account</button>
+        <button class="btn btn-primary btn-block" onclick="handleCreateAccount(true)">Create &amp; Switch Account</button>
       </div>
     `;
   }
@@ -5406,7 +5507,7 @@ function openProfileFolder(folder) {
 function sendSupportMsg() {
   const inp = document.getElementById("support-input");
   const text = inp.value.trim();
-  if (!text || !currentUser) return;
+  if (!text) return;
   db.ref("supportChats/" + currentUser.uid).push({
     sender: "user",
     userName: currentUser.name,
@@ -5419,40 +5520,42 @@ function sendSupportMsg() {
 function clearSupportChat() {
   if (!currentUser) return;
   db.ref("supportChats/" + currentUser.uid).remove();
-  showToast("Chat cleared", "fa-trash");
+  showToast("Customer service chat cleared", "fa-trash");
 }
 
-function submitPasswordChange() {
-  const oldP = document.getElementById("cp-old").value;
-  const newP = document.getElementById("cp-new").value;
-  const confP = document.getElementById("cp-confirm").value;
-
-  if (oldP !== currentUser.password) {
-    showToast("Old password incorrect!", "fa-circle-xmark");
+function updateUserPassword() {
+  const curr = document.getElementById("curr-pass-inp").value;
+  const nextP = document.getElementById("new-pass-inp").value;
+  if (curr !== currentUser.password) {
+    showToast("Current password is incorrect!", "fa-lock");
     return;
   }
-  if (!newP || newP !== confP) {
-    showToast("New passwords do not match!", "fa-triangle-exclamation");
+  if (!nextP || nextP.length < 4) {
+    showToast("New password must be at least 4 characters!", "fa-triangle-exclamation");
     return;
   }
-  db.ref("users/" + currentUser.uid + "/password").set(newP).then(() => {
-    showToast("Password updated", "fa-circle-check");
+  db.ref("users/" + currentUser.uid + "/password").set(nextP).then(() => {
+    showToast("Password changed successfully!", "fa-key");
     closeModal("profile-folder-modal");
   });
 }
 
 /* ==========================================================================
-   LUXURY ADMIN LOGIN & OWNER ADMIN PANEL
+   LUXURY OWNER ADMIN PANEL (ALL 12+ REQUIREMENTS IN ISOLATED SCROLLING FOLDERS)
    ========================================================================== */
 function openLuxuryAdminModal() {
+  const modal = document.getElementById("luxury-admin-login-modal");
   const inp = document.getElementById("luxury-admin-code-input");
   inp.value = "";
-  document.getElementById("luxury-admin-login-modal").classList.remove("hidden");
-  setTimeout(() => inp.focus(), 80);
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
+  setTimeout(() => inp.focus(), 100);
 }
 
 function closeLuxuryAdminModal() {
-  document.getElementById("luxury-admin-login-modal").classList.add("hidden");
+  const modal = document.getElementById("luxury-admin-login-modal");
+  modal.classList.add("hidden");
+  modal.style.display = "";
 }
 
 function submitLuxuryAdminCode() {
@@ -5461,10 +5564,11 @@ function submitLuxuryAdminCode() {
     showToast("Invalid Admin Passcode!", "fa-lock");
     return;
   }
-  closeLuxuryAdminModal();
   localStorage.setItem("aura_meet_is_admin", "1");
   document.getElementById("maintenance-screen").classList.add("hidden");
   document.getElementById("admin-shortcut-btn").classList.remove("hidden");
+  updateFemaleFaceBoxVisibility();
+  closeLuxuryAdminModal();
   openAdminPanel();
 }
 
@@ -5474,409 +5578,740 @@ function openAdminPanel() {
     return;
   }
   pushNavHistoryState();
-  document.getElementById("admin-panel-modal").classList.remove("hidden");
+  syncPkQuickButtonUI();
+  const modal = document.getElementById("admin-panel-modal");
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
   renderAdminMainDashboard();
 }
 
 function renderAdminMainDashboard() {
   const body = document.getElementById("admin-main-body");
-  const totalUsers = Object.keys(allUsersMap).length;
-  const totalGirls = Object.values(allUsersMap).filter(u => u && u.sex === "Female").length;
-  const totalBoys = Object.values(allUsersMap).filter(u => u && u.sex === "Male").length;
+  if (!body) return;
+  syncPkQuickButtonUI();
+
+  const usersArr = Object.values(allUsersMap).filter(Boolean);
+  const totalUsers = usersArr.length;
+  const onlineUsers = usersArr.filter(u => u.online).length;
+  const offlineUsers = Math.max(0, totalUsers - onlineUsers);
+  const girlsCount = usersArr.filter(u => u.sex === "Female").length;
+  const boysCount = usersArr.filter(u => u.sex === "Male").length;
 
   body.innerHTML = `
+    <div class="lux-hero-banner">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+        <div>
+          <div style="font-size:10px; font-weight:800; color:var(--gold-light); letter-spacing:1px;">✦ ROYAL OWNER SUITE ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:2px;">Aura Meet Command</div>
+        </div>
+        <span style="background:rgba(253,224,71,0.18); color:var(--gold-light); border:1px solid rgba(253,224,71,0.5); padding:5px 10px; border-radius:12px; font-size:11px; font-weight:800;">
+          ${appSettings.appClosedPakistan ? 'PK CLOSED' : 'PK LIVE'}
+        </span>
+      </div>
+      <div style="font-size:11px; opacity:0.86; margin-top:6px;">
+        Girls: <strong>${girlsCount}</strong> • Boys: <strong>${boysCount}</strong> • ${formatDateTime(Date.now())}
+      </div>
+    </div>
+
     <div class="admin-stat-grid">
-      <div class="admin-stat"><strong>${totalUsers}</strong><span>Total Users</span></div>
-      <div class="admin-stat"><strong>${totalGirls}</strong><span>Girls</span></div>
-      <div class="admin-stat"><strong>${totalBoys}</strong><span>Boys</span></div>
+      <div class="admin-stat"><strong>${totalUsers}</strong><span>TOTAL USERS</span></div>
+      <div class="admin-stat"><strong style="color:#16a34a;">${onlineUsers}</strong><span>ONLINE</span></div>
+      <div class="admin-stat"><strong style="color:#6b7280;">${offlineUsers}</strong><span>OFFLINE</span></div>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('users')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-users"></i></div> All Users &amp; Coins</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('pk-kill-switch')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-power-off"></i></div> 1. Pakistan App Kill Switch</div>
+      <span style="font-size:11px; font-weight:800; color:${appSettings.appClosedPakistan ? '#86efac' : '#fda4af'};">
+        ${appSettings.appClosedPakistan ? 'CLOSED' : 'ACTIVE'}
+      </span>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('deposits')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-money-bill-trend-up"></i></div> Deposit Approvals</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('app-links')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-link"></i></div> 2. Download App Link &amp; Invite Link</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('withdraws')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div> Withdraw Approvals</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('ep-dep-history')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-clock-rotate-left"></i></div> 3A. Easypaisa Deposit History</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('paid-calls')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-crown"></i></div> Paid Call Approvals</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('jc-dep-history')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-clock-rotate-left"></i></div> 3B. JazzCash Deposit History</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('girl-settings')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-venus"></i></div> Girl Paid Call Settings</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('ep-wd-history')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div> 4A. Easypaisa Withdraw History</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('support-inbox')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-headset"></i></div> Customer Service Inbox</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('jc-wd-history')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div> 4B. JazzCash Withdraw History</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
 
-    <div class="folder-item" onclick="openAdminSubfolder('app-controls')">
-      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-sliders"></i></div> App Controls &amp; Links</div>
-      <i class="fa-solid fa-chevron-right"></i>
+    <div class="lux-folder-card" onclick="openAdminSubfolder('ep-wd-requests')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-money-bill-transfer"></i></div> 5A. Easypaisa Withdrawal Requests</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('jc-wd-requests')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-money-bill-transfer"></i></div> 5B. JazzCash Withdrawal Requests</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('ep-dep-requests')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-receipt"></i></div> 6A. Easypaisa Deposit Requests</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('jc-dep-requests')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-receipt"></i></div> 6B. JazzCash Deposit Requests</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('users-coins')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-users-gear"></i></div> 7 &amp; 8. Users, Credentials, Ban/Remove &amp; Coins</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('girl-paid-call-forms')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-phone-volume"></i></div> 9. Girl Paid Call Forms + Direct Msg &amp; Login</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('paid-call-approvals')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-crown"></i></div> 10. Paid Call Deposit Requests</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('paid-call-history')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-clock"></i></div> 11. Paid Call History</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('invite-friend-tracker')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-user-group"></i></div> 12. Invite Friend Tracker</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('security-face-controls')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-user-shield"></i></div> 13. Screen Record Lock, Face Pics &amp; Girl Bypass</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
+    </div>
+
+    <div class="lux-folder-card" onclick="openAdminSubfolder('support-inbox')">
+      <div class="folder-left"><div class="folder-icon"><i class="fa-solid fa-headset"></i></div> 14. Customer Service Inbox</div>
+      <i class="fa-solid fa-chevron-right" style="color:var(--gold-light);"></i>
     </div>
   `;
 }
 
-function openAdminSubfolder(sub) {
+function openAdminSubfolder(folderKey) {
   pushNavHistoryState();
-  const title = document.getElementById("admin-subfolder-title");
-  const body = document.getElementById("admin-subfolder-body");
-  document.getElementById("admin-subfolder-modal").classList.remove("hidden");
+  const titleEl = document.getElementById("admin-subfolder-title");
+  const bodyEl = document.getElementById("admin-subfolder-body");
+  const modal = document.getElementById("admin-subfolder-modal");
+  modal.classList.remove("hidden");
+  modal.style.display = "flex";
+  bodyEl.innerHTML = `<p style="text-align:center; color:var(--text-muted); padding:20px;">Loading...</p>`;
 
-  if (sub === "users") {
-    title.textContent = "All Users & Coins";
-    const users = Object.values(allUsersMap);
-    body.innerHTML = users.map(u => `
-      <div class="auth-card" style="margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div>
-            <strong>${escapeHtml(u.name)}</strong> <span class="new-badge">${escapeHtml(u.sex)}</span>
-            <div style="font-size:12px; color:var(--text-muted);">${escapeHtml(u.mobile)} • ${Number(u.coins || 0).toLocaleString()} Coins</div>
-            <div style="font-size:11px; color:var(--maroon-800); font-weight:700;">Pass: ${escapeHtml(u.password || '')}</div>
-          </div>
-          <span style="font-size:11px; font-weight:800; color:${u.banned ? '#dc2626' : '#16a34a'};">${u.banned ? 'BANNED' : 'ACTIVE'}</span>
-        </div>
-        <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="adminLoginAsUser('${escapeAttr(u.uid)}')"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-          <button class="btn btn-success btn-sm" onclick="adminAdjustCoins('${escapeAttr(u.uid)}', 1000)">+1,000</button>
-          <button class="btn btn-outline btn-sm" onclick="adminAdjustCoins('${escapeAttr(u.uid)}', -1000)">-1,000</button>
-          <button class="btn btn-warning btn-sm" onclick="adminToggleBan('${escapeAttr(u.uid)}', ${!!u.banned})">${u.banned ? 'Unban' : 'Ban'}</button>
-          <button class="btn btn-danger btn-sm" onclick="adminDeleteUser('${escapeAttr(u.uid)}')">Delete</button>
-        </div>
+  if (folderKey === "pk-kill-switch") {
+    titleEl.textContent = "1. Pakistan App Kill Switch";
+    const closed = !!appSettings.appClosedPakistan;
+    bodyEl.innerHTML = `
+      <div class="lux-hero-banner" style="text-align:center;">
+        <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ NATIONWIDE EMERGENCY SWITCH ✦</div>
+        <h3 style="font-size:20px; font-weight:800; margin:6px 0;">
+          Status: ${closed ? 'CLOSED IN PAKISTAN' : 'OPEN / LIVE IN PAKISTAN'}
+        </h3>
+        <p style="font-size:12px; opacity:0.88;">Pressing Close immediately stops app usage across Pakistan while Admin stays unlocked.</p>
       </div>
-    `).join("");
-  } else if (sub === "deposits") {
-    title.textContent = "Deposit Approvals";
-    body.innerHTML = `<p style="text-align:center;">Loading deposits...</p>`;
-    db.ref("deposits").once("value", snap => {
-      const list = Object.values(snap.val() || {}).sort((a, b) => b.ts - a.ts);
-      body.innerHTML = list.length ? list.map(d => `
-        <div class="auth-card" style="margin-bottom:10px;">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>${escapeHtml(d.userName)} (${escapeHtml(d.wallet)})</strong>
-            <span class="new-badge">${escapeHtml(d.status)}</span>
-          </div>
-          <div style="font-size:12px; margin:4px 0;">
-            Holder: <strong>${escapeHtml(d.holder)}</strong> | Acc: <strong>${escapeHtml(d.accountNumber)}</strong><br/>
-            Amount: <strong>Rs. ${d.amountPkr}</strong> | Coins: <strong>${d.expectedCoins}</strong>
-          </div>
-          ${d.slip ? `<button class="btn btn-outline btn-sm" style="margin-bottom:8px;" onclick="openSlipModal('${d.slip}', 'Deposit Slip')"><i class="fa-solid fa-magnifying-glass-plus"></i> View Slip</button>` : ''}
-          ${d.status === "pending" ? `
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-success btn-sm" onclick="approveDeposit('${d.id}', '${d.uid}', ${d.expectedCoins})">Approve</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectRecord('deposits', '${d.id}')">Reject</button>
-            </div>
-          ` : ''}
-        </div>
-      `).join("") : `<div class="auth-card" style="text-align:center;">No deposit requests</div>`;
-    });
-  } else if (sub === "withdraws") {
-    title.textContent = "Withdraw Approvals";
-    body.innerHTML = `<p style="text-align:center;">Loading withdrawals...</p>`;
-    db.ref("withdrawals").once("value", snap => {
-      const list = Object.values(snap.val() || {}).sort((a, b) => b.ts - a.ts);
-      body.innerHTML = list.length ? list.map(w => `
-        <div class="auth-card" style="margin-bottom:10px;">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>${escapeHtml(w.userName)} (${escapeHtml(w.wallet)})</strong>
-            <span class="new-badge">${escapeHtml(w.status)}</span>
-          </div>
-          <div style="font-size:12px; margin:4px 0;">
-            Holder: <strong>${escapeHtml(w.holder)}</strong> | Acc: <strong>${escapeHtml(w.accountNumber)}</strong><br/>
-            Coins: <strong>${w.coins}</strong> | Net Payout (after 10%): <strong>Rs. ${w.netPkr}</strong>
-          </div>
-          ${w.status === "pending" ? `
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-success btn-sm" onclick="approveWithdraw('${w.id}')">Approve Paid</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectWithdrawAndRefund('${w.id}', '${w.uid}', ${w.coins})">Reject &amp; Refund</button>
-            </div>
-          ` : ''}
-        </div>
-      `).join("") : `<div class="auth-card" style="text-align:center;">No withdrawal requests</div>`;
-    });
-  } else if (sub === "paid-calls") {
-    title.textContent = "Paid Call Approvals";
-    body.innerHTML = `<p style="text-align:center;">Loading paid call requests...</p>`;
-    db.ref("paidCallRequests").once("value", snap => {
-      const list = Object.values(snap.val() || {}).sort((a, b) => b.ts - a.ts);
-      body.innerHTML = list.length ? list.map(r => `
-        <div class="auth-card" style="margin-bottom:10px;">
-          <div style="display:flex; justify-content:space-between;">
-            <strong>${escapeHtml(r.boyName)} → ${escapeHtml(r.girlName)}</strong>
-            <span class="new-badge">${escapeHtml(r.status)}</span>
-          </div>
-          <div style="font-size:12px; margin:4px 0;">
-            ${escapeHtml(r.wallet)} • Rs. ${r.amount} • Max ${r.durationMinutes || 60} mins
-          </div>
-          ${r.slip ? `<button class="btn btn-outline btn-sm" style="margin-bottom:8px;" onclick="openSlipModal('${r.slip}', 'Paid Call Slip')"><i class="fa-solid fa-magnifying-glass-plus"></i> View Payment Slip</button>` : ''}
-          ${r.status === "pending" ? `
-            <div style="display:flex; gap:8px;">
-              <button class="btn btn-success btn-sm" onclick="approvePaidCall('${r.id}', ${r.durationMinutes || 60})">Approve Call</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectRecord('paidCallRequests', '${r.id}')">Reject</button>
-            </div>
-          ` : ''}
-        </div>
-      `).join("") : `<div class="auth-card" style="text-align:center;">No paid call requests</div>`;
-    });
-  } else if (sub === "girl-settings") {
-    title.textContent = "Girl Paid Call Settings";
-    const girls = Object.values(allUsersMap).filter(u => u && u.sex === "Female");
-    body.innerHTML = girls.map(g => {
-      const cfg = g.paidCallConfig || { method: "Easypaisa", holder: g.name, number: "03242499478", amountPkr: 500, durationMinutes: 60 };
-      return `
-        <div class="auth-card" style="margin-bottom:12px;">
-          <strong>${escapeHtml(g.name)}</strong> <span style="font-size:11px; color:var(--text-muted);">(${escapeHtml(g.mobile)})</span>
-          <div class="input-group" style="margin-top:8px;">
-            <label>Method</label>
-            <select id="gcfg-method-${g.uid}" class="input-field">
-              <option value="Easypaisa" ${cfg.method === 'Easypaisa' ? 'selected' : ''}>Easypaisa</option>
-              <option value="JazzCash" ${cfg.method === 'JazzCash' ? 'selected' : ''}>JazzCash</option>
-            </select>
-          </div>
-          <div class="input-group"><label>Account Holder Name</label><input type="text" id="gcfg-holder-${g.uid}" class="input-field" value="${escapeHtml(cfg.holder)}" /></div>
-          <div class="input-group"><label>Account Number</label><input type="text" id="gcfg-num-${g.uid}" class="input-field" value="${escapeHtml(cfg.number)}" /></div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-            <div class="input-group"><label>Video Call PKR</label><input type="number" id="gcfg-amt-${g.uid}" class="input-field" value="${cfg.amountPkr}" /></div>
-            <div class="input-group"><label>Max Time (Mins)</label><input type="number" id="gcfg-mins-${g.uid}" class="input-field" value="${cfg.durationMinutes || 60}" max="60" /></div>
-          </div>
-          <button class="btn btn-primary btn-sm btn-block" onclick="saveGirlPaidConfig('${g.uid}')">Save Girl Settings</button>
-        </div>
-      `;
-    }).join("") || `<div class="auth-card" style="text-align:center;">No female accounts yet</div>`;
-  } else if (sub === "support-inbox") {
-    title.textContent = "Customer Service Inbox";
-    body.innerHTML = `<p style="text-align:center;">Loading support chats...</p>`;
-    db.ref("supportChats").once("value", snap => {
-      const allSup = snap.val() || {};
-      const uids = Object.keys(allSup);
-      body.innerHTML = uids.length ? uids.map(uid => {
-        const u = findUserByUid(uid) || { name: uid };
-        const msgs = Object.values(allSup[uid] || {});
-        const lastMsg = msgs[msgs.length - 1];
-        return `
-          <div class="auth-card" style="margin-bottom:10px;">
-            <strong>${escapeHtml(u.name)}</strong>
-            <div style="font-size:12px; color:var(--text-muted); margin:4px 0;">${lastMsg ? escapeHtml(lastMsg.text) : ''}</div>
-            <div style="display:flex; gap:8px; margin-top:8px;">
-              <input type="text" id="admin-rep-${uid}" class="input-field" style="padding:8px 10px;" placeholder="Reply as Owner..." />
-              <button class="btn btn-primary btn-sm" onclick="adminReplySupport('${uid}')">Send</button>
-            </div>
-          </div>
-        `;
-      }).join("") : `<div class="auth-card" style="text-align:center;">No customer service messages</div>`;
-    });
-  } else if (sub === "app-controls") {
-    title.textContent = "App Controls & Links";
-    body.innerHTML = `
+      <div class="auth-card" style="text-align:center;">
+        <button class="btn ${closed ? 'btn-success' : 'btn-danger'} btn-block" style="padding:15px; font-size:14px;" onclick="togglePakistanKillSwitch(); openAdminSubfolder('pk-kill-switch');">
+          <i class="fa-solid fa-power-off"></i> ${closed ? 'TURN APP ON IN PAKISTAN' : 'CLOSE APP IN ALL PAKISTAN'}
+        </button>
+      </div>
+    `;
+  } else if (folderKey === "app-links") {
+    titleEl.textContent = "2. Download App Link & Invite Link";
+    bodyEl.innerHTML = `
+      <div class="lux-hero-banner">
+        <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ PUBLIC DISTRIBUTION LINKS ✦</div>
+        <div style="font-size:16px; font-weight:800; margin-top:4px;">Publish Download &amp; Invite Links</div>
+      </div>
       <div class="auth-card">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <div>
-            <strong>Close App in Pakistan</strong>
-            <div style="font-size:11px; color:var(--text-muted);">Show maintenance screen across Pakistan</div>
-          </div>
-          <input type="checkbox" id="adm-close-pk" ${appSettings.appClosedPakistan ? 'checked' : ''} style="width:22px; height:22px;" />
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <div>
-            <strong>Allow Screenshot / Recording (Admin)</strong>
-            <div style="font-size:11px; color:var(--text-muted);">Keep capture enabled for Owner</div>
-          </div>
-          <input type="checkbox" id="adm-owner-cap" ${appSettings.ownerCaptureEnabled !== false ? 'checked' : ''} style="width:22px; height:22px;" />
-        </div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
-          <div>
-            <strong>Skip Girl Face Verification (Admin)</strong>
-            <div style="font-size:11px; color:var(--text-muted);">Create Girl ID without live face photo</div>
-          </div>
-          <input type="checkbox" id="adm-girl-noface" ${appSettings.ownerGirlNoFaceVerify === true ? 'checked' : ''} style="width:22px; height:22px;" />
-        </div>
-
         <div class="input-group">
-          <label>Download App Link</label>
+          <label>Download App Link (APK / Store URL)</label>
           <input type="text" id="adm-dl-link" class="input-field" value="${escapeHtml(appSettings.downloadAppLink || '')}" />
         </div>
         <div class="input-group">
-          <label>Invite Link</label>
+          <label>Invite Link (Public Share URL)</label>
           <input type="text" id="adm-inv-link" class="input-field" value="${escapeHtml(appSettings.inviteLink || '')}" />
         </div>
-        <button class="btn btn-primary btn-block" onclick="saveAdminAppSettings()">Save App Settings</button>
+        <button class="btn btn-primary btn-block" onclick="saveAdminAppAndInviteLinks()">
+          <i class="fa-solid fa-cloud-arrow-up"></i> Publish Links Live
+        </button>
       </div>
     `;
+  } else if (folderKey === "ep-dep-history" || folderKey === "jc-dep-history") {
+    const walletName = folderKey === "ep-dep-history" ? "Easypaisa" : "JazzCash";
+    titleEl.textContent = `3. ${walletName} Deposit History`;
+    db.ref("deposits").once("value", snap => {
+      const list = Object.values(snap.val() || {})
+        .filter(d => d.wallet === walletName && d.status !== "pending")
+        .sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ ${walletName.toUpperCase()} DEPOSIT ARCHIVE ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Total Records: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(d => `
+        <div class="auth-card" style="margin-bottom:10px; border-left:4px solid var(--gold);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>${escapeHtml(d.userName)} • Rs. ${d.amountPkr}</strong>
+            <span class="new-badge" style="text-transform:uppercase;">${escapeHtml(d.status)}</span>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+            Holder: ${escapeHtml(d.holder)} • ${escapeHtml(d.accountNumber)}
+          </div>
+          <div style="font-size:11px; color:var(--maroon-800); font-weight:700; margin-top:4px;">${formatDateTime(d.ts)}</div>
+          ${d.slip ? `<button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="openSlipViewer('${d.slip}', '${escapeAttr(d.userName)} • ${formatDateTime(d.ts)}')">
+            <i class="fa-solid fa-magnifying-glass-plus"></i> Open Slip &amp; Zoom
+          </button>` : ''}
+        </div>
+      `).join("") : `<div class="auth-card" style="text-align:center;">No ${walletName} deposit history yet.</div>`);
+    });
+  } else if (folderKey === "ep-wd-history" || folderKey === "jc-wd-history") {
+    const walletName = folderKey === "ep-wd-history" ? "Easypaisa" : "JazzCash";
+    titleEl.textContent = `4. ${walletName} Withdraw History`;
+    db.ref("withdrawals").once("value", snap => {
+      const list = Object.values(snap.val() || {})
+        .filter(w => w.wallet === walletName && w.status !== "pending")
+        .sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ ${walletName.toUpperCase()} PAYOUT ARCHIVE ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Total Records: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(w => `
+        <div class="auth-card" style="margin-bottom:10px; border-left:4px solid var(--gold);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>${escapeHtml(w.userName)} • ${Number(w.coins || 0).toLocaleString()} Coins</strong>
+            <span class="new-badge" style="text-transform:uppercase;">${escapeHtml(w.status)}</span>
+          </div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:4px;">
+            Net: Rs. ${w.netPkr} • ${escapeHtml(w.holder)} (${escapeHtml(w.accountNumber)})
+          </div>
+          <div style="font-size:11px; color:var(--maroon-800); font-weight:700; margin-top:4px;">${formatDateTime(w.ts)}</div>
+        </div>
+      `).join("") : `<div class="auth-card" style="text-align:center;">No ${walletName} withdraw history yet.</div>`);
+    });
+  } else if (folderKey === "ep-wd-requests" || folderKey === "jc-wd-requests") {
+    const walletName = folderKey === "ep-wd-requests" ? "Easypaisa" : "JazzCash";
+    titleEl.textContent = `5. ${walletName} Withdrawal Requests`;
+    db.ref("withdrawals").once("value", snap => {
+      const list = Object.values(snap.val() || {})
+        .filter(w => w.wallet === walletName && w.status === "pending")
+        .sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ ${walletName.toUpperCase()} PENDING PAYOUTS ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Pending Requests: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(w => `
+        <div class="auth-card" style="margin-bottom:12px; border:1.5px solid var(--gold);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong>${escapeHtml(w.userName)}</strong>
+            <span class="new-badge">Rs. ${w.netPkr} Net</span>
+          </div>
+          <div style="font-size:12px; margin-top:4px;">
+            Coins: <strong>${Number(w.coins || 0).toLocaleString()}</strong> • ${escapeHtml(w.holder)} • <strong>${escapeHtml(w.accountNumber)}</strong>
+          </div>
+          <div style="font-size:11px; color:var(--text-muted); margin-top:3px;">${formatDateTime(w.ts)}</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; margin-top:10px;">
+            <button class="btn btn-primary btn-sm" onclick="decideWithdraw('${w.id}', 'approved', '${folderKey}')">Approve</button>
+            <button class="btn btn-success btn-sm" onclick="decideWithdraw('${w.id}', 'success', '${folderKey}')">Success</button>
+            <button class="btn btn-danger btn-sm" onclick="decideWithdraw('${w.id}', 'rejected', '${folderKey}')">Reject</button>
+          </div>
+        </div>
+      `).join("") : `<div class="auth-card" style="text-align:center;">No pending ${walletName} withdrawals.</div>`);
+    });
+  } else if (folderKey === "ep-dep-requests" || folderKey === "jc-dep-requests") {
+    const walletName = folderKey === "ep-dep-requests" ? "Easypaisa" : "JazzCash";
+    titleEl.textContent = `6. ${walletName} Deposit Requests`;
+    db.ref("deposits").once("value", snap => {
+      const list = Object.values(snap.val() || {})
+        .filter(d => d.wallet === walletName && d.status === "pending")
+        .sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ ${walletName.toUpperCase()} DEPOSIT APPROVALS ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Pending Slips: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(d => {
+        const metaInfo = `${escapeHtml(d.userName)} • Rs. ${d.amountPkr} • ${formatDateTime(d.ts)}`;
+        return `
+          <div class="auth-card" style="margin-bottom:12px; border:1.5px solid var(--gold);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <strong>${escapeHtml(d.userName)}</strong>
+              <span class="new-badge">Rs. ${d.amountPkr}</span>
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+              ${escapeHtml(d.holder)} • ${escapeHtml(d.accountNumber)}
+            </div>
+            <div style="font-size:11px; color:var(--maroon-800); font-weight:700; margin-top:3px;">
+              Date &amp; Time: ${formatDateTime(d.ts)}
+            </div>
+            ${d.slip ? `
+              <img src="${d.slip}" onclick="openSlipViewer('${d.slip}', '${metaInfo}')"
+                   style="width:100%; max-height:210px; object-fit:contain; border-radius:12px; margin:8px 0; border:1.5px solid var(--gold); cursor:zoom-in; filter:none;" />
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
+                <button class="btn btn-outline btn-sm" onclick="openSlipViewer('${d.slip}', '${metaInfo}')">
+                  <i class="fa-solid fa-magnifying-glass-plus"></i> Slip Zoom View
+                </button>
+                <button class="btn btn-gold btn-sm" onclick="openSlipViewer('${d.slip}', '${metaInfo}')">
+                  <i class="fa-solid fa-clock"></i> Date &amp; Time View
+                </button>
+              </div>
+            ` : ''}
+            <div class="input-group" style="margin-bottom:8px;">
+              <label>Custom Coins for Package (Optional - default ${d.expectedCoins || 0})</label>
+              <input type="number" id="custom-dep-coins-${d.id}" class="input-field" value="${d.expectedCoins || 0}" placeholder="Type custom coins" />
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+              <button class="btn btn-primary btn-sm" onclick="decideDeposit('${d.id}', 'approved', '${folderKey}')">Approve</button>
+              <button class="btn btn-success btn-sm" onclick="decideDeposit('${d.id}', 'success', '${folderKey}')">Success</button>
+              <button class="btn btn-danger btn-sm" onclick="decideDeposit('${d.id}', 'rejected', '${folderKey}')">Reject</button>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="auth-card" style="text-align:center;">No pending ${walletName} deposits.</div>`);
+    });
+  } else if (folderKey === "users-coins") {
+    titleEl.textContent = "7 & 8. Users, Credentials, Ban/Remove & Coins";
+    const users = Object.values(allUsersMap).filter(Boolean);
+    bodyEl.innerHTML = `
+      <div class="lux-hero-banner">
+        <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ MASTER USER DIRECTORY &amp; COIN SETTER ✦</div>
+        <div style="font-size:16px; font-weight:800; margin-top:4px;">Total: ${users.length} Users</div>
+      </div>
+    ` + users.map(u => `
+      <div class="auth-card" style="margin-bottom:12px; border:1.5px solid rgba(212,175,55,0.45);">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+          <div style="display:flex; align-items:center; gap:10px; min-width:0;">
+            <img src="${escapeHtml(u.dp || defaultAvatar(u.name, u.sex))}" style="width:44px; height:44px; border-radius:50%; object-fit:cover; border:2px solid var(--gold);" />
+            <div style="min-width:0;">
+              <strong style="font-size:14px;">${escapeHtml(u.name)}</strong>
+              <span class="new-badge">${u.online ? '● Online' : 'Offline'}</span>
+              <div style="font-size:12px; color:var(--text-muted);">
+                Mobile: <strong>${escapeHtml(u.mobile)}</strong> • Pass: <strong>${escapeHtml(u.password || '')}</strong>
+              </div>
+              <div style="font-size:12px; font-weight:800; color:var(--maroon-800);">
+                Balance: ${Number(u.coins || 0).toLocaleString()} Coins • ${escapeHtml(u.sex)}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:6px; margin-top:10px; flex-wrap:wrap;">
+          <input type="number" id="adm-set-coins-${u.uid}" class="input-field" style="width:130px; padding:7px 10px; margin:0;" placeholder="Coins (e.g. 2500)" />
+          <button class="btn btn-gold btn-sm" onclick="setExactUserCoins('${u.uid}', 'users-coins')">Set Coins</button>
+          <button class="btn btn-success btn-sm" onclick="addCustomUserCoins('${u.uid}', 'users-coins')">+ Add Coins</button>
+          <button class="btn btn-warning btn-sm" onclick="toggleBanUser('${u.uid}', ${!u.banned}, 'users-coins')">${u.banned ? 'Unban' : 'Ban'}</button>
+          <button class="btn btn-primary btn-sm" onclick="ownerDirectMessageUser('${u.uid}')"><i class="fa-solid fa-comment"></i> Msg</button>
+          <button class="btn btn-outline btn-sm" onclick="ownerLoginAsUser('${u.uid}')"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+          <button class="btn btn-danger btn-sm" onclick="removeUserAccount('${u.uid}', 'users-coins')"><i class="fa-solid fa-trash"></i> Remove</button>
+        </div>
+      </div>
+    `).join("");
+  } else if (folderKey === "girl-paid-call-forms") {
+    titleEl.textContent = "9. Girl Paid Call Forms + Direct Msg & Login";
+    const girls = Object.values(allUsersMap).filter(u => u && u.sex === "Female");
+    bodyEl.innerHTML = `
+      <div class="lux-hero-banner">
+        <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ GIRL PAID CALL CONFIGURATION (MAX 60 MIN) ✦</div>
+        <div style="font-size:16px; font-weight:800; margin-top:4px;">Girls: ${girls.length}</div>
+      </div>
+    ` + (girls.length ? girls.map(g => {
+      const cfg = g.paidCallConfig || { method: "Easypaisa", holder: g.name, number: "03242499478", amountPkr: 500, durationMinutes: 60 };
+      return `
+        <div class="auth-card" style="margin-bottom:12px; border:1.5px solid var(--gold);">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong><i class="fa-solid fa-venus" style="color:var(--maroon-700);"></i> ${escapeHtml(g.name)} (${escapeHtml(g.mobile)})</strong>
+            <div style="display:flex; gap:5px;">
+              <button class="btn btn-primary btn-sm" onclick="ownerDirectMessageUser('${g.uid}')">Msg</button>
+              <button class="btn btn-outline btn-sm" onclick="ownerLoginAsUser('${g.uid}')">Login</button>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+            <div>
+              <label style="font-size:11px; font-weight:700;">Wallet</label>
+              <select id="gpc-method-${g.uid}" class="input-field" style="padding:8px;">
+                <option value="Easypaisa" ${cfg.method === 'Easypaisa' ? 'selected' : ''}>Easypaisa</option>
+                <option value="JazzCash" ${cfg.method === 'JazzCash' ? 'selected' : ''}>JazzCash</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700;">Number</label>
+              <input type="text" id="gpc-num-${g.uid}" class="input-field" style="padding:8px;" value="${escapeHtml(cfg.number)}" />
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700;">Account Name</label>
+              <input type="text" id="gpc-holder-${g.uid}" class="input-field" style="padding:8px;" value="${escapeHtml(cfg.holder)}" />
+            </div>
+            <div>
+              <label style="font-size:11px; font-weight:700;">Amount (PKR)</label>
+              <input type="number" id="gpc-amt-${g.uid}" class="input-field" style="padding:8px;" value="${cfg.amountPkr}" />
+            </div>
+          </div>
+          <button class="btn btn-gold btn-block btn-sm" onclick="saveGirlPaidCallConfig('${g.uid}')">
+            <i class="fa-solid fa-floppy-disk"></i> Save Paid Call Form for ${escapeHtml(g.name)}
+          </button>
+        </div>
+      `;
+    }).join("") : `<div class="auth-card" style="text-align:center;">No female accounts found.</div>`);
+  } else if (folderKey === "paid-call-approvals") {
+    titleEl.textContent = "10. Paid Call Deposit Requests";
+    db.ref("paidCallRequests").once("value", snap => {
+      const list = Object.values(snap.val() || {})
+        .filter(r => r.status === "pending")
+        .sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ PAID CALL APPROVAL QUEUE (1 HR MAX) ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Pending Requests: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(r => `
+        <div class="auth-card" style="margin-bottom:12px; border:1.5px solid var(--gold);">
+          <div><strong>Boy:</strong> ${escapeHtml(r.boyName)} ➔ <strong>Girl:</strong> ${escapeHtml(r.girlName)}</div>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+            ${escapeHtml(r.wallet)} • Rs. ${r.amount} • Max 1 Hr • ${formatDateTime(r.ts)}
+          </div>
+          ${r.slip ? `<img src="${r.slip}" onclick="openSlipViewer('${r.slip}', '${escapeAttr(r.boyName)} -> ${escapeAttr(r.girlName)} • ${formatDateTime(r.ts)}')" style="width:100%; max-height:190px; object-fit:contain; border-radius:10px; margin:8px 0; cursor:zoom-in; filter:none;" />` : ''}
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <button class="btn btn-success btn-sm" onclick="decidePaidCallRequest('${r.id}', 'approved')">Approve Call (1 Hr)</button>
+            <button class="btn btn-danger btn-sm" onclick="decidePaidCallRequest('${r.id}', 'rejected')">Reject</button>
+          </div>
+        </div>
+      `).join("") : `<div class="auth-card" style="text-align:center;">No pending paid call requests.</div>`);
+    });
+  } else if (folderKey === "paid-call-history") {
+    titleEl.textContent = "11. Paid Call History";
+    db.ref("paidCallHistory").once("value", snap => {
+      const list = Object.values(snap.val() || {}).sort((a, b) => b.ts - a.ts);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ PAID CALL SESSION LOGS ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Total Calls: ${list.length}</div>
+        </div>
+      ` + (list.length ? list.map(h => `
+        <div class="auth-card" style="margin-bottom:10px; border-left:4px solid var(--gold);">
+          <strong>${escapeHtml(h.boyName)} ➔ ${escapeHtml(h.girlName)}</strong>
+          <div style="font-size:12px; color:var(--text-muted); margin-top:3px;">
+            ${escapeHtml((h.callType || 'call').toUpperCase())} • ${escapeHtml(h.outcome || '')} • ${formatDateTime(h.ts)}
+          </div>
+        </div>
+      `).join("") : `<div class="auth-card" style="text-align:center;">No paid call history yet.</div>`);
+    });
+  } else if (folderKey === "invite-friend-tracker") {
+    titleEl.textContent = "12. Invite Friend Tracker";
+    db.ref("invites").once("value", snap => {
+      const invitesObj = snap.val() || {};
+      const rows = Object.entries(invitesObj);
+      bodyEl.innerHTML = `
+        <div class="lux-hero-banner">
+          <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ REFERRAL &amp; INVITE ANALYTICS ✦</div>
+          <div style="font-size:18px; font-weight:800; margin-top:4px;">Tracked Inviters: ${rows.length}</div>
+        </div>
+      ` + (rows.length ? rows.map(([inviterId, invitedMap]) => {
+        const inviter = findUserByUid(inviterId) || { name: inviterId };
+        const invitedList = Object.values(invitedMap || {});
+        return `
+          <div class="auth-card" style="margin-bottom:10px; border:1.5px solid var(--gold);">
+            <div style="display:flex; justify-content:space-between;">
+              <strong>${escapeHtml(inviter.name)}</strong>
+              <span class="new-badge">${invitedList.length} Invited</span>
+            </div>
+            <div style="font-size:12px; color:var(--text-muted); margin-top:5px;">
+              Invited Users: ${invitedList.map(x => escapeHtml(x.name || x.uid || '')).join(", ") || "None"}
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="auth-card" style="text-align:center;">No invite records found yet.</div>`);
+    });
+  } else if (folderKey === "security-face-controls") {
+    titleEl.textContent = "13. Screen Record Lock, Face Pics & Girl Bypass";
+    const recAllowed = !!appSettings.screenRecordingAllowedForAll;
+    const girlBypass = !!appSettings.ownerGirlNoFaceVerify;
+    const girlsWithFace = Object.values(allUsersMap).filter(u => u && u.sex === "Female");
+
+    bodyEl.innerHTML = `
+      <div class="lux-hero-banner">
+        <div style="font-size:11px; color:var(--gold-light); font-weight:800;">✦ SECURITY &amp; FACE VERIFICATION VAULT ✦</div>
+        <div style="font-size:16px; font-weight:800; margin-top:4px;">Recording &amp; Girl Face Controls</div>
+      </div>
+
+      <div class="auth-card" style="margin-bottom:12px; border:1.5px solid var(--gold);">
+        <div style="font-size:13px; font-weight:800; margin-bottom:8px;">
+          Screen Recording for Users: <span style="color:${recAllowed ? '#16a34a' : '#dc2626'};">${recAllowed ? 'ON (All Users)' : 'OFF (Only Owner)'}</span>
+        </div>
+        <button class="btn ${recAllowed ? 'btn-danger' : 'btn-success'} btn-block btn-sm" onclick="toggleScreenRecordingSetting()">
+          <i class="fa-solid fa-record-vinyl"></i> ${recAllowed ? 'Turn Screen Recording OFF (Owner Only)' : 'Turn Screen Recording ON (Allow All)'}
+        </button>
+
+        <div style="font-size:13px; font-weight:800; margin:14px 0 8px;">
+          Owner Girl Account Without Face Verification: <span style="color:${girlBypass ? '#16a34a' : 'var(--maroon-800)'};">${girlBypass ? 'ENABLED' : 'OFF (Face Required)'}</span>
+        </div>
+        <button class="btn btn-gold btn-block btn-sm" onclick="toggleOwnerGirlNoFaceVerify()">
+          <i class="fa-solid fa-user-check"></i> ${girlBypass ? 'Disable Girl Face Bypass' : 'Enable Girl Account Without Face Verification'}
+        </button>
+      </div>
+
+      <div class="section-heading"><span>Verified Girl Face Pictures</span></div>
+      ${girlsWithFace.length ? girlsWithFace.map(g => {
+        const pic = g.faceVerificationPic || g.dp || defaultAvatar(g.name, "Female");
+        return `
+          <div class="auth-card" style="margin-bottom:10px; display:flex; align-items:center; gap:12px;">
+            <img src="${pic}" onclick="openSlipViewer('${pic}', '${escapeAttr(g.name)} • Face Verification')" style="width:62px; height:62px; border-radius:14px; object-fit:cover; border:2px solid var(--gold); cursor:zoom-in;" />
+            <div style="flex:1;">
+              <strong>${escapeHtml(g.name)}</strong>
+              <div style="font-size:11px; color:var(--text-muted);">${escapeHtml(g.mobile)} • ${g.faceVerificationPic ? 'Face Pic Captured' : 'Profile DP'}</div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="openSlipViewer('${pic}', '${escapeAttr(g.name)} • Face Verification')">View</button>
+          </div>
+        `;
+      }).join("") : `<div class="auth-card" style="text-align:center;">No girl face pictures yet.</div>`}
+    `;
+  } else if (folderKey === "support-inbox") {
+    titleEl.textContent = "14. Customer Service Inbox";
+    db.ref("supportChats").once("value", snap => {
+      const allSup = snap.val() || {};
+      const uids = Object.keys(allSup);
+      bodyEl.innerHTML = uids.length ? uids.map(uid => {
+        const u = findUserByUid(uid) || { name: uid };
+        const msgs = Object.values(allSup[uid] || {});
+        const lastMsg = msgs[msgs.length - 1] || { text: "" };
+        return `
+          <div class="auth-card" style="margin-bottom:10px; border:1px solid var(--gold);">
+            <strong>${escapeHtml(u.name)}</strong>
+            <div style="font-size:12px; color:var(--text-muted); margin:4px 0;">Last: ${escapeHtml(lastMsg.text)}</div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <input type="text" id="sup-reply-${uid}" class="input-field" style="padding:8px; margin:0;" placeholder="Reply to ${escapeHtml(u.name)}..." />
+              <button class="btn btn-primary btn-sm" onclick="sendAdminSupportReply('${uid}')">Send</button>
+            </div>
+          </div>
+        `;
+      }).join("") : `<div class="auth-card" style="text-align:center;">No customer service messages.</div>`;
+    });
   }
 }
 
-function adminLoginAsUser(uid) {
-  const target = findUserByUid(uid);
-  if (!target) return showToast("User not found", "fa-circle-xmark");
-  completeUserLogin(target, true);
-}
-
-function adminAdjustCoins(uid, delta) {
-  db.ref("users/" + uid + "/coins").transaction(c => Math.max(0, (c || 0) + delta)).then(() => {
-    showToast("Coins updated", "fa-coins");
-    openAdminSubfolder("users");
-  });
-}
-
-function adminToggleBan(uid, currentlyBanned) {
-  db.ref("users/" + uid + "/banned").set(!currentlyBanned).then(() => {
-    showToast(!currentlyBanned ? "User banned" : "User unbanned", "fa-ban");
-    openAdminSubfolder("users");
-  });
-}
-
-function adminDeleteUser(uid) {
-  if (!confirm("Delete this user permanently?")) return;
-  db.ref("users/" + uid).remove().then(() => {
-    showToast("User deleted", "fa-trash");
-    openAdminSubfolder("users");
-  });
-}
-
-function approveDeposit(depId, uid, coins) {
-  db.ref("deposits/" + depId + "/status").set("approved");
-  db.ref("users/" + uid + "/coins").transaction(c => (c || 0) + Number(coins || 0)).then(() => {
-    showToast("Deposit approved & coins credited", "fa-circle-check");
-    openAdminSubfolder("deposits");
-  });
-}
-
-function approveWithdraw(wdId) {
-  db.ref("withdrawals/" + wdId + "/status").set("approved").then(() => {
-    showToast("Withdrawal marked approved", "fa-circle-check");
-    openAdminSubfolder("withdraws");
-  });
-}
-
-function rejectWithdrawAndRefund(wdId, uid, coins) {
-  db.ref("withdrawals/" + wdId + "/status").set("rejected");
-  db.ref("users/" + uid + "/coins").transaction(c => (c || 0) + Number(coins || 0)).then(() => {
-    showToast("Withdrawal rejected & coins refunded", "fa-rotate-left");
-    openAdminSubfolder("withdraws");
-  });
-}
-
-function rejectRecord(path, id) {
-  db.ref(`${path}/${id}/status`).set("rejected").then(() => {
-    showToast("Rejected", "fa-circle-xmark");
-    openAdminSubfolder(path === "deposits" ? "deposits" : "paid-calls");
-  });
-}
-
-function approvePaidCall(reqId, mins) {
-  const durationMs = Math.min(60, Number(mins || 60)) * 60 * 1000;
-  db.ref("paidCallRequests/" + reqId).update({
-    status: "approved",
-    approvedAt: Date.now(),
-    expiresAt: Date.now() + durationMs
+function saveAdminAppAndInviteLinks() {
+  const dl = document.getElementById("adm-dl-link").value.trim();
+  const inv = document.getElementById("adm-inv-link").value.trim();
+  db.ref("settings").update({
+    downloadAppLink: dl || appSettings.downloadAppLink,
+    inviteLink: inv || appSettings.inviteLink
   }).then(() => {
-    showToast(`Paid call approved for ${Math.min(60, Number(mins || 60))} mins`, "fa-circle-check");
-    openAdminSubfolder("paid-calls");
+    showToast("Download & Invite links published live!", "fa-link");
   });
 }
 
-function saveGirlPaidConfig(girlUid) {
+function decideDeposit(depId, status, returnFolder) {
+  const customInp = document.getElementById("custom-dep-coins-" + depId);
+  db.ref("deposits/" + depId).once("value", snap => {
+    const dep = snap.val();
+    if (!dep) return;
+    const coinsToAdd = customInp && customInp.value !== "" ? Number(customInp.value) : Number(dep.expectedCoins || 0);
+    if ((status === "approved" || status === "success") && dep.status === "pending" && coinsToAdd > 0) {
+      db.ref("users/" + dep.uid + "/coins").transaction(c => (c || 0) + coinsToAdd);
+    }
+    db.ref("deposits/" + depId).update({
+      status,
+      creditedCoins: coinsToAdd,
+      processedAt: Date.now()
+    }).then(() => {
+      showToast(`Deposit ${status} (${coinsToAdd} coins)`, "fa-circle-check");
+      openAdminSubfolder(returnFolder);
+    });
+  });
+}
+
+function decideWithdraw(wdId, status, returnFolder) {
+  db.ref("withdrawals/" + wdId).once("value", snap => {
+    const wd = snap.val();
+    if (!wd) return;
+    if (status === "rejected" && wd.status === "pending") {
+      db.ref("users/" + wd.uid + "/coins").transaction(c => (c || 0) + Number(wd.coins || 0));
+    }
+    db.ref("withdrawals/" + wdId).update({ status, processedAt: Date.now() }).then(() => {
+      showToast(`Withdrawal ${status}`, "fa-circle-check");
+      openAdminSubfolder(returnFolder);
+    });
+  });
+}
+
+function setExactUserCoins(uid, returnFolder) {
+  const val = Number(document.getElementById("adm-set-coins-" + uid).value);
+  if (isNaN(val) || val < 0) return showToast("Enter valid coins amount", "fa-coins");
+  db.ref("users/" + uid + "/coins").set(val).then(() => {
+    showToast(`Balance set to ${val.toLocaleString()} coins`, "fa-coins");
+    openAdminSubfolder(returnFolder);
+  });
+}
+
+function addCustomUserCoins(uid, returnFolder) {
+  const val = Number(document.getElementById("adm-set-coins-" + uid).value);
+  if (isNaN(val) || val === 0) return showToast("Enter coins to add", "fa-coins");
+  db.ref("users/" + uid + "/coins").transaction(c => Math.max(0, (c || 0) + val)).then(() => {
+    showToast(`Added ${val.toLocaleString()} coins`, "fa-coins");
+    openAdminSubfolder(returnFolder);
+  });
+}
+
+function toggleBanUser(uid, banState, returnFolder) {
+  db.ref("users/" + uid + "/banned").set(banState).then(() => {
+    showToast(banState ? "User banned" : "User unbanned", "fa-ban");
+    openAdminSubfolder(returnFolder);
+  });
+}
+
+function removeUserAccount(uid, returnFolder) {
+  if (!confirm("Permanently remove this user account?")) return;
+  db.ref("users/" + uid).remove().then(() => {
+    delete allUsersMap[uid];
+    showToast("User account removed", "fa-trash");
+    openAdminSubfolder(returnFolder);
+  });
+}
+
+function ownerDirectMessageUser(targetUid) {
+  const targetUser = findUserByUid(targetUid);
+  if (!targetUser) return;
+  const msgText = prompt(`Send message from Owner to ${targetUser.name}:`);
+  if (!msgText || !msgText.trim()) return;
+
+  const ownerSenderId = currentUser ? currentUser.uid : "owner_admin";
+  const threadId = getChatThreadId(ownerSenderId, targetUid);
+  db.ref("chats/" + threadId).push({
+    senderId: ownerSenderId,
+    type: "text",
+    text: `👑 Owner Message: ${msgText.trim()}`,
+    seenByPeer: false,
+    ts: Date.now()
+  }).then(() => {
+    showToast(`Message sent to ${targetUser.name}`, "fa-paper-plane");
+  });
+}
+
+function ownerLoginAsUser(targetUid) {
+  const targetUser = findUserByUid(targetUid);
+  if (!targetUser) return;
+  completeUserLogin(targetUser, true);
+}
+
+function saveGirlPaidCallConfig(girlUid) {
   const cfg = {
-    method: document.getElementById("gcfg-method-" + girlUid).value,
-    holder: document.getElementById("gcfg-holder-" + girlUid).value.trim(),
-    number: document.getElementById("gcfg-num-" + girlUid).value.trim(),
-    amountPkr: Number(document.getElementById("gcfg-amt-" + girlUid).value || 500),
-    durationMinutes: Math.min(60, Number(document.getElementById("gcfg-mins-" + girlUid).value || 60))
+    method: document.getElementById("gpc-method-" + girlUid).value,
+    number: document.getElementById("gpc-num-" + girlUid).value.trim(),
+    holder: document.getElementById("gpc-holder-" + girlUid).value.trim(),
+    amountPkr: Number(document.getElementById("gpc-amt-" + girlUid).value || 500),
+    durationMinutes: 60
   };
   db.ref("users/" + girlUid + "/paidCallConfig").set(cfg).then(() => {
-    showToast("Girl paid call settings saved", "fa-circle-check");
+    showToast("Girl Paid Call Form saved (Max 1 Hour)!", "fa-check");
   });
 }
 
-function adminReplySupport(uid) {
-  const inp = document.getElementById("admin-rep-" + uid);
+function decidePaidCallRequest(reqId, status) {
+  db.ref("paidCallRequests/" + reqId).once("value", snap => {
+    const r = snap.val();
+    if (!r) return;
+    const oneHourMs = 60 * 60 * 1000;
+    db.ref("paidCallRequests/" + reqId).update({
+      status,
+      durationMinutes: 60,
+      expiresAt: status === "approved" ? (Date.now() + oneHourMs) : null
+    }).then(() => {
+      showToast(`Paid Call ${status} (1 Hour max)`, "fa-crown");
+      openAdminSubfolder("paid-call-approvals");
+    });
+  });
+}
+
+function toggleScreenRecordingSetting() {
+  const nextVal = !appSettings.screenRecordingAllowedForAll;
+  db.ref("settings/screenRecordingAllowedForAll").set(nextVal).then(() => {
+    showToast(nextVal ? "Screen recording ON for all users" : "Screen recording OFF (Owner only)", "fa-record-vinyl");
+    openAdminSubfolder("security-face-controls");
+  });
+}
+
+function toggleOwnerGirlNoFaceVerify() {
+  const nextVal = !appSettings.ownerGirlNoFaceVerify;
+  db.ref("settings/ownerGirlNoFaceVerify").set(nextVal).then(() => {
+    updateFemaleFaceBoxVisibility();
+    showToast(nextVal ? "Girl account without face verification ON" : "Girl face verification required", "fa-user-check");
+    openAdminSubfolder("security-face-controls");
+  });
+}
+
+function sendAdminSupportReply(uid) {
+  const inp = document.getElementById("sup-reply-" + uid);
   const text = inp.value.trim();
   if (!text) return;
   db.ref("supportChats/" + uid).push({
     sender: "admin",
     text,
     ts: Date.now()
-  }).then(() => {
-    inp.value = "";
-    showToast("Reply sent", "fa-paper-plane");
   });
+  inp.value = "";
+  showToast("Reply sent", "fa-paper-plane");
 }
 
-function saveAdminAppSettings() {
-  const closedPk = document.getElementById("adm-close-pk").checked;
-  const ownerCap = document.getElementById("adm-owner-cap").checked;
-  const girlNoFace = document.getElementById("adm-girl-noface").checked;
-  const dlLink = document.getElementById("adm-dl-link").value.trim();
-  const invLink = document.getElementById("adm-inv-link").value.trim();
-
-  db.ref("settings").update({
-    appClosedPakistan: closedPk,
-    ownerCaptureEnabled: ownerCap,
-    ownerGirlNoFaceVerify: girlNoFace,
-    downloadAppLink: dlLink,
-    inviteLink: invLink
-  }).then(() => {
-    showToast("App settings saved", "fa-sliders");
-  });
-}
-
-/* ==========================================================================
-   ZOOMABLE SLIP / PHOTO VIEWER & IMAGE COMPRESSION
-   ========================================================================== */
-function openSlipModal(imgSrc, titleText = "Payment Slip") {
+function openSlipViewer(src, titleLabel = "Full Color Photo & Date/Time") {
   slipZoomLevel = 1;
   const img = document.getElementById("slip-zoom-img");
-  document.getElementById("zoom-viewer-title").textContent = titleText;
-  img.src = imgSrc;
+  img.src = src;
+  img.style.filter = "none";
   img.style.transform = "scale(1)";
+  document.getElementById("zoom-viewer-title").textContent = titleLabel;
   document.getElementById("slip-zoom-modal").classList.remove("hidden");
 }
-
-function openUserPhotoViewer(imgSrc) {
-  openSlipModal(imgSrc, "Photo View");
+function openUserPhotoViewer(src) {
+  openSlipViewer(src, "Photo Viewer");
 }
-
 function zoomSlip(delta) {
-  slipZoomLevel = Math.max(1, Math.min(4, Number((slipZoomLevel + delta).toFixed(2))));
+  slipZoomLevel = Math.max(1, Math.min(4, +(slipZoomLevel + delta).toFixed(1)));
   document.getElementById("slip-zoom-img").style.transform = `scale(${slipZoomLevel})`;
 }
-
 function closeSlipModal() {
   slipZoomLevel = 1;
+  document.getElementById("slip-zoom-img").style.transform = "scale(1)";
   document.getElementById("slip-zoom-modal").classList.add("hidden");
 }
 
-function compressImageFile(file, maxDim, quality, callback) {
+function compressImageFile(file, maxSize, quality, callback) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const img = new Image();
     img.onload = () => {
       let w = img.width;
       let h = img.height;
-      if (w > h && w > maxDim) {
-        h = Math.round((h * maxDim) / w);
-        w = maxDim;
-      } else if (h > maxDim) {
-        w = Math.round((w * maxDim) / h);
-        h = maxDim;
+      if (w > h && w > maxSize) {
+        h = Math.round((h * maxSize) / w);
+        w = maxSize;
+      } else if (h > maxSize) {
+        w = Math.round((w * maxSize) / h);
+        h = maxSize;
       }
       const canvas = document.createElement("canvas");
       canvas.width = w;
       canvas.height = h;
-      canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, w, h);
       callback(canvas.toDataURL("image/jpeg", quality));
     };
     img.src = e.target.result;
@@ -5894,8 +6329,7 @@ function escapeHtml(str) {
 }
 
 function escapeAttr(str) {
-  if (!str) return "";
-  return String(str).replace(/'/g, "\\'").replace(/"/g, "&quot;");
+  return escapeHtml(str).replace(/'/g, "&#39;");
 }
 </script>
 </body>
